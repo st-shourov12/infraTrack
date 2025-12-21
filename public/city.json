@@ -1,0 +1,514 @@
+[
+  {
+    "region": "Barishal",
+    "district": "Barguna",
+    "city": "Barguna",
+    "upazilas": ["Amtali", "Bamna", "Barguna Sadar", "Betagi", "Patharghata", "Taltali"],
+    "longitude": 90.1264,
+    "latitude": 22.0953
+  },
+  {
+    "region": "Barishal",
+    "district": "Barishal",
+    "city": "Barishal",
+    "upazilas": ["Agailjhara", "Babuganj", "Bakerganj", "Banaripara", "Gaurnadi", "Hizla", "Barishal Sadar", "Mehendiganj", "Muladi", "Wazirpur"],
+    "longitude": 90.3679,
+    "latitude": 22.7010
+  },
+  {
+    "region": "Barishal",
+    "district": "Bhola",
+    "city": "Bhola",
+    "upazilas": ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
+    "longitude": 90.6489,
+    "latitude": 22.6856
+  },
+  {
+    "region": "Barishal",
+    "district": "Jhalokati",
+    "city": "Jhalokati",
+    "upazilas": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+    "longitude": 90.1994,
+    "latitude": 22.6421
+  },
+  {
+    "region": "Barishal",
+    "district": "Patuakhali",
+    "city": "Patuakhali",
+    "upazilas": ["Bauphal", "Dashmina", "Dumki", "Galachipa", "Kalapara", "Mirzaganj", "Patuakhali Sadar", "Rangabali"],
+    "longitude": 90.3181,
+    "latitude": 22.3597
+  },
+  {
+    "region": "Barishal",
+    "district": "Pirojpur",
+    "city": "Pirojpur",
+    "upazilas": ["Bhandaria", "Kawkhali", "Mathbaria", "Nesarabad (Swarupkati)", "Pirojpur Sadar", "Nazirpur", "Zianagar"],
+    "longitude": 89.9669,
+    "latitude": 22.5793
+  },
+  {
+    "region": "Chattogram",
+    "district": "Bandarban",
+    "city": "Bandarban",
+    "upazilas": ["Alikadam", "Bandarban Sadar", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi"],
+    "longitude": 92.2236,
+    "latitude": 22.1953
+  },
+  {
+    "region": "Chattogram",
+    "district": "Brahmanbaria",
+    "city": "Brahmanbaria",
+    "upazilas": ["Akhaura", "Ashuganj", "Bancharampur", "Bijoynagar", "Brahmanbaria Sadar", "Kasba", "Nabinagar", "Nasirnagar", "Sarail"],
+    "longitude": 91.1119,
+    "latitude": 23.9608
+  },
+  {
+    "region": "Chattogram",
+    "district": "Chandpur",
+    "city": "Chandpur",
+    "upazilas": ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab Dakshin", "Matlab Uttar", "Shahrasti"],
+    "longitude": 90.6554,
+    "latitude": 23.2338
+  },
+  {
+    "region": "Chattogram",
+    "district": "Chattogram",
+    "city": "Chattogram",
+    "upazilas": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda", "Chattogram Port (Thana)"],
+    "longitude": 91.8348,
+    "latitude": 22.3569
+  },
+  {
+    "region": "Chattogram",
+    "district": "Cumilla",
+    "city": "Cumilla",
+    "upazilas": ["Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Cumilla Sadar", "Meghna", "Monohorganj", "Sadarsouth", "Titas"],
+    "longitude": 91.1868,
+    "latitude": 23.4682
+  },
+  {
+    "region": "Chattogram",
+    "district": "Cox's Bazar",
+    "city": "Cox's Bazar",
+    "upazilas": ["Chakaria", "Cox's Bazar Sadar", "Kutubdia", "Maheshkhali", "Pekua", "Ramu", "Teknaf", "Ukhia", "Eidgaon"],
+    "longitude": 91.9780,
+    "latitude": 21.4272
+  },
+  {
+    "region": "Chattogram",
+    "district": "Feni",
+    "city": "Feni",
+    "upazilas": ["Chhagalnaiya", "Daganbhuiyan", "Feni Sadar", "Parshuram", "Sonagazi", "Fulgazi"],
+    "longitude": 91.3966,
+    "latitude": 23.0159
+  },
+  {
+    "region": "Chattogram",
+    "district": "Khagrachhari",
+    "city": "Khagrachhari",
+    "upazilas": ["Dighinala", "Khagrachhari Sadar", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
+    "longitude": 91.9946,
+    "latitude": 23.1193
+  },
+  {
+    "region": "Chattogram",
+    "district": "Lakshmipur",
+    "city": "Lakshmipur",
+    "upazilas": ["Kamalnagar", "Lakshmipur Sadar", "Raipur", "Ramganj", "Ramgati"],
+    "longitude": 90.8288,
+    "latitude": 22.9447
+  },
+  {
+    "region": "Chattogram",
+    "district": "Noakhali",
+    "city": "Noakhali",
+    "upazilas": ["Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Kabirhat", "Noakhali Sadar", "Senbagh", "Sonaimuri", "Subarnachar"],
+    "longitude": 91.0973,
+    "latitude": 22.8724
+  },
+  {
+    "region": "Chattogram",
+    "district": "Rangamati",
+    "city": "Rangamati",
+    "upazilas": ["Baghaichhari", "Barkal", "Belaichhari", "Juraichhari", "Kaptai", "Kawkhali", "Langadu", "Naniarchar", "Rajosthali", "Rangamati Sadar"],
+    "longitude": 92.1921,
+    "latitude": 22.6371
+  },
+  {
+    "region": "Dhaka",
+    "district": "Dhaka",
+    "city": "Dhaka",
+    "upazilas": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar"],
+    "longitude": 90.4125,
+    "latitude": 23.8103
+  },
+  {
+    "region": "Dhaka",
+    "district": "Faridpur",
+    "city": "Faridpur",
+    "upazilas": ["Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Faridpur Sadar", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+    "longitude": 89.8426,
+    "latitude": 23.5424
+  },
+  {
+    "region": "Dhaka",
+    "district": "Gazipur",
+    "city": "Gazipur",
+    "upazilas": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+    "longitude": 90.4264,
+    "latitude": 24.0023
+  },
+  {
+    "region": "Dhaka",
+    "district": "Gopalganj",
+    "city": "Gopalganj",
+    "upazilas": ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
+    "longitude": 89.8879,
+    "latitude": 23.0051
+  },
+  {
+    "region": "Dhaka",
+    "district": "Kishoreganj",
+    "city": "Kishoreganj",
+    "upazilas": ["Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+    "longitude": 90.7766,
+    "latitude": 24.4398
+  },
+  {
+    "region": "Dhaka",
+    "district": "Madaripur",
+    "city": "Madaripur",
+    "upazilas": ["Kalkini", "Madaripur Sadar", "Rajoir", "Shibchar", "Dasar"],
+    "longitude": 90.2041,
+    "latitude": 23.1641
+  },
+  {
+    "region": "Dhaka",
+    "district": "Manikganj",
+    "city": "Manikganj",
+    "upazilas": ["Daulatpur", "Ghior", "Harirampur", "Manikganj Sadar", "Saturia", "Shibalaya", "Singair"],
+    "longitude": 90.0039,
+    "latitude": 23.8613
+  },
+  {
+    "region": "Dhaka",
+    "district": "Munshiganj",
+    "city": "Munshiganj",
+    "upazilas": ["Gazaria", "Lohajang", "Munshiganj Sadar", "Sirajdikhan", "Sreenagar", "Tongibari"],
+    "longitude": 90.5350,
+    "latitude": 23.5422
+  },
+  {
+    "region": "Dhaka",
+    "district": "Narayanganj",
+    "city": "Narayanganj",
+    "upazilas": ["Araihazar", "Bandar", "Narayanganj Sadar", "Rupganj", "Sonargaon"],
+    "longitude": 90.5029,
+    "latitude": 23.6333
+  },
+  {
+    "region": "Dhaka",
+    "district": "Narsingdi",
+    "city": "Narsingdi",
+    "upazilas": ["Belabo", "Monohardi", "Narsingdi Sadar", "Palash", "Raipura", "Shibpur"],
+    "longitude": 90.7177,
+    "latitude": 23.9322
+  },
+  {
+    "region": "Dhaka",
+    "district": "Rajbari",
+    "city": "Rajbari",
+    "upazilas": ["Baliakandi", "Goalanda", "Pangsha", "Rajbari Sadar", "Kalukhali"],
+    "longitude": 89.6506,
+    "latitude": 23.7588
+  },
+  {
+    "region": "Dhaka",
+    "district": "Shariatpur",
+    "city": "Shariatpur",
+    "upazilas": ["Bhedarganj", "Damudya", "Gosairhat", "Naria", "Shariatpur Sadar", "Zanjira"],
+    "longitude": 90.3563,
+    "latitude": 23.2423
+  },
+  {
+    "region": "Dhaka",
+    "district": "Tangail",
+    "city": "Tangail",
+    "upazilas": ["Basail", "Bhuapur", "Delduar", "Dhanbari", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Tangail Sadar"],
+    "longitude": 89.9167,
+    "latitude": 24.2513
+  },
+  {
+    "region": "Khulna",
+    "district": "Bagerhat",
+    "city": "Bagerhat",
+    "upazilas": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+    "longitude": 89.7852,
+    "latitude": 22.6588
+  },
+  {
+    "region": "Khulna",
+    "district": "Chuadanga",
+    "city": "Chuadanga",
+    "upazilas": ["Alamdanga", "Chuadanga Sadar", "Damurhuda", "Jibannagar"],
+    "longitude": 88.8418,
+    "latitude": 23.6161
+  },
+  {
+    "region": "Khulna",
+    "district": "Jashore",
+    "city": "Jashore",
+    "upazilas": ["Abhaynagar", "Bagherpara", "Chaugachha", "Jashore Sadar", "Jhikargachha", "Keshabpur", "Manirampur", "Sharsha"],
+    "longitude": 89.2098,
+    "latitude": 23.1634
+  },
+  {
+    "region": "Khulna",
+    "district": "Jhenaidah",
+    "city": "Jhenaidah",
+    "upazilas": ["Harinakunda", "Jhenaidah Sadar", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+    "longitude": 89.1839,
+    "latitude": 23.5448
+  },
+  {
+    "region": "Khulna",
+    "district": "Khulna",
+    "city": "Khulna",
+    "upazilas": ["Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsa", "Terokhada"],
+    "longitude": 89.5671,
+    "latitude": 22.8456
+  },
+  {
+    "region": "Khulna",
+    "district": "Kushtia",
+    "city": "Kushtia",
+    "upazilas": ["Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Kushtia Sadar", "Mirpur"],
+    "longitude": 89.1213,
+    "latitude": 23.9012
+  },
+  {
+    "region": "Khulna",
+    "district": "Magura",
+    "city": "Magura",
+    "upazilas": ["Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur"],
+    "longitude": 89.4192,
+    "latitude": 23.4873
+  },
+  {
+    "region": "Khulna",
+    "district": "Meherpur",
+    "city": "Meherpur",
+    "upazilas": ["Gangni", "Meherpur Sadar", "Mujibnagar"],
+    "longitude": 88.8317,
+    "latitude": 23.7669
+  },
+  {
+    "region": "Khulna",
+    "district": "Narail",
+    "city": "Narail",
+    "upazilas": ["Kalia", "Lohagara", "Narail Sadar"],
+    "longitude": 89.5000,
+    "latitude": 23.1667
+  },
+  {
+    "region": "Khulna",
+    "district": "Satkhira",
+    "city": "Satkhira",
+    "upazilas": ["Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Satkhira Sadar", "Shyamnagar", "Tala"],
+    "longitude": 89.0710,
+    "latitude": 22.3155
+  },
+  {
+    "region": "Mymensingh",
+    "district": "Jamalpur",
+    "city": "Jamalpur",
+    "upazilas": ["Bakshiganj", "Dewanganj", "Islampur", "Jamalpur Sadar", "Madarganj", "Melandaha", "Sarishabari"],
+    "longitude": 89.9486,
+    "latitude": 24.9375
+  },
+  {
+    "region": "Mymensingh",
+    "district": "Mymensingh",
+    "city": "Mymensingh",
+    "upazilas": ["Bhaluka", "Dhobaura", "Fulbaria", "Gafargaon", "Gouripur", "Haluaghat", "Ishwarganj", "Mymensingh Sadar", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Tarakanda"],
+    "longitude": 90.4065,
+    "latitude": 24.7471
+  },
+  {
+    "region": "Mymensingh",
+    "district": "Netrokona",
+    "city": "Netrokona",
+    "upazilas": ["Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Netrokona Sadar", "Purbadhala"],
+    "longitude": 90.7290,
+    "latitude": 24.8818
+  },
+  {
+    "region": "Mymensingh",
+    "district": "Sherpur",
+    "city": "Sherpur",
+    "upazilas": ["Jhenaigati", "Nakla", "Nalitabari", "Sherpur Sadar", "Sreebardi"],
+    "longitude": 90.0073,
+    "latitude": 25.0168
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Bogura",
+    "city": "Bogura",
+    "upazilas": ["Adamdighi", "Bogura Sadar", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
+    "longitude": 89.3720,
+    "latitude": 24.8464
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Joypurhat",
+    "city": "Joypurhat",
+    "upazilas": ["Akkelpur", "Joypurhat Sadar", "Kalai", "Khetlal", "Panchbibi"],
+    "longitude": 89.0227,
+    "latitude": 25.0968
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Naogaon",
+    "city": "Naogaon",
+    "upazilas": ["Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mohadevpur", "Naogaon Sadar", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
+    "longitude": 88.9336,
+    "latitude": 24.8119
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Natore",
+    "city": "Natore",
+    "upazilas": ["Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Natore Sadar", "Singra", "Naldanga"],
+    "longitude": 88.9843,
+    "latitude": 24.4102
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Chapainawabganj",
+    "city": "Chapainawabganj",
+    "upazilas": ["Bholahat", "Gomastapur", "Nachole", "Chapainawabganj Sadar", "Shibganj"],
+    "longitude": 88.2697,
+    "latitude": 24.5964
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Pabna",
+    "city": "Pabna",
+    "upazilas": ["Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Pabna Sadar", "Santhia", "Sujanagar"],
+    "longitude": 89.2372,
+    "latitude": 24.0113
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Rajshahi",
+    "city": "Rajshahi",
+    "upazilas": ["Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
+    "longitude": 88.6161,
+    "latitude": 24.3745
+  },
+  {
+    "region": "Rajshahi",
+    "district": "Sirajganj",
+    "city": "Sirajganj",
+    "upazilas": ["Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Sirajganj Sadar", "Tarash", "Ullahpara"],
+    "longitude": 89.7080,
+    "latitude": 24.4539
+  },
+  {
+    "region": "Rangpur",
+    "district": "Dinajpur",
+    "city": "Dinajpur",
+    "upazilas": ["Birampur", "Birganj", "Biral", "Bochaganj", "Chirirbandar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Dinajpur Sadar", "Nawabganj", "Parbatipur"],
+    "longitude": 88.6499,
+    "latitude": 25.6274
+  },
+  {
+    "region": "Rangpur",
+    "district": "Gaibandha",
+    "city": "Gaibandha",
+    "upazilas": ["Fulchhari", "Gaibandha Sadar", "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
+    "longitude": 89.5281,
+    "latitude": 25.1874
+  },
+  {
+    "region": "Rangpur",
+    "district": "Kurigram",
+    "city": "Kurigram",
+    "upazilas": ["Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Kurigram Sadar", "Nageshwari", "Rajarhat", "Raomari", "Ulipur"],
+    "longitude": 89.6474,
+    "latitude": 25.8072
+  },
+  {
+    "region": "Rangpur",
+    "district": "Lalmonirhat",
+    "city": "Lalmonirhat",
+    "upazilas": ["Aditmari", "Hatibandha", "Kaliganj", "Lalmonirhat Sadar", "Patgram"],
+    "longitude": 89.2158,
+    "latitude": 26.0036
+  },
+  {
+    "region": "Rangpur",
+    "district": "Nilphamari",
+    "city": "Nilphamari",
+    "upazilas": ["Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Nilphamari Sadar", "Saidpur"],
+    "longitude": 88.8560,
+    "latitude": 25.9318
+  },
+  {
+    "region": "Rangpur",
+    "district": "Panchagarh",
+    "city": "Panchagarh",
+    "upazilas": ["Atwari", "Boda", "Debiganj", "Panchagarh Sadar", "Tetulia"],
+    "longitude": 88.5565,
+    "latitude": 26.3337
+  },
+  {
+    "region": "Rangpur",
+    "district": "Rangpur",
+    "city": "Rangpur",
+    "upazilas": ["Badarganj", "Gangachara", "Kaunia", "Rangpur Sadar", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
+    "longitude": 89.2517,
+    "latitude": 25.7439
+  },
+  {
+    "region": "Rangpur",
+    "district": "Thakurgaon",
+    "city": "Thakurgaon",
+    "upazilas": ["Baliadangi", "Haripur", "Pirganj", "Ranisankail", "Thakurgaon Sadar"],
+    "longitude": 88.4617,
+    "latitude": 26.0307
+  },
+  {
+    "region": "Sylhet",
+    "district": "Habiganj",
+    "city": "Habiganj",
+    "upazilas": ["Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Habiganj Sadar", "Lakhai", "Madhabpur", "Nabiganj", "Sayestaganj"],
+    "longitude": 91.3988,
+    "latitude": 24.3749
+  },
+  {
+    "region": "Sylhet",
+    "district": "Moulvibazar",
+    "city": "Moulvibazar",
+    "upazilas": ["Barlekha", "Juri", "Kamalganj", "Kulaura", "Moulvibazar Sadar", "Rajnagar", "Sreemangal"],
+    "longitude": 91.7631,
+    "latitude": 24.3095
+  },
+  {
+    "region": "Sylhet",
+    "district": "Sunamganj",
+    "city": "Sunamganj",
+    "upazilas": ["Bishwambarpur", "Chhatak", "Dakshin Sunamganj", "Derai", "Dharampasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sullah", "Sunamganj Sadar", "Tahirpur", "Madhyanagar", "Shantiganj"],
+    "longitude": 91.3988,
+    "latitude": 25.0691
+  },
+  {
+    "region": "Sylhet",
+    "district": "Sylhet",
+    "city": "Sylhet",
+    "upazilas": ["Balaganj", "Beanibazar", "Bishwanath", "Companiganj", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj", "South Surma"],
+    "longitude": 91.8676,
+    "latitude": 24.8949
+  }
+]
