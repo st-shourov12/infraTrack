@@ -6,6 +6,7 @@ import { Link, Outlet } from 'react-router';
 import { GrUserSettings } from "react-icons/gr";
 import { MdOutlineReportProblem } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
+import { FaCreditCard } from 'react-icons/fa6';
 
 const DashBoard = () => {
     return (
@@ -77,6 +78,13 @@ const DashBoard = () => {
                                 {/* Manage Staff icon */}
                                 <GrUserSettings className='text-lg' />
                                 <span className="is-drawer-close:hidden">Manage Staff</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/dashboard/payment-history'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Payment History">
+                                {/* Manage Staff icon */}
+                                <FaCreditCard className='text-lg' />
+                                <span className="is-drawer-close:hidden">Payment History</span>
                             </Link>
                         </li>
 

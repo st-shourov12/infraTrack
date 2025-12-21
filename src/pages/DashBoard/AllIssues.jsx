@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Link } from 'react-router';
+import { FcAssistant } from 'react-icons/fc';
 
 
 
@@ -110,6 +111,9 @@ const AllIssues = () => {
                     
                     {/* Action Button */}
                     <div className="card-actions justify-end mt-4">
+                        <button className="btn">
+                            <FcAssistant />
+                        </button>
                         <Link
                             to={`/dashboard/all-issues/${issue._id}`}
                          className="btn btn-primary btn-sm w-full">

@@ -5,6 +5,9 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import Heading from '../../components/Shared/Heading';
 import { imageUpload } from '../../Utils';
+import { FaTrashCan, FaUserCheck } from 'react-icons/fa6';
+import { IoPersonRemoveSharp } from 'react-icons/io5';
+import { icons } from 'lucide-react';
 
 const ManageStaff = () => {
     const axiosSecure = useAxiosSecure();
@@ -30,7 +33,7 @@ const ManageStaff = () => {
     ];
 
     // Fetch all staff
-    const { data: staffList = [], isLoading } = useQuery({
+    const { data: staffList = [], isLoading , refetch} = useQuery({
         queryKey: ['staff'],
         queryFn: async () => {
             const res = await axiosSecure.get('/staffs');
@@ -38,93 +41,154 @@ const ManageStaff = () => {
         }
     });
 
+    const handleDeleteStaff = (staff) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to delete ${staff.fullName}. This action cannot be undone!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/staffs/${staff._id}`)
+                .then(res=>{
+                    if(res.data.deletedCount){
+                        refetch();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Staff member has been removed.',
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    const handleReject = (staff) => {
+        const updatedInfo = {applicationStatus: 'rejected'}
+        axiosSecure.patch(`/staffs/${staff._id}`, updatedInfo)
+        .then(res=>{
+            if(res.data.modifiedCount){
+                refetch();
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'warning',
+                    title: 'Staff Rejected',
+                    showConfirmButon: false,
+                    timer: 2000
+                })
+            }
+        })
+    }
+
+
+    const handleApproval = (staff) => {
+        const updatedInfo = {applicationStatus: 'approved'}
+        axiosSecure.patch(`/staffs/${staff._id}`, updatedInfo)
+        .then(res=>{
+            if(res.data.modifiedCount){
+                refetch();
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Staff Approved',
+                    showConfirmButon: false,
+                    timer: 2000
+                })
+            }
+        })
+    }
+
     // Add Staff Mutation
-    const addStaffMutation = useMutation({
-        mutationFn: async (staffData) => {
-            // First create user in Firebase (you'll need to implement this endpoint in your backend)
-            const firebaseResponse = await axiosSecure.post('/auth/create-staff', {
-                email: staffData.email,
-                password: staffData.password,
-                displayName: staffData.name
-            });
+    // const addStaffMutation = useMutation({
+    //     mutationFn: async (staffData) => {
+    //         // First create user in Firebase (you'll need to implement this endpoint in your backend)
+    //         const firebaseResponse = await axiosSecure.post('/auth/create-staff', {
+    //             email: staffData.email,
+    //             password: staffData.password,
+    //             displayName: staffData.name
+    //         });
 
-            // Then save staff data to database
-            const dbResponse = await axiosSecure.post('/staffs', {
-                ...staffData,
-                firebaseUid: firebaseResponse.data.uid,
-                role: 'staff',
-                createdAt: new Date().toISOString()
-            });
+    //         // Then save staff data to database
+    //         const dbResponse = await axiosSecure.post('/staffs', {
+    //             ...staffData,
+    //             firebaseUid: firebaseResponse.data.uid,
+    //             role: 'staff',
+    //             createdAt: new Date().toISOString()
+    //         });
 
-            return dbResponse.data;
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['staffs']);
-            setShowAddModal(false);
-            resetAdd();
-            Swal.fire({
-                icon: 'success',
-                title: 'Staff Added!',
-                text: 'Staff member has been successfully added.',
-            });
-        },
-        onError: (error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed to Add Staff',
-                text: error?.response?.data?.message || 'Something went wrong',
-            });
-        }
-    });
+    //         return dbResponse.data;
+    //     },
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries(['staffs']);
+    //         setShowAddModal(false);
+    //         resetAdd();
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Staff Added!',
+    //             text: 'Staff member has been successfully added.',
+    //         });
+    //     },
+    //     onError: (error) => {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Failed to Add Staff',
+    //             text: error?.response?.data?.message || 'Something went wrong',
+    //         });
+    //     }
+    // });
 
-    // Update Staff Mutation
-    const updateStaffMutation = useMutation({
-        mutationFn: async ({ id, data }) => {
-            const res = await axiosSecure.patch(`/staffs/${id}`, data);
-            return res.data;
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['staffs']);
-            setShowUpdateModal(false);
-            setSelectedStaff(null);
-            resetUpdate();
-            Swal.fire({
-                icon: 'success',
-                title: 'Staff Updated!',
-                text: 'Staff information has been successfully updated.',
-            });
-        },
-        onError: (error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed to Update Staff',
-                text: error?.response?.data?.message || 'Something went wrong',
-            });
-        }
-    });
+    // // Update Staff Mutation
+    // const updateStaffMutation = useMutation({
+    //     mutationFn: async ({ id, data }) => {
+    //         const res = await axiosSecure.patch(`/staffs/${id}`, data);
+    //         return res.data;
+    //     },
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries(['staffs']);
+    //         setShowUpdateModal(false);
+    //         setSelectedStaff(null);
+    //         resetUpdate();
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Staff Updated!',
+    //             text: 'Staff information has been successfully updated.',
+    //         });
+    //     },
+    //     onError: (error) => {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Failed to Update Staff',
+    //             text: error?.response?.data?.message || 'Something went wrong',
+    //         });
+    //     }
+    // });
 
-    // Delete Staff Mutation
-    const deleteStaffMutation = useMutation({
-        mutationFn: async (id) => {
-            const res = await axiosSecure.delete(`/staffs/${id}`);
-            return res.data;
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['staffs']);
-            Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Staff member has been removed.',
-            });
-        },
-        onError: (error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed to Delete',
-                text: error?.response?.data?.message || 'Something went wrong',
-            });
-        }
-    });
+    // // Delete Staff Mutation
+    // const deleteStaffMutation = useMutation({
+    //     mutationFn: async (id) => {
+    //         const res = await axiosSecure.delete(`/staffs/${id}`);
+    //         return res.data;
+    //     },
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries(['staff']);
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Deleted!',
+    //             text: 'Staff member has been removed.',
+    //         });
+    //     },
+    //     onError: (error) => {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Failed to Delete',
+    //             text: error?.response?.data?.message || 'Something went wrong',
+    //         });
+    //     }
+    // });
 
     // Handle Add Staff Form Submit
     const handleAddStaff = async (data) => {
@@ -143,7 +207,7 @@ const ManageStaff = () => {
             photo: photoURL
         };
 
-        addStaffMutation.mutate(staffData);
+        // addStaffMutation.mutate(staffData);
     };
 
     // Handle Update Staff Form Submit
@@ -165,25 +229,25 @@ const ManageStaff = () => {
             photo: photoURL
         };
 
-        updateStaffMutation.mutate({ id: selectedStaff._id, data: updatedData });
+        // updateStaffMutation.mutate({ id: selectedStaff._id, data: updatedData });
     };
 
     // Handle Delete Staff
-    const handleDeleteStaff = (staff) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: `You are about to delete ${staff.name}. This action cannot be undone!`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteStaffMutation.mutate(staff._id);
-            }
-        });
-    };
+    // const handleDeleteStaff = (staff) => {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: `You are about to delete ${staff.name}. This action cannot be undone!`,
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#d33',
+    //         cancelButtonColor: '#3085d6',
+    //         confirmButtonText: 'Yes, delete it!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // deleteStaffMutation.mutate(staff._id);
+    //         }
+    //     });
+    // };
 
     // Open Update Modal
     const openUpdateModal = (staff) => {
@@ -230,6 +294,7 @@ const ManageStaff = () => {
                             <th>Staff Info</th>
                             <th>Contact</th>
                             <th>Department</th>
+                            <th>Status</th>
                             <th>Joined Date</th>
                             <th>Actions</th>
                         </tr>
@@ -243,27 +308,30 @@ const ManageStaff = () => {
                             </tr>
                         ) : (
                             staffList.map((staff, index) => (
-                                <tr key={staff._id}>
+                                <tr key={staff?._id}>
                                     <th>{index + 1}</th>
                                     <td>
                                         <div className="flex items-center gap-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-12 w-12">
-                                                    <img src={staff.photo} alt={staff.name} />
+                                                    <img src={staff?.photo} alt={staff?.name} />
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="font-bold">{staff.name}</div>
-                                                <div className="text-sm opacity-50">{staff.email}</div>
+                                                <div className="font-bold">{staff?.name}</div>
+                                                <div className="text-sm opacity-50">{staff?.email}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{staff.phone}</td>
+                                    <td>{staff?.phone}</td>
                                     <td>
-                                        <span className="badge badge-info badge-sm">{staff.department}</span>
+                                        <span className="badge badge-info badge-sm">{staff?.department}</span>
                                     </td>
                                     <td>
-                                        {new Date(staff.createdAt).toLocaleDateString('en-US', {
+                                        <span className={`badge badge-sm ${staff?.applicationStatus === 'approved' && ' badge-success'} ${staff?.applicationStatus === 'rejected' && ' bg-red-400 text-red-800'} ${staff?.applicationStatus === 'pending' && ' badge-info'}`}>{staff?.applicationStatus}</span>
+                                    </td>
+                                    <td>
+                                        {new Date(staff?.appliedAt).toLocaleDateString('en-US', {
                                             year: 'numeric',
                                             month: 'short',
                                             day: 'numeric'
@@ -271,21 +339,16 @@ const ManageStaff = () => {
                                     </td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <button 
-                                                onClick={() => openUpdateModal(staff)}
-                                                className="btn btn-sm btn-warning"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                </svg>
+                                            <button onClick={() => {
+                                                handleApproval(staff)
+                                            }} className='btn'>
+                                                <FaUserCheck></FaUserCheck>
                                             </button>
-                                            <button 
-                                                onClick={() => handleDeleteStaff(staff)}
-                                                className="btn btn-sm btn-error"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
+                                            <button onClick={()=>{handleReject(staff)}} className='btn'>
+                                                <IoPersonRemoveSharp></IoPersonRemoveSharp>
+                                            </button>
+                                            <button onClick={()=> handleDeleteStaff(staff)} className='btn'>
+                                                <FaTrashCan></FaTrashCan>
                                             </button>
                                         </div>
                                     </td>
