@@ -306,6 +306,13 @@ export default function MyProfile() {
                             </div>
                         )}
                     </div>
+                    {
+                        x?.isBlock &&
+                        <h3 className="text-red-700 text-center text-xl font-bold w-1/2 mx-auto">
+                            You have been Blocked by admin. Please Contact with us.
+
+                        </h3>
+                    }
                 </div>
             </div>
         </div>

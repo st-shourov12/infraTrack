@@ -87,6 +87,17 @@ const ReportIssue = () => {
             location,
             userRole: xrole,
             status: 'pending',
+            timeline: [
+                {
+                    id: 5,
+                    status: "pending",
+                    message: "Issue reported and awaiting review",
+                    updatedBy: reporterName,
+                    role: xrole,
+                    assignedAt: new Date().toISOString()
+                }
+            ]
+
 
         };
         console.log(issueData);
@@ -126,13 +137,16 @@ const ReportIssue = () => {
                         });
 
                 }
+                else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Submission Failed",
+                        text: 'You are block by Admin',
+                    });
+                }
 
             }
-            Swal.fire({
-                icon: "error",
-                title: "Submission Failed",
-                text: 'You are block by Admin',
-            });
+
         });
         // post issue data to the server
     }

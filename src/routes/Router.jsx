@@ -17,6 +17,7 @@ import PaymentSuccess from "../pages/DashBoard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/DashBoard/Payment/PaymentCancelled";
 import IssueDetailsPage from "../pages/DashBoard/IssueDetailsPage";
 import Staff from "../pages/Staff/Staff";
+import AssignedIssue from "../pages/DashBoard/AssignedIssue";
 
 export const router = createBrowserRouter([
     {
@@ -86,11 +87,16 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'manage-staff',
-                element: <ManageStaff />
+                element: <ManageStaff />,
+                loader: () => fetch('/city.json').then(res => res.json())
             },
             {
                 path: 'my-issues',
                 element: <MyIssues />
+            },
+            {
+                path: 'assign-issues',
+                element: <AssignedIssue />
             },
         ]
     }
