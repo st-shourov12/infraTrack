@@ -18,6 +18,8 @@ import PaymentCancelled from "../pages/DashBoard/Payment/PaymentCancelled";
 import IssueDetailsPage from "../pages/DashBoard/IssueDetailsPage";
 import Staff from "../pages/Staff/Staff";
 import AssignedIssue from "../pages/DashBoard/AssignedIssue";
+import AllIssueUser from "../pages/AllIssueUser";
+import Dash from "../pages/DashBoard/Dashboard/Dash";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +34,16 @@ export const router = createBrowserRouter([
                 path: 'staff',
                 element: <Staff></Staff>,
                 loader: () => fetch('/city.json').then(res => res.json())
+            },
+            {
+                path: 'issues',
+                element: <AllIssueUser />,
+                
+            },
+            {
+                path: 'issues/:id',
+                element: <IssueDetailsPage />,
+                
             },
             {
                 path: 'report',
@@ -54,6 +66,10 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                element: <Dash />
+            },
+            {
+                path: 'myProfile',
                 element: <MyProfile />
             },
 

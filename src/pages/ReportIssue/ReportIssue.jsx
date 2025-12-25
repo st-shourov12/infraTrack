@@ -1,7 +1,7 @@
 import React from 'react';
 import Heading from '../../components/Shared/Heading';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 
 import { imageUpload } from '../../Utils';
 import useAuth from '../../hooks/useAuth';
@@ -33,6 +33,8 @@ const ReportIssue = () => {
             return res.data
         }
     });
+
+    const navigate = useNavigate()
 
 
 
@@ -87,6 +89,7 @@ const ReportIssue = () => {
             location,
             userRole: xrole,
             status: 'pending',
+            boosted: false,
             timeline: [
                 {
                     id: 5,
@@ -120,11 +123,14 @@ const ReportIssue = () => {
                         .then(res => {
                             console.log('Issue saved', res.data);
 
+                            
+
                             Swal.fire({
                                 icon: "success",
                                 title: "Issue Submitted",
                                 text: "Your issue has been reported successfully!",
                             });
+                            navigate('/dashboard/my-issues')
                         })
                         .catch(error => {
                             console.error('Axios error:', error);
@@ -204,10 +210,11 @@ const ReportIssue = () => {
                                         <input
                                             type="radio"
                                             {...register("priority")}
+                                            disabled
                                             value="High"
                                             className="form-radio"
                                         />
-                                        <span className="ml-2">High</span>
+                                        <span className="ml-2">High <span className="text-xs">(Boast for High)</span></span>
                                     </label>
                                 </div>
                             </fieldset>

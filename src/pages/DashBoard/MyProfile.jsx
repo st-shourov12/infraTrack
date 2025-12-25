@@ -39,7 +39,7 @@ export default function MyProfile() {
     console.log('pay', latestPayment);
 
     // USER FROM DB
-    const x = users.find(us => us.email === user?.email)
+    const x = users.find(us => us.email === user?.email);
 
 
 
@@ -51,6 +51,9 @@ export default function MyProfile() {
         }
     }
     )
+
+    const closeIssue = issues.filter(p => p.status == 'closed');
+    
 
     const [isEditing, setIsEditing] = useState(false);
     // const [editData, setEditData] = useState({
@@ -218,8 +221,8 @@ export default function MyProfile() {
                                     <p className="text-sm text-gray-600">Reports</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-2xl font-bold text-indigo-600">8</p>
-                                    <p className="text-sm text-gray-600">Resolved</p>
+                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${closeIssue.length}` : 0 }</p>
+                                    <p className="text-sm text-gray-600">Closed</p>
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold text-indigo-600">95%</p>

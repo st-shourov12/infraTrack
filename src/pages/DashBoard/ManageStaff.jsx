@@ -456,6 +456,7 @@ const ManageStaff = () => {
         });
 
         if (res.data.modifiedCount) {
+            await axiosSecure.patch(`/users/${selectedStaff?.userId}`, {role : 'staff'})
             refetch();
             setShowAppModal(false);
             setSelectedStaff(null);

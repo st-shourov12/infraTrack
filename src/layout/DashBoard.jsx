@@ -4,7 +4,7 @@ import { HiMiniUsers } from 'react-icons/hi2';
 import { IoHome } from 'react-icons/io5';
 import { Link, Outlet } from 'react-router';
 import { GrUserSettings } from "react-icons/gr";
-import { MdOutlineReportProblem } from 'react-icons/md';
+import { MdOutlineReportProblem, MdSpaceDashboard } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { FaCreditCard } from 'react-icons/fa6';
 import { GoIssueOpened } from 'react-icons/go';
@@ -39,11 +39,12 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Homepage</span>
                             </Link>
                         </li>
+                                                
                         <li>
-                            <Link to={'/dashboard'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Profile">
-                                {/* Home icon */}
-                                <CgProfile className='text-lg' />
-                                <span className="is-drawer-close:hidden">My Profile</span>
+                            <Link to={'/dashboard'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Dashboard">
+                                {/* My Issues icon */}
+                                <MdSpaceDashboard className='text-lg' />
+                                <span className="is-drawer-close:hidden">Dashboard</span>
                             </Link>
                         </li>
                         <li>
@@ -93,6 +94,13 @@ const DashBoard = () => {
                                 {/* Manage Staff icon */}
                                 <FaCreditCard className='text-lg' />
                                 <span className="is-drawer-close:hidden">Payment History</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/dashboard/myProfile'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Profile">
+                                {/* Home icon */}
+                                <CgProfile className='text-lg' />
+                                <span className="is-drawer-close:hidden">My Profile</span>
                             </Link>
                         </li>
 

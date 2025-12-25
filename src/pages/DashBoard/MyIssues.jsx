@@ -3,10 +3,12 @@ import { X, Edit, Trash2, Eye, Filter } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
+import UpdateIssue from '../ReportIssue/UpdateIssue';
 
 const MyIssues = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    
     
     const [filters, setFilters] = useState({
         status: 'all',
@@ -76,31 +78,31 @@ const MyIssues = () => {
         window.location.href = `/issue-details/${id}`;
     };
 
-    const handleEditSubmit = async (e) => {
-        e.preventDefault();
+    // const handleEditSubmit = async (e) => {
+    //     e.preventDefault();
 
-        try {
-            await axiosSecure.patch(`/issues/${editingIssue._id}`, {
-                category: editingIssue.category,
-                description: editingIssue.description,
-                priority: editingIssue.priority,
-                region: editingIssue.region,
-                district: editingIssue.district,
-                upzila: editingIssue.upzila,
-                location: editingIssue.location
-            });
-            refetch();
-            setShowEditModal(false);
-            setEditingIssue(null);
-        } catch (error) {
-            console.error('Error updating issue:', error);
-            alert('Failed to update issue');
-        }
-    };
+    //     try {
+    //         await axiosSecure.patch(`/issues/${editingIssue._id}`, {
+    //             category: editingIssue.category,
+    //             description: editingIssue.description,
+    //             priority: editingIssue.priority,
+    //             region: editingIssue.region,
+    //             district: editingIssue.district,
+    //             upzila: editingIssue.upzila,
+    //             location: editingIssue.location
+    //         });
+    //         refetch();
+    //         setShowEditModal(false);
+    //         setEditingIssue(null);
+    //     } catch (error) {
+    //         console.error('Error updating issue:', error);
+    //         alert('Failed to update issue');
+    //     }
+    // };
 
-    const handleEditChange = (field, value) => {
-        setEditingIssue({ ...editingIssue, [field]: value });
-    };
+    // const handleEditChange = (field, value) => {
+    //     setEditingIssue({ ...editingIssue, [field]: value });
+    // };
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -315,114 +317,7 @@ const MyIssues = () => {
                             </div>
 
                             <div className="p-6 space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                                    <select
-                                        value={editingIssue.category}
-                                        onChange={(e) => handleEditChange('category', e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        required
-                                    >
-                                        <option value="">Select Category</option>
-                                        <option value="Potholes">Potholes</option>
-                                        <option value="Broken Streetlights">Broken Streetlights</option>
-                                        <option value="Water Leakage">Water Leakage</option>
-                                        <option value="Garbage Overflow">Garbage Overflow</option>
-                                        <option value="Damaged Footpaths">Damaged Footpaths</option>
-                                        <option value="Drainage Blockage">Drainage Blockage</option>
-                                        <option value="Illegal Parking">Illegal Parking</option>
-                                        <option value="Broken Park Bench">Broken Park Bench</option>
-                                        <option value="Faulty Traffic Signal">Faulty Traffic Signal</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                                    <textarea
-                                        value={editingIssue.description}
-                                        onChange={(e) => handleEditChange('description', e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        rows="4"
-                                        required
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                                    <select
-                                        value={editingIssue.priority}
-                                        onChange={(e) => handleEditChange('priority', e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        required
-                                    >
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Region</label>
-                                        <input
-                                            type="text"
-                                            value={editingIssue.region}
-                                            onChange={(e) => handleEditChange('region', e.target.value)}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">District</label>
-                                        <input
-                                            type="text"
-                                            value={editingIssue.district}
-                                            onChange={(e) => handleEditChange('district', e.target.value)}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Upzila</label>
-                                        <input
-                                            type="text"
-                                            value={editingIssue.upzila}
-                                            onChange={(e) => handleEditChange('upzila', e.target.value)}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Location Details</label>
-                                    <input
-                                        type="text"
-                                        value={editingIssue.location}
-                                        onChange={(e) => handleEditChange('location', e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder="Enter location details"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="flex gap-4 pt-4">
-                                    <button
-                                        onClick={handleEditSubmit}
-                                        className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                                    >
-                                        Update Issue
-                                    </button>
-                                    <button
-                                        onClick={() => setShowEditModal(false)}
-                                        className="flex-1 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors font-medium"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
+                                <UpdateIssue editingIssue={editingIssue} setShowEditModal={setShowEditModal}></UpdateIssue>
                             </div>
                         </div>
                     </div>

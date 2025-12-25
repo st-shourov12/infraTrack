@@ -25,7 +25,7 @@ const AssignedIssue = () => {
 
     const staff = staffs[0]
 
-    const { data: assignIssue = [] } = useQuery({
+    const { data: assignIssue = [] , refetch:issueFetch} = useQuery({
         queryKey: ['issues', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues`);
@@ -70,49 +70,47 @@ const AssignedIssue = () => {
     }, [filters, issues]);
 
     const handleResolved = (issue) => {
-        
-        const { _id, category, timeline, assignedStaff } = issue;
+  const { _id, category, timeline, assignedStaff } = issue;
 
-        const {resolvedCount} = staff;
+  const count = Number(staff?.resolvedCount || 0) + 1;
 
-        const count = parseInt(resolvedCount);
+  const updateIssue = {
+    status: 'resolved',
+    timeline: [
+      {
+        id: 2,
+        status: "resolved",
+        message: `${category} issue is resolved.`,
+        updatedBy: assignedStaff?.name,
+        role: 'staff',
+        date: new Date().toISOString(),
+      },
+      ...timeline,
+    ]
+  };
 
-        const updateIssue = {
-            status: 'resolved',
+  axiosSecure.patch(`/issues/${_id}`, updateIssue)
+    .then(res => {
+      if (res.data.modifiedCount) {
 
-            timeline: [
+        const updateStaff = {
+          resolvedCount: count,
+          workStatus: 'Available'
+        };
 
-                {
-                    id: 2,
-                    status: "resolved",
-                    message: `${category} issue is resolved.`,
-                    updatedBy: `${assignedStaff?.name}`,
-                    role: 'staff',
-                    date: new Date().toISOString(),
-                },
-                ...timeline,
+        axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
+          .then(() => {
+            issueFetch();
+            Swal.fire({
+              icon: 'success',
+              title: 'Issue resolved',
+              timer: 1000,
+            });
+          });
+      }
+    });
+};
 
-            ]
-        }
-        axiosSecure.patch(`/issues/${_id}`, updateIssue)
-            .then((res) => {
-                if (res.data.modifiedCount) {
-
-                    const updateStaff = {
-                        resolvedCount: Number(count) + 1
-                    }
-
-                    axiosSecure.patch(`/issues/${staff?._id}`, updateStaff)
-
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Issue resolved',
-                        timer: 1000,
-                    });
-                }
-            })
-    }
     const handleClosed = (issue) => {
         console.log(issue)
         const { _id, category, timeline, assignedStaff } = issue;
@@ -148,6 +146,8 @@ const AssignedIssue = () => {
 
                     axiosSecure.patch(`/issues/${staff?._id}`, updateStaff)
                     .then()
+
+                    issueFetch()
 
 
                     Swal.fire({
@@ -309,17 +309,7 @@ const AssignedIssue = () => {
 
 
 
-                        {/* <form onChange={handleSubmit(handleStatus)} className='w-full mx-auto'>
-                            <select {...register("status")} defaultValue="Pick Category" className="select w-full">
-                                <option disabled={true}>pending</option>
-                                <option disabled={true}>in-progress</option>
-                                <option>resolved</option>
-                                <option>closed</option>
-
-
-
-                            </select>
-                        </form> */}
+                        
 
                     </tbody>
 

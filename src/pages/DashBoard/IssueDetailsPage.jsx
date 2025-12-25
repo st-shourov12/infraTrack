@@ -3,85 +3,19 @@ import { Clock, MapPin, User, Calendar, AlertCircle, CheckCircle, XCircle, Trend
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
-// Mock data - replace with your actual data fetching
-// const issueData = {
-//   _id: "6946c5593c643a04967af5b7",
-//   reporterName: "DevShow",
-//   reporterEmail: "shourov@cm.com",
-//   reporterPhoto: "https://i.ibb.co/HfGgYbmQ/Snipaste-2023-12-20-17-00-28.png",
-//   category: "Potholes",
-//   description: "There are multiple dangerous potholes on the main road near Mouchak market. These potholes have been causing issues for commuters and have led to several accidents. The situation worsens during rain as the holes fill with water making them invisible to drivers.",
-//   photo: "https://i.ibb.co/tMgd63tk/Snipaste-2025-12-05-12-47-41.png",
-//   priority: "High",
-//   region: "Chattogram",
-//   district: "Chattogram",
-//   upzila: "Hathazari",
-//   location: "Mouchak",
-//   userRole: "user",
-//   status: "in-progress",
-//   createdAt: "2025-12-20T15:48:41.096+00:00",
-//   boosted: true,
-//   assignedStaff: {
-//     name: "John Doe",
-//     email: "john.doe@staff.com",
-//     photo: "https://i.pravatar.cc/150?img=12",
-//     phone: "+880 1712-345678",
-//     department: "Road Maintenance"
-//   },
-//   timeline: [
-//     {
-//       id: 1,
-//       status: "resolved",
-//       message: "Issue has been successfully resolved. Road has been repaired and is now safe for use.",
-//       updatedBy: "John Doe (Staff)",
-//       role: "staff",
-//       date: "2025-12-21T10:30:00.000Z"
-//     },
-//     {
-//       id: 2,
-//       status: "in-progress",
-//       message: "Work started on repairing the potholes. Expected completion in 2 days.",
-//       updatedBy: "John Doe (Staff)",
-//       role: "staff",
-//       date: "2025-12-21T08:00:00.000Z"
-//     },
-//     {
-//       id: 3,
-//       status: "boost",
-//       message: "Issue priority boosted to High through payment (৳100)",
-//       updatedBy: "DevShow (Citizen)",
-//       role: "citizen",
-//       date: "2025-12-20T18:30:00.000Z"
-//     },
-//     {
-//       id: 4,
-//       status: "assigned",
-//       message: "Issue assigned to Staff: John Doe from Road Maintenance Department",
-//       updatedBy: "Admin",
-//       role: "admin",
-//       date: "2025-12-20T17:15:00.000Z"
-//     },
-//     {
-//       id: 5,
-//       status: "pending",
-//       message: "Issue reported and awaiting review",
-//       updatedBy: "DevShow (Citizen)",
-//       role: "citizen",
-//       date: "2025-12-20T15:48:41.096Z"
-//     }
-//   ]
-// };
+
 
 // Mock current user - replace with actual auth
-const currentUser = {
-  email: "shourov@cm.com",
-  role: "user"
-};
+
 
 const IssueDetailsPage = () => {
-  const issueId = useParams();
-  const axiosSecure = useAxiosSecure()
+  const { issueId } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
   const { data: issueDatas = [] } = useQuery({
     queryKey: ['issue', issueId],
     queryFn: async () => {
@@ -89,16 +23,25 @@ const IssueDetailsPage = () => {
       return res.data;
     }
   });
+  const { data: users = [] } = useQuery({
+    queryKey: ['issue', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      return res.data;
+    }
+  });
 
-  console.log(issueDatas);
-  const issueData = issueDatas[0];
-  
+
+  const issue = issueDatas[0];
+
+  const currentUser = users[0]
+
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [issue, setIssue] = useState(issueData);
 
-  const isOwner = currentUser.email === issue?.reporterEmail;
-  const canEdit = isOwner && issue.status === "pending";
+
+  const isOwner = currentUser?.email === issue?.reporterEmail;
+  const canEdit = isOwner && issue?.status === "pending";
   const canDelete = isOwner;
   const canBoost = !issue?.boosted;
 
@@ -117,27 +60,39 @@ const IssueDetailsPage = () => {
   };
 
   const processPayment = () => {
-    // Simulate payment processing
-    setTimeout(() => {
-      setIssue({
-        ...issue,
-        priority: "High",
-        boosted: true,
-        timeline: [
-          {
-            id: Date.now(),
-            status: "boost",
-            message: "Issue priority boosted to High through payment (৳100)",
-            updatedBy: `${currentUser.email} (Citizen)`,
-            role: "citizen",
-            date: new Date().toISOString()
-          },
-          ...issue.timeline
-        ]
+
+
+
+
+    const update = {
+
+      priority: "High",
+      boosted: true,
+      timeline: [
+        {
+          id: 3,
+          status: "boost",
+          message: "Issue priority boosted to High through payment (৳100)",
+          updatedBy: `${currentUser.email} (${currentUser?.role})`,
+          role: "citizen",
+          date: new Date().toISOString()
+        },
+        ...issue.timeline
+      ]
+    };
+    axiosSecure.patch(`/issues/${issue?._id}`, update)
+      .then(() => {
+        setShowPaymentModal(false);
+        Swal.fire({
+          icon: 'success',
+          title: 'Issue Boasted',
+          timer: 2000,
+        });
+
       });
-      setShowPaymentModal(false);
-      alert("Payment successful! Issue priority boosted to High.");
-    }, 1500);
+
+
+
   };
 
   const getStatusColor = (status) => {
@@ -320,7 +275,7 @@ const IssueDetailsPage = () => {
                             {entry?.role}
                           </span>
                           <span className="text-xs text-gray-500">
-                            {new Date(entry?.date).toLocaleDateString('en-US', {
+                            {new Date(entry?.assignedAt).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
                               year: 'numeric',
