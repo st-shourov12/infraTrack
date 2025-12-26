@@ -3,9 +3,14 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { CheckCircle, Clock, XCircle, AlertCircle, DollarSign, Users, FileText, TrendingUp } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { GrCompliance } from 'react-icons/gr';
+import { IoCloseCircleSharp } from 'react-icons/io5';
+
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+// import { RechartsDevtools } from '@recharts/devtools';
 
 const AdminDash = () => {
-    const axiosSecure = useAxiosSecure()
+    const axiosSecure = useAxiosSecure();
 
     const { data: allIssues = [] } = useQuery({
         queryKey: ['issues'],
@@ -13,17 +18,14 @@ const AdminDash = () => {
             const res = await axiosSecure.get(`/issues`);
             return res.data;
         },
-
-
     });
+
     const { data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`);
             return res.data;
         },
-
-
     });
 
     const { data: staffs = [] } = useQuery({
@@ -32,62 +34,59 @@ const AdminDash = () => {
             const res = await axiosSecure.get(`/staffs`);
             return res.data;
         },
-
-
     });
-
 
     const { data: payments = [] } = useQuery({
         queryKey: ['payment'],
-
         queryFn: async () => {
-            const res = await axiosSecure.get(
-                `/payments`
-            );
+            const res = await axiosSecure.get(`/payments`);
             return res.data;
         }
     });
 
-    const latestStaff = staffs.slice(0, 6)
+    const latestStaff = staffs.slice(0, 6);
 
+    const pendingIssue = allIssues.filter(p => p.status === 'pending');
+    const resolvedIssue = allIssues.filter(p => p.status === 'resolved');
+    const closedIssue = allIssues.filter(p => p.status === 'closed');
+    const inProgressIssue = allIssues.filter(p => p.status === 'in-progress');
+    const rejectedIssue = allIssues.filter(p => p.status === 'rejected');
 
-    const pendingIssue = allIssues.filter(p => p.status === 'pending')
-    const resolvedIssue = allIssues.filter(p => p.status === 'resolved')
-    const closedIssue = allIssues.filter(p => p.status === 'closed')
-    const inProgressIssue = allIssues.filter(p => p.status === 'in-progress')
-
-
-    const latestIssues = allIssues.slice(0, 6)
-    const latestUsers = users.slice(0, 6)
-    const latestPayments = payments.slice(0, 6)
+    const latestIssues = allIssues.slice(0, 6);
+    const latestUsers = users.slice(0, 6);
+    const latestPayments = payments.slice(0, 6);
 
     const totalAmount = payments?.reduce(
         (sum, p) => sum + Number(p.amount || 0),
         0
     ) || 0;
 
-
-
-
-    // Mock data for stats
     const stats = {
         totalIssues: allIssues.length,
         resolvedIssues: resolvedIssue.length,
         pendingIssues: pendingIssue.length,
         closedIssues: closedIssue.length,
         inProgressIssues: inProgressIssue.length,
-        totalPayment: 45750,
-        avgResolutionTime: 3.2,
-        totalUsers: 1234,
-        activeIssues: 58
+        rejectedIssues: rejectedIssue.lentgh,
     };
 
-    // Chart data
+   
+
+
+    // const issueStatusData = [
+    //     { name: 'Closed', value: stats.closedIssues, color: '#10b981' },
+    //     { name: 'Pending', value: stats.pendingIssues, color: '#f59e0b' },
+    //     { name: 'In Progress', value: stats.inProgressIssues, color: '#deef44ff' },
+    //      { name: 'Rejected', value: stats.rejectedIssues, color: '#ef4444ff' }
+    // ];
     const issueStatusData = [
-        { name: 'Closed', value: stats.closedIssues, color: '#10b981' },
-        { name: 'Pending', value: stats.pendingIssues, color: '#f59e0b' },
-        { name: 'In Progress', value: stats.inProgressIssues, color: '#ef4444' }
-    ];
+        { name: 'Closed', value: closedIssue.length, color: '#10b981' },
+        { name: 'Pending', value: pendingIssue.length, color: '#f59e0b' },
+        { name: 'In Progress', value: inProgressIssue.length, color: '#f97316' },
+        { name: 'Resolved', value: resolvedIssue.length, color: '#22c55e' },
+        { name: 'Rejected', value: rejectedIssue.length, color: '#ef4444' },
+    ].filter(item => item.value > 0);
+
 
 
 
@@ -100,32 +99,6 @@ const AdminDash = () => {
         { month: 'Dec', issues: 12, resolved: 8, payment: 1800 }
     ];
 
-    // Latest issues
-    //   const latestIssues = [
-    //     { id: '#2847', title: 'Payment gateway error', status: 'Pending', priority: 'High', date: '2025-12-24' },
-    //     { id: '#2846', title: 'UI bug on mobile', status: 'Resolved', priority: 'Medium', date: '2025-12-24' },
-    //     { id: '#2845', title: 'Login issues', status: 'Pending', priority: 'Critical', date: '2025-12-23' },
-    //     { id: '#2844', title: 'Feature request - Dark mode', status: 'Rejected', priority: 'Low', date: '2025-12-23' },
-    //     { id: '#2843', title: 'Database sync issue', status: 'Resolved', priority: 'High', date: '2025-12-22' }
-    //   ];
-
-    // Latest payments
-    //   const latestPayments = [
-    //     { id: 'PAY-1234', user: 'John Doe', amount: 250, method: 'Credit Card', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1233', user: 'Jane Smith', amount: 180, method: 'PayPal', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1232', user: 'Mike Johnson', amount: 320, method: 'Bank Transfer', date: '2025-12-23', status: 'Pending' },
-    //     { id: 'PAY-1231', user: 'Sarah Williams', amount: 150, method: 'Credit Card', date: '2025-12-23', status: 'Completed' },
-    //     { id: 'PAY-1230', user: 'Robert Brown', amount: 290, method: 'PayPal', date: '2025-12-22', status: 'Completed' }
-    //   ];
-
-    // Latest users
-    //   const latestUsers = [
-    //     { id: 'USR-5678', name: 'Emily Davis', email: 'emily.d@email.com', date: '2025-12-24', issues: 2 },
-    //     { id: 'USR-5677', name: 'David Wilson', email: 'david.w@email.com', date: '2025-12-24', issues: 1 },
-    //     { id: 'USR-5676', name: 'Lisa Anderson', email: 'lisa.a@email.com', date: '2025-12-23', issues: 3 },
-    //     { id: 'USR-5675', name: 'James Martinez', email: 'james.m@email.com', date: '2025-12-23', issues: 0 },
-    //     { id: 'USR-5674', name: 'Maria Garcia', email: 'maria.g@email.com', date: '2025-12-22', issues: 1 }
-    //   ];
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -146,7 +119,7 @@ const AdminDash = () => {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-1">Welcome back! Here's your overview</p>
+                    <p className="text-gray-600 mt-1">Welcome to Admin DashBoard</p>
                 </div>
 
                 {/* Stats Cards */}
@@ -165,7 +138,7 @@ const AdminDash = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-700">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Closed Issues</p>
@@ -174,17 +147,15 @@ const AdminDash = () => {
                                     {((stats.closedIssues / stats.totalIssues) * 100).toFixed(1)}% closing rate
                                 </p>
                             </div>
-                            <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />
+                            <GrCompliance className="w-12 h-12 text-green-500 opacity-80" />
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-300">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Resolved Issues</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.resolvedIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
-                                    {((stats.resolvedIssues / stats.totalIssues) * 100).toFixed(1)}% resolution rate
-                                </p>
+
                             </div>
                             <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />
                         </div>
@@ -196,7 +167,7 @@ const AdminDash = () => {
                                 <p className="text-gray-500 text-sm font-medium">Pending Issues</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.pendingIssues}</h3>
                                 <p className="text-gray-600 text-sm mt-2">
-                                    Avg. {stats.avgResolutionTime} days to resolve
+                                    {((stats.pendingIssues / stats.totalIssues) * 100).toFixed(1)}% pending rate
                                 </p>
                             </div>
                             <Clock className="w-12 h-12 text-yellow-500 opacity-80" />
@@ -210,7 +181,7 @@ const AdminDash = () => {
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Total Payment</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">${totalAmount.toLocaleString()}</h3>
-                                
+
                             </div>
                             <DollarSign className="w-12 h-12 text-purple-500 opacity-80" />
                         </div>
@@ -229,7 +200,7 @@ const AdminDash = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 md:col-span-2 lg:col-span-2">
+                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 ">
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Active Issues (In Progress)</p>
@@ -241,32 +212,62 @@ const AdminDash = () => {
                             <AlertCircle className="w-12 h-12 text-orange-500 opacity-80" />
                         </div>
                     </div>
+                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-red-800 col-span-1 ">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-gray-500 text-sm font-medium">Rejected</p>
+                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{isNaN(rejectedIssue.length) ? 0 : rejectedIssue.length}</h3>
+                                <p className="text-gray-600 text-sm mt-2">
+                                    {((rejectedIssue.length / stats.totalIssues) * 100).toFixed(1)}% rejected rate
+
+                                </p>
+                            </div>
+                            <IoCloseCircleSharp className="w-12 h-12 text-orange-700 opacity-80" />
+                        </div>
+                    </div>
                 </div>
 
                 {/* Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Issue Status Distribution */}
                     <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Issue Status Distribution</h3>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <PieChart>
-                                <Pie
-                                    data={issueStatusData}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                                    outerRadius={100}
-                                    fill="#8884d8"
-                                    dataKey="value"
-                                >
-                                    {issueStatusData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                            </PieChart>
-                        </ResponsiveContainer>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Issue Status Distribution
+                        </h3>
+
+
+                        {issueStatusData.some(item => item.value > 0) ? (
+                            <ResponsiveContainer width="100%" height={300}>
+
+
+
+                                <PieChart>
+                                    <Pie
+                                        data={issueStatusData}
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={100}
+                                        dataKey="value"
+                                        label={({ name, percent = 0 }) =>
+                                            `${name} ${(percent * 100).toFixed(0)}%`
+                                        }
+
+                                    >
+                                        {issueStatusData.map((entry, index) => (
+                                            <Cell
+                                                key={`cell-${index}`}
+                                                fill={entry?.color}
+                                            />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <p className="text-center text-gray-500">
+                                No issue data available
+                            </p>
+                        )}
                     </div>
 
                     {/* Monthly Issues Trend */}

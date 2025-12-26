@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Clock, MapPin, User, Calendar, AlertCircle, CheckCircle, XCircle, TrendingUp } from 'lucide-react';
+import { Clock, MapPin, User, Calendar, AlertCircle, CheckCircle, XCircle, TrendingUp, X } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import UpdateIssue from '../ReportIssue/UpdateIssue';
 
 
 
@@ -15,26 +16,35 @@ const IssueDetailsPage = () => {
   const { issueId } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingIssue, setEditingIssue] = useState(null);
 
-  const { data: issueDatas = [] } = useQuery({
+  console.log(issueId)
+
+  const { data: issue = {}, refetch } = useQuery({
     queryKey: ['issue', issueId],
+    enabled: !!issueId,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues?_id=${issueId}`);
+      const res = await axiosSecure.get(`/issues/${issueId}`);
       return res.data;
     }
   });
+
   const { data: users = [] } = useQuery({
-    queryKey: ['issue', user?.email],
+    queryKey: ['user', user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      const res = await axiosSecure.get(`/users?email=${user.email}`);
       return res.data;
     }
   });
 
+  const currentUser = users[0];
 
-  const issue = issueDatas[0];
 
-  const currentUser = users[0]
+
+
+
 
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -46,13 +56,31 @@ const IssueDetailsPage = () => {
   const canBoost = !issue?.boosted;
 
   const handleEdit = () => {
-    alert("Redirect to edit page");
+    setShowEditModal(true)
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this issue?")) {
-      alert("Issue deleted");
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Delete ${issue?.category}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Yes, reject!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/issues/${issue?._id}`)
+          .then(() => {
+            refetch();
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              
+            });
+          })
+
+      }
+    })
   };
 
   const handleBoostPayment = () => {
@@ -185,7 +213,7 @@ const IssueDetailsPage = () => {
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-2">
                     {canEdit && (
-                      <button onClick={handleEdit} className="btn btn-primary btn-sm">
+                      <button onClick={() => { handleEdit(), setEditingIssue(issue) }} className="btn btn-primary btn-sm">
                         Edit Issue
                       </button>
                     )}
@@ -202,6 +230,29 @@ const IssueDetailsPage = () => {
                     )}
                   </div>
                 </div>
+
+                {showEditModal && editingIssue && (
+
+                  // convert this form into react hook form
+
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                      <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-gray-900">Edit Issue</h2>
+                        <button
+                          onClick={() => setShowEditModal(false)}
+                          className="text-gray-500 hover:text-gray-700"
+                        >
+                          <X size={24} />
+                        </button>
+                      </div>
+
+                      <div className="p-6 space-y-4">
+                        <UpdateIssue refetch={refetch} editingIssue={editingIssue} setShowEditModal={setShowEditModal}></UpdateIssue>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="divider"></div>
 
@@ -253,7 +304,7 @@ const IssueDetailsPage = () => {
               <div className="card-body">
                 <h2 className="card-title text-2xl mb-4">Issue Timeline</h2>
                 <div className="space-y-6">
-                  {issue?.timeline.map((entry, index) => (
+                  {issue.timeline?.map((entry, index) => (
                     <div key={entry.id} className="flex gap-4">
                       {/* Timeline Icon */}
                       <div className="flex flex-col items-center">
@@ -275,7 +326,7 @@ const IssueDetailsPage = () => {
                             {entry?.role}
                           </span>
                           <span className="text-xs text-gray-500">
-                            {new Date(entry?.assignedAt).toLocaleDateString('en-US', {
+                            {new Date(entry?.assignedAt || entry?.date).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
                               year: 'numeric',
@@ -359,7 +410,7 @@ const IssueDetailsPage = () => {
                 <div className="space-y-3 mt-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Timeline Events</span>
-                    <span className="font-bold text-lg">{issue?.timeline.length}</span>
+                    <span className="font-bold text-lg">{issue?.timeline?.length}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Priority Level</span>

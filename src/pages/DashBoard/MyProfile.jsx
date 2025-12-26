@@ -23,17 +23,19 @@ export default function MyProfile() {
     });
 
     const { data: payments = [] } = useQuery({
-        queryKey: ['payment', user?.email],
-        enabled: !!user?.email,
+        queryKey: ['payment'],
+        
         queryFn: async () => {
             const res = await axiosSecure.get(
-                `/payments?userEmail=${user?.email}`
+                `/payments`
             );
             return res.data;
         }
     });
 
-    const latestPayment = payments[0];
+    const latestPayment = payments.filter(p => p?.userEmail === user?.email);
+
+    console.log(latestPayment)
 
 
     console.log('pay', latestPayment);
@@ -53,6 +55,8 @@ export default function MyProfile() {
     )
 
     const closeIssue = issues.filter(p => p.status == 'closed');
+
+    const parse = (closeIssue.length / issues.length) * 100
     
 
     const [isEditing, setIsEditing] = useState(false);
@@ -103,7 +107,7 @@ export default function MyProfile() {
 
     const handlePayment = async (user) => {
         const paymentInfo = {
-            cost: Number(10),
+            cost: Number(1000),
             userId: user?._id,
             userEmail: user?.email,
             userName: user?.displayName,
@@ -225,7 +229,7 @@ export default function MyProfile() {
                                     <p className="text-sm text-gray-600">Closed</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-2xl font-bold text-indigo-600">95%</p>
+                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${parse} %` : 0 }</p>
                                     <p className="text-sm text-gray-600">Success Rate</p>
                                 </div>
                             </div>
@@ -277,11 +281,11 @@ export default function MyProfile() {
 
                         {/* Premium Benefits */}
 
-                        {x?.isPremium && payments.length > 0 && (
+                        {x?.isPremium && latestPayment.length > 0 && (
                             <div className="mt-6">
                                 <h3 className="text-lg font-semibold mb-2">Pay Reciept</h3>
 
-                                {payments.map(p => (
+                                {latestPayment.map(p => (
                                     <a
                                         key={p._id}
                                         href={`http://localhost:3000/invoice/${p._id}`}

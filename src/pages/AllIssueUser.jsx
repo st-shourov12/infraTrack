@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Link } from 'react-router';
@@ -10,6 +10,7 @@ import { MdOutlineAssignmentInd } from 'react-icons/md';
 import { IoPersonRemove } from 'react-icons/io5';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Filter } from 'lucide-react';
 
 
 
@@ -18,9 +19,16 @@ const AllIssueUser = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const [showModal, setShowModal] = useState(false);
-    const [selectedIssue, setSelectedIssue] = useState(null);
-    
+    // const [showModal, setShowModal] = useState(false);
+    // const [selectedIssue, setSelectedIssue] = useState(null);
+     const [filters, setFilters] = useState({
+            status: 'all',
+            category: 'all',
+            priority: 'all'
+        });
+        // const [showEditModal, setShowEditModal] = useState(false);
+        // const [editingIssue, setEditingIssue] = useState(null);
+        const [showFilters, setShowFilters] = useState(false);
 
 
     const { data: allIssue = [] } = useQuery({
@@ -90,7 +98,7 @@ const AllIssueUser = () => {
     //                                 department: department
     //                             },
     //                             timeline: [
-                                    
+
     //                                 {
     //                                     id: 4,
     //                                     status: "assigned",
@@ -105,7 +113,7 @@ const AllIssueUser = () => {
     //                         axiosSecure.patch(`/issues/${selectedIssue._id}`, updateIssue)
     //                     }
     //             });
-                            
+
     //         }
     //     });
     // };
@@ -126,7 +134,7 @@ const AllIssueUser = () => {
     //                 })
     //                 .then((res) => {
     //                     if (res.data.modifiedCount) {
-                            
+
     //                         refetch();
     //                     }
     //                 });
@@ -134,16 +142,108 @@ const AllIssueUser = () => {
     //     });
     // };
 
+    const filteredIssues = useMemo(() => {
+        let filtered = [...allIssue];
 
+        if (filters.status !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.status === filters.status
+            );
+        }
+
+        if (filters.category !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.category === filters.category
+            );
+        }
+
+        if (filters.priority !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.priority?.toLowerCase() === filters.priority
+            );
+        }
+
+        return filtered;
+    }, [filters, allIssue]);
 
 
     return (
-        <div>
-            <h2 className="text-2xl font-bold mb-6">
-                All Issues : {allIssue?.length}
+        <div className='max-w-5/6 mx-auto'>
+            <h2 className="text-2xl font-bold mb-6 text-center my-5">
+                All Issues : {filteredIssues?.length}
             </h2>
+
+            <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+                    <button
+                        onClick={() => setShowFilters(!showFilters)}
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                    >
+                        <Filter size={20} />
+                        {showFilters ? 'Hide' : 'Show'} Filters
+                    </button>
+                </div>
+
+                {showFilters && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <select
+                                value={filters.status}
+                                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select
+                                value={filters.category}
+                                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="all">All Categories</option>
+                                <option value="Potholes">Potholes</option>
+                                <option value="Broken Streetlights">Broken Streetlights</option>
+                                <option value="Water Leakage">Water Leakage</option>
+                                <option value="Garbage Overflow">Garbage Overflow</option>
+                                <option value="Damaged Footpaths">Damaged Footpaths</option>
+                                <option value="Drainage Blockage">Drainage Blockage</option>
+                                <option value="Illegal Parking">Illegal Parking</option>
+                                <option value="Broken Park Bench">Broken Park Bench</option>
+                                <option value="Faulty Traffic Signal">Faulty Traffic Signal</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                            <select
+                                value={filters.priority}
+                                onChange={(e) => setFilters({ ...filters, priority: e.target.value })}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="all">All Priorities</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="normal">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {allIssue.map((issue, i) => (
+                {filteredIssues.map((issue, i) => (
                     <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
                         <figure className="px-6 pt-6 relative">
                             <img
@@ -169,8 +269,8 @@ const AllIssueUser = () => {
                                     </div>
                                     <div className={`badge badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
                                         issue?.status === 'in-progress' ? 'badge-info' :
-                                            issue?.status === 'resolved' ? 'badge-success' :
-                                                'badge-ghost'
+                                            issue?.status === 'resolved' ? 'badge-accent' :
+                                                issue?.status === 'closed' ? 'badge-success' : 'badge-error'
                                         }`}>
                                         {issue?.status}
                                     </div>
@@ -252,7 +352,7 @@ const AllIssueUser = () => {
                         </div>
                     </div>
                 ))}
-                
+
             </div>
 
 
@@ -327,7 +427,7 @@ const AllIssueUser = () => {
                     </div>
                 )
             */}
-        </div> 
+        </div>
     );
 };
 

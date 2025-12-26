@@ -1,15 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { X, Edit, Trash2, Eye, Filter } from 'lucide-react';
+import { X, Edit, Trash2, Eye, Filter, Link } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import UpdateIssue from '../ReportIssue/UpdateIssue';
+import { NavLink } from 'react-router';
+
 
 const MyIssues = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    
-    
+
+
     const [filters, setFilters] = useState({
         status: 'all',
         category: 'all',
@@ -31,31 +33,31 @@ const MyIssues = () => {
     });
 
     // Apply filters
-   const filteredIssues = useMemo(() => {
-    let filtered = [...allIssues];
+    const filteredIssues = useMemo(() => {
+        let filtered = [...allIssues];
 
-    if (filters.status !== 'all') {
-        filtered = filtered.filter(
-            issue => issue.status === filters.status
-        );
-    }
+        if (filters.status !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.status === filters.status
+            );
+        }
 
-    if (filters.category !== 'all') {
-        filtered = filtered.filter(
-            issue => issue.category === filters.category
-        );
-    }
+        if (filters.category !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.category === filters.category
+            );
+        }
 
-    if (filters.priority !== 'all') {
-        filtered = filtered.filter(
-            issue => issue.priority?.toLowerCase() === filters.priority
-        );
-    }
+        if (filters.priority !== 'all') {
+            filtered = filtered.filter(
+                issue => issue.priority?.toLowerCase() === filters.priority
+            );
+        }
 
         return filtered;
     }, [filters, allIssues]);
 
-    
+
 
     const handleEdit = (issue) => {
         setEditingIssue({ ...issue });
@@ -74,9 +76,9 @@ const MyIssues = () => {
         }
     };
 
-    const handleViewDetails = (id) => {
-        window.location.href = `/issue-details/${id}`;
-    };
+    // const handleViewDetails = (id) => {
+    //     window.location.href = `/issue-details/${id}`;
+    // };
 
     // const handleEditSubmit = async (e) => {
     //     e.preventDefault();
@@ -205,7 +207,7 @@ const MyIssues = () => {
                                     <option value="all">All Priorities</option>
                                     <option value="high">High</option>
                                     <option value="medium">Medium</option>
-                                    <option value="low">Low</option>
+                                    <option value="normal">Low</option>
                                 </select>
                             </div>
                         </div>
@@ -283,13 +285,13 @@ const MyIssues = () => {
                                                     Delete
                                                 </button>
 
-                                                <button
-                                                    onClick={() => handleViewDetails(issue._id)}
-                                                    className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-                                                >
+                                                
+                                                <NavLink
+                                                    to={`/issues/${issue._id}`}
+                                                    className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                                                     <Eye size={18} />
                                                     View Details
-                                                </button>
+                                                </NavLink>
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +305,7 @@ const MyIssues = () => {
                 {showEditModal && editingIssue && (
 
                     // convert this form into react hook form
-                    
+
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
@@ -317,7 +319,7 @@ const MyIssues = () => {
                             </div>
 
                             <div className="p-6 space-y-4">
-                                <UpdateIssue editingIssue={editingIssue} setShowEditModal={setShowEditModal}></UpdateIssue>
+                                <UpdateIssue refetch={refetch} editingIssue={editingIssue} setShowEditModal={setShowEditModal}></UpdateIssue>
                             </div>
                         </div>
                     </div>

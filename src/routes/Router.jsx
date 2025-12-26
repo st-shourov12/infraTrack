@@ -20,6 +20,8 @@ import Staff from "../pages/Staff/Staff";
 import AssignedIssue from "../pages/DashBoard/AssignedIssue";
 import AllIssueUser from "../pages/AllIssueUser";
 import Dash from "../pages/DashBoard/Dashboard/Dash";
+import AdminRoute from "./AdminRoute";
+import StaffRoute from "./StaffRoute";
 
 export const router = createBrowserRouter([
     {
@@ -41,15 +43,11 @@ export const router = createBrowserRouter([
                 
             },
             {
-                path: 'issues/:id',
+                path: 'issues/:issueId',
                 element: <IssueDetailsPage />,
                 
             },
-            {
-                path: 'report',
-                element: <ReportIssue />,
-                loader: () => fetch('/city.json').then(res => res.json())
-            }
+            
         ]
     },
     {
@@ -67,6 +65,12 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Dash />
+
+            },
+            {
+                path: 'report',
+                element: <ReportIssue />,
+                loader: () => fetch('/city.json').then(res => res.json())
             },
             {
                 path: 'myProfile',
@@ -75,7 +79,7 @@ export const router = createBrowserRouter([
 
             {
                 path: 'all-issues',
-                element: <AllIssues />
+                element: <AdminRoute><AllIssues /></AdminRoute> 
             },
             {
                 path: `all-issues/:userId`,
@@ -87,7 +91,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'payment-history',
-                Component: PaymentHistory
+                element: <AdminRoute><PaymentHistory /></AdminRoute> 
             },
             {
                 path: 'payment-success',
@@ -99,11 +103,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'manage-users',
-                element: <ManageUsers />
+                element: <AdminRoute><ManageUsers /></AdminRoute>
             },
             {
                 path: 'manage-staff',
-                element: <ManageStaff />,
+                element: <AdminRoute><ManageStaff /></AdminRoute>,
                 loader: () => fetch('/city.json').then(res => res.json())
             },
             {
@@ -112,7 +116,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'assign-issues',
-                element: <AssignedIssue />
+                element: <StaffRoute><AssignedIssue /></StaffRoute>
             },
         ]
     }

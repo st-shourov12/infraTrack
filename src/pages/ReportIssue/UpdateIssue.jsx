@@ -8,7 +8,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 
-const UpdateIssue = ({setShowEditModal , editingIssue}) => {
+const UpdateIssue = ({setShowEditModal ,refetch, editingIssue}) => {
 
 
     const categories = [
@@ -84,7 +84,7 @@ const UpdateIssue = ({setShowEditModal , editingIssue}) => {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "You are going to tell us issue!",
+            text: "You are going to edit issue!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -99,6 +99,7 @@ const UpdateIssue = ({setShowEditModal , editingIssue}) => {
 
                         .then(res => {
                             console.log('Issue saved', res.data);
+                            refetch();
 
                             Swal.fire({
                                 icon: "success",
@@ -128,6 +129,7 @@ const UpdateIssue = ({setShowEditModal , editingIssue}) => {
             }
 
         });
+        setShowEditModal(false)
         // post issue data to the server
     }
     return (

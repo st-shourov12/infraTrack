@@ -19,111 +19,113 @@ const SignUp = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   // form submit handler
-  const handleSignUp = async(data) => {
+  const handleSignUp = async (data) => {
 
-      const {photo} = data;
-      const profileImg = photo[0];  
-      
-        // // 1. store the image in form data
-        // const formData = new FormData();
-        // formData.append('image', profileImg);
-        // // 2. send the photo to store and get the ul
-        // const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
-        // const res =  await axios.post(image_API_URL, formData);
-        // const photoURL = res.data.data.url;
-        // const photoURL = await imageUpload(profileImg);
-        // // create user and show toast and store in mongodb database
-        // createUser(data.email, data.password).
-        // then(res => 
-        //   console.log(res.user)
-        // )
-        // toast.success('User created successfully');
-        // // update user profile to firebase
-        // const userProfile = {
-        //     displayName: data.name,
-        //     photoURL: photoURL
-        // }
-        // await updateUserProfile(userProfile);
-        // navigate(from, { replace: true });
-      
+    const { photo } = data;
+    const profileImg = photo[0];
 
-        createUser(data.email, data.password)
-            .then(() => {
-
-                // 1. store the image in form data
-                const formData = new FormData();
-                formData.append('image', profileImg);
-
-                // 2. send the photo to store and get the ul
-                const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
-
-                axios.post(image_API_URL, formData)
-                    .then(res => {
-                        const photoURL = res.data.data.url;
-
-                        // create user in the database
-                        const userInfo = {
-                            email: data.email,
-                            displayName: data.name,
-                            photoURL: photoURL
-                        }
-                        axiosSecure.post('/users', userInfo)
-                        .then(res =>{
-                            if(res.data.insertedId){
-                                console.log('user created in the database');
-                            }
-                        })
+    // // 1. store the image in form data
+    // const formData = new FormData();
+    // formData.append('image', profileImg);
+    // // 2. send the photo to store and get the ul
+    // const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+    // const res =  await axios.post(image_API_URL, formData);
+    // const photoURL = res.data.data.url;
+    // const photoURL = await imageUpload(profileImg);
+    // // create user and show toast and store in mongodb database
+    // createUser(data.email, data.password).
+    // then(res => 
+    //   console.log(res.user)
+    // )
+    // toast.success('User created successfully');
+    // // update user profile to firebase
+    // const userProfile = {
+    //     displayName: data.name,
+    //     photoURL: photoURL
+    // }
+    // await updateUserProfile(userProfile);
+    // navigate(from, { replace: true });
 
 
-                        // update user profile to firebase
-                        const userProfile = {
-                            displayName: data.name,
-                            photoURL: photoURL
-                        }
+    createUser(data.email, data.password)
+      .then(() => {
 
-                        updateUserProfile(userProfile)
-                            .then(() => {
-                                console.log('user profile updated done.')
-                                navigate(location.state || '/');
-                            })
-                            .catch(error => console.log(error))
-                    })
+        // 1. store the image in form data
+        const formData = new FormData();
+        formData.append('image', profileImg);
+
+        // 2. send the photo to store and get the ul
+        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+
+        axios.post(image_API_URL, formData)
+          .then(res => {
+            const photoURL = res.data.data.url;
+
+            // create user in the database
+            const userInfo = {
+              email: data.email,
+              displayName: data.name,
+              photoURL: photoURL,
+              role: 'user'
+            }
+            axiosSecure.post('/users', userInfo)
+              .then(res => {
+                if (res.data.insertedId) {
+                  console.log('user created in the database');
+                }
+              })
+
+
+            // update user profile to firebase
+            const userProfile = {
+              displayName: data.name,
+              photoURL: photoURL
+            }
+
+            updateUserProfile(userProfile)
+              .then(() => {
+                console.log('user profile updated done.')
+                navigate(location.state || '/');
+              })
+              .catch(error => console.log(error))
+          })
 
 
 
-            })
-            .catch(error => {
-                console.log(error)
-            })
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
   }
 
   // Handle Google Signin
-   const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     signInGoogle()
-    .then(result => {
-                console.log(result.user);
-                
+      .then(result => {
+        console.log(result.user);
 
-                // create user in the database
-                const userInfo = {
-                    email: result.user.email,
-                    displayName: result.user.displayName,
-                    photoURL: result.user.photoURL
-                }
 
-                axiosSecure.post('/users', userInfo)
-                    .then(res => {
-                        console.log('user data has been stored', res.data)
-                        navigate(location.state || '/');
-                    })
+        // create user in the database
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+          role: 'user'
+        }
 
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    
-  
+        axiosSecure.post('/users', userInfo)
+          .then(res => {
+            console.log('user data has been stored', res.data)
+            navigate(location.state || '/');
+          })
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+
   }
   return (
     <div className='flex justify-center items-center min-h-screen bg-white'>
@@ -156,7 +158,7 @@ const SignUp = () => {
             {/* Image */}
             <div>
               <label
-                
+
                 className='block mb-2 text-sm font-medium text-gray-700'
               >
                 Profile Image
@@ -205,11 +207,11 @@ const SignUp = () => {
                     value: 6,
                     message: "Password must be at least 6 characters"
                   },
-                  pattern : {
-                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/
-                      ,
-                      message: 'Password must have at least one small, capital letters and special character'
-                    }
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/
+                    ,
+                    message: 'Password must have at least one small, capital letters and special character'
+                  }
 
                 })}
                 placeholder='Password'

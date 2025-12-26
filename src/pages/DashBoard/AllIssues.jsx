@@ -19,10 +19,10 @@ const AllIssues = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [selectedIssue, setSelectedIssue] = useState(null);
-    
 
 
-    const { data: allIssue = [] } = useQuery({
+
+    const { data: allIssue = [] , refetch:issuefetch } = useQuery({
         queryKey: ['allIssues', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues`)
@@ -54,14 +54,65 @@ const AllIssues = () => {
     const exactStaff = exactStaffUp.length > 0 ? exactStaffUp : exactStaffZila;
 
 
+    const handleRejectIssue = (issue) => {
+
+        const {timeline} = issue;
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Reject ${issue?.category}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+
+                const updateIssue = {
+                    status: 'rejected',
+
+                    timeline: [
+
+                        {
+                            id: 6,
+                            status: "Rejected",
+                            message: `Issue rejected`,
+                            updatedBy: "Shourov",
+                            role: 'admin',
+                            date: new Date().toISOString(),
+                        },
+                        ...timeline
+
+                    ]
+                }
+                axiosSecure.patch(`/issues/${issue._id}`, updateIssue)
+                    .then((res) => {
+                        if (res.data.modifiedCount) {
+                            refetch();
+                            issuefetch()
+                            Swal.fire('Rejected', '', 'warning');
+                        }
+                    });
+            }
+
+
+        }
+        )
+
+    }
+
+
 
 
 
 
     const handleAssign = (staff) => {
 
-        const {_id,email, fullName, profilePhoto , phone, department, userRole} = staff
-        const {timeline} = selectedIssue ;
+        const { _id, email, fullName, profilePhoto, phone, department, userRole } = staff
+        const { timeline } = selectedIssue;
         Swal.fire({
             title: 'Are you sure?',
             text: `Assign ${staff.fullName}?`,
@@ -72,27 +123,28 @@ const AllIssues = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.patch(`/staffs/${staff._id}`, {
-                        workStatus: 'Assigned',
+                    workStatus: 'Assigned',
 
                 })
                     .then((res) => {
                         if (res.data.modifiedCount) {
                             refetch();
+                            issuefetch();
 
                             const updateIssue = {
                                 status: 'in-progress',
                                 assignedStaff: {
-                                    name: fullName  ,
+                                    name: fullName,
                                     email: email,
                                     photo: profilePhoto,
                                     phone: phone,
                                     department: department
                                 },
                                 timeline: [
-                                    
+
                                     {
                                         id: 4,
-                                        status: "assigned",
+                                        status: "in-progress",
                                         message: `Issue assigned to Staff: ${fullName} from ${department} Department`,
                                         updatedBy: "Admin",
                                         role: userRole,
@@ -102,9 +154,10 @@ const AllIssues = () => {
                                 ]
                             }
                             axiosSecure.patch(`/issues/${selectedIssue._id}`, updateIssue)
+
                         }
-                });
-                            
+                    });
+
             }
         });
     };
@@ -125,7 +178,7 @@ const AllIssues = () => {
                     })
                     .then((res) => {
                         if (res.data.modifiedCount) {
-                            
+
                             refetch();
                         }
                     });
@@ -138,7 +191,7 @@ const AllIssues = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">
+            <h2 className="text-2xl font-bold mb-6 text-center my-5">
                 All Issues : {allIssue?.length}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -169,7 +222,7 @@ const AllIssues = () => {
                                     <div className={`badge badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
                                         issue?.status === 'in-progress' ? 'badge-info' :
                                             issue?.status === 'resolved' ? 'badge-success' :
-                                                'badge-ghost'
+                                                issue?.status === 'closed' ? 'badge-success' : 'badge-error'
                                         }`}>
                                         {issue?.status}
                                     </div>
@@ -227,26 +280,46 @@ const AllIssues = () => {
                             {/* Action Button */}
                             <div className="card-actions justify-end mt-4">
 
-                                <button
-                                    onClick={() => {
+                                { 
+                                    issue?.status === 'pending'  ?  <button
+                                        onClick={() => {
 
-                                        setShowModal(true);
-                                        setSelectedIssue(issue);
-                                        console.log(issue);
+                                            setShowModal(true);
+                                            setSelectedIssue(issue);
+                                            console.log(issue);
+                                        }
+
+
+                                        }
+                                        className="btn"
+                                    >
+                                        <FcAssistant className='text-xl' />
+                                        Assign
+                                    </button> :
+                                    
+                                        <span className={`text-green-600 bg-green-300 ${issue?.status === 'rejected' ? 'text-red-600 bg-red-300 ' : 'text-green-600 bg-green-300 '} px-3 py-2 rounded-xl`}>{issue?.status === 'rejected' ? 'Rejected' : 'Assign'}</span>
+                                }
+
+                                
+
+                                    <Link
+                                        to={`/issues/${issue._id}`}
+                                        className="btn btn-primary btn-sm w-full">
+                                        <FaMagnifyingGlass />
+                                        View Details
+                                    </Link>
+
+                                    {
+                                        issue?.status === 'pending' && 
+                                    
+
+                                    <button onClick={() => { handleRejectIssue(issue) }} className='bg-red-400 w-full px-3 py-2 rounded-lg text-red-800'>
+                                        Reject
+
+                                    </button>
                                     }
+                               
 
-
-                                    }
-                                    className="btn"
-                                >
-                                    <FcAssistant className='text-xl' />
-                                </button>
-                                <Link
-                                    to={`/dashboard/all-issues/${issue._id}`}
-                                    className="btn btn-primary btn-sm w-full">
-                                    <FaMagnifyingGlass />
-                                    View Details
-                                </Link>
                             </div>
                         </div>
                     </div>
@@ -321,7 +394,7 @@ const AllIssues = () => {
                             </div>
 
                         </div>
-                        <div className="modal-backdrop" onClick={() => { setShowModal(false)}}></div>
+                        <div className="modal-backdrop" onClick={() => { setShowModal(false) }}></div>
                     </div>
                 )
             }

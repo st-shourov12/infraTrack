@@ -72,7 +72,7 @@ const AssignedIssue = () => {
     const handleResolved = (issue) => {
   const { _id, category, timeline, assignedStaff } = issue;
 
-  const count = Number(staff?.resolvedCount || 0) + 1;
+  
 
   const updateIssue = {
     status: 'resolved',
@@ -94,7 +94,7 @@ const AssignedIssue = () => {
       if (res.data.modifiedCount) {
 
         const updateStaff = {
-          resolvedCount: count,
+         
           workStatus: 'Available'
         };
 
@@ -115,8 +115,7 @@ const AssignedIssue = () => {
         console.log(issue)
         const { _id, category, timeline, assignedStaff } = issue;
 
-        const {closedCount} = staff ;
-        const count = parseInt(closedCount)
+       
 
         const updateIssue = {
             status: 'closed',
@@ -140,7 +139,7 @@ const AssignedIssue = () => {
                 if (res.data.modifiedCount) {
 
                     const updateStaff = {
-                        closedCount: Number(count) + 1 ,
+                       
                         workStatus : 'Available',
                     }
 
@@ -226,7 +225,7 @@ const AssignedIssue = () => {
                                 <option value="all">All Priorities</option>
                                 <option value="high">High</option>
                                 <option value="medium">Medium</option>
-                                <option value="low">Low</option>
+                                <option value="normal">Low</option>
                             </select>
                         </div>
                     </div>

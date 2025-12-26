@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
-const Staff = () => {
+const Staff2 = () => {
     const departments = [
         "Road Maintenance",
         "Electrical Services",
@@ -31,7 +31,7 @@ const Staff = () => {
         "Professional License",
     ];
 
-    const { user } = useAuth();
+    const { user , createUser , updateUserProfile } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const { data: users = [] } = useQuery({
@@ -70,7 +70,8 @@ const Staff = () => {
 
     }
 
-    const handleFormSubmit = async (data) => {
+const handleFormSubmit = async (data) => {
+    try {
         const {
             fullName,
             email,
@@ -83,16 +84,13 @@ const Staff = () => {
             district,
             upzila,
             password,
-
             profileImage
         } = data;
 
-        // Upload images
-        const profileImgFile = profileImage[0];
-
-
-        const profilePhotoURL = profileImgFile ? await imageUpload(profileImgFile) : currentUser?.photoURL || '';
-
+        const profileImgFile = profileImage?.[0];
+        const profilePhotoURL = profileImgFile
+            ? await imageUpload(profileImgFile)
+            : currentUser?.photoURL || '';
 
         const staffApplicationData = {
             fullName,
@@ -107,52 +105,61 @@ const Staff = () => {
             preferredUpzila: upzila,
             password,
             profilePhoto: profilePhotoURL,
-            applicationStatus: 'pending',
+            workStatus : 'Available',
+            applicationStatus: 'approved',
             appliedAt: new Date().toISOString(),
             userId: currentUser?._id,
             userRole: 'staff',
         };
 
-        console.log(staffApplicationData);
-
-        Swal.fire({
+        const result = await Swal.fire({
             title: "Submit Application?",
-            text: "You are applying to become a staff member!",
+            text: "You are appointing a staff member!",
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Submit!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (!currentUser?.isBlock) {
-                    axiosSecure.post('/staffs', staffApplicationData)
-                        .then(res => {
-                            console.log('Application submitted', res.data);
-                            Swal.fire({
-                                icon: "success",
-                                title: "Application Submitted!",
-                                text: "Your staff application has been submitted successfully. We'll review it soon!",
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Axios error:', error);
-                            Swal.fire({
-                                icon: "error",
-                                title: "Submission Failed",
-                                text: error?.response?.data?.message || 'Something went wrong',
-                            });
-                        });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Submission Failed",
-                        text: 'You are blocked by Admin',
-                    });
-                }
-            }
         });
-    };
+
+        if (!result.isConfirmed) return;
+
+        
+        await createUser(email, password);
+
+        
+        await updateUserProfile({
+            displayName: fullName,
+            photoURL: profilePhotoURL
+        });
+
+       
+        await axiosSecure.post('/users', {
+            email,
+            displayName: fullName,
+            photoURL: profilePhotoURL,
+            role: 'staff'
+        });
+
+        
+        await axiosSecure.post('/staffs', staffApplicationData);
+
+        Swal.fire({
+            icon: "success",
+            title: "Application Submitted!",
+            text: "Your staff application has been submitted successfully. We'll review it soon!",
+        });
+
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: "error",
+            title: "Submission Failed",
+            text: error?.response?.data?.message || error.message || "Something went wrong",
+        });
+    }
+};
+
 
     return (
         <div className='max-w-5xl mx-auto py-5'>
@@ -430,4 +437,4 @@ const Staff = () => {
     );
 };
 
-export default Staff;
+export default Staff2;

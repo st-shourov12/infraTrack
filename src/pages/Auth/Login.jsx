@@ -45,7 +45,8 @@ const Login = () => {
                 const userInfo = {
                     email: result.user.email,
                     displayName: result.user.displayName,
-                    photoURL: result.user.photoURL
+                    photoURL: result.user.photoURL,
+                    role: 'user'
                 }
 
                 axiosSecure.post('/users', userInfo)

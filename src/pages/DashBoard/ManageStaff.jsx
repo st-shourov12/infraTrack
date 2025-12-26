@@ -375,7 +375,8 @@ import Heading from '../../components/Shared/Heading';
 
 import { FaTrashCan, FaUserCheck } from 'react-icons/fa6';
 import { IoPersonRemoveSharp } from 'react-icons/io5';
-import Staff from '../Staff/Staff';
+import Staff2 from '../Staff/Staff2';
+
 
 const ManageStaff = () => {
     const axiosSecure = useAxiosSecure();
@@ -555,7 +556,8 @@ const ManageStaff = () => {
                                                 onClick={() => handleReject(staff)}
                                                 className="btn"
                                             >
-                                                <IoPersonRemoveSharp />
+                                                <IoPersonRemoveSharp />Reject
+                                            
                                             </button>
                                         ) : (
                                             <button
@@ -576,6 +578,7 @@ const ManageStaff = () => {
                                             className="btn"
                                         >
                                             <FaTrashCan />
+                                            Remove
                                         </button>
                                     </div>
                                 </td>
@@ -740,7 +743,7 @@ const ManageStaff = () => {
             {showAddModal && (
                 <div className="modal modal-open">
                     <div className="modal-box max-w-2xl">
-                        <Staff />
+                        <Staff2 />
                     </div>
                     <div
                         className="modal-backdrop"
