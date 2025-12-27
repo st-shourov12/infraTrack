@@ -3,35 +3,36 @@ import { AiOutlineIssuesClose } from 'react-icons/ai';
 import { HiMiniUsers } from 'react-icons/hi2';
 import { IoHome } from 'react-icons/io5';
 import { Link, Outlet } from 'react-router';
-import { GrUserSettings } from "react-icons/gr";
+import { GrUserSettings, GrUserWorker } from "react-icons/gr";
 import { MdOutlineReport, MdOutlineReportProblem, MdSpaceDashboard } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { FaCreditCard } from 'react-icons/fa6';
 import { GoIssueOpened } from 'react-icons/go';
-// import useAuth from '../hooks/useAuth';
-// import useAxiosSecure from '../hooks/useAxiosSecure';
-// import { useQuery } from '@tanstack/react-query';
-import useRole from '../hooks/useRole';
+import { RiSdCardFill } from 'react-icons/ri';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+// import useRole from '../hooks/useRole';
 
 const DashBoard = () => {
 
-    // const { user } = useAuth();
-    // const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
-    // const { data: users = []} = useQuery({
-    //     queryKey: ['user', user?.email],
-    //     enabled: !!user?.email,
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/users?email=${user.email}`);
-    //         return res.data;
-    //     }
-    // });
-    const {role} = useRole();
+    const { data: users = []} = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user.email}`);
+            return res.data;
+        }
+    });
+
     
 
-    // const isAdmin = users.some(u => u.role === 'admin');
-    // const isStaff = users.some(u => u.role === 'staff');
-    // const isUser = users.some(u => u.role === 'user');
+    const isAdmin = users.some(u => u.role === 'admin');
+    const isStaff = users.some(u => u.role === 'staff');
+    const isUser = users.some(u => u.role === 'user');
     
 
 
@@ -80,14 +81,26 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Report Issue</span>
                             </Link>
                         </li>
-                        <li>
+                        {
+                            isUser && <li>
                             <Link to={'/dashboard/my-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Issues">
                                 {/* My Issues icon */}
                                 <MdOutlineReportProblem className='text-lg' />
                                 <span className="is-drawer-close:hidden">My Issues</span>
                             </Link>
                         </li>
-                        {role === 'admin' && <li>
+                        }
+                        {
+                            isUser && <li>
+                            <Link to={'/dashboard/staff'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Be a Staff">
+                                {/* My Issues icon */}
+                                <GrUserWorker className='text-lg' />
+                                <span className="is-drawer-close:hidden">Be a Staff</span>
+                            </Link>
+                        </li>
+                        }
+                        {isAdmin && 
+                        <li>
                             <Link to={'/dashboard/all-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="All Issues">
                                 {/* All Issues icon */}
                                 <AiOutlineIssuesClose className='text-lg' />
@@ -101,28 +114,28 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Assign Issues</span>
                             </Link>
                         </li> */}
-                        {role === 'admin' && <li>
+                        {isAdmin && <li>
                             <Link to={'/dashboard/manage-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Manage Users">
                                 {/* Manage Users icon */}
                                 <HiMiniUsers className='text-lg' />
                                 <span className="is-drawer-close:hidden">Manage Users</span>
                             </Link>
                         </li>}
-                        {role === 'admin' && <li>
+                        {isAdmin && <li>
                             <Link to={'/dashboard/manage-staff'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Manage Staff">
                                 {/* Manage Staff icon */}
                                 <GrUserSettings className='text-lg' />
                                 <span className="is-drawer-close:hidden">Manage Staff</span>
                             </Link>
                         </li>}
-                        {role === 'staff' &&<li>
+                        { isStaff &&<li>
                             <Link to={'/dashboard/assign-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Assign Issue">
                                 {/* Manage Staff icon */}
                                 <GoIssueOpened className='text-lg' />
                                 <span className="is-drawer-close:hidden">Assigned Issue</span>
                             </Link>
                         </li>}
-                        {role === 'admin' && <li>
+                        {isAdmin && <li>
                             <Link to={'/dashboard/payment-history'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Payment History">
                                 {/* Manage Staff icon */}
                                 <FaCreditCard className='text-lg' />

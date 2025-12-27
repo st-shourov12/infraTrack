@@ -8,9 +8,9 @@ const Navbar = () => {
     <>
         <li><NavLink to="/">Home</NavLink></li>
         {/* <li><NavLink to="/report">Report Issue</NavLink></li> */}
-        <li><NavLink to="/staff">Be a Staff</NavLink></li>
-        <li><NavLink to="/dashboard">DashBoard</NavLink></li>
+        {/* <li><NavLink to="/staff">Be a Staff</NavLink></li> */}
         <li><NavLink to="/issues">All Issues</NavLink></li>
+        <li><NavLink to="/dashboard">DashBoard</NavLink></li>
     </>;
 
     const handleSignOut = () => {

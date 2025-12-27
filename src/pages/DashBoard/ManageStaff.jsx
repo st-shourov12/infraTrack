@@ -451,7 +451,7 @@ const ManageStaff = () => {
         const { id, password } = data;
 
         const res = await axiosSecure.patch(`/staffs/${id}`, {
-            workStatus : 'Available',
+           
             applicationStatus: 'approved',
             password,
         });

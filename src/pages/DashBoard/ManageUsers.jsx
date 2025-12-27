@@ -2,21 +2,34 @@ import React from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
-import { FaMagnifyingGlass, FaTrashCan } from 'react-icons/fa6';
+import { FaMagnifyingGlass, FaTrashCan, FaUserShield } from 'react-icons/fa6';
 import { MdBlockFlipped } from 'react-icons/md';
 import { CgUnblock } from 'react-icons/cg';
 import Swal from 'sweetalert2';
+import { LuUserRoundX, LuUserX } from 'react-icons/lu';
 
 const ManageUsers = () => {
-    const { user } = useAuth()
+    // const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
     const { data: users = [], refetch: refetchUser } = useQuery({
-        queryKey: ['users', user?.email],
+        queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`)
             return res.data
         }
     })
+
+    // , refetch: refetchStaff
+    const { data: staffs = [] } = useQuery({
+        queryKey: ['staffs'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/staffs`)
+            return res.data
+        }
+    })
+
+
+
 
     const handleUserBlock = (mu) => {
 
@@ -32,15 +45,15 @@ const ManageUsers = () => {
                 axiosSecure.patch(`/users/${mu?._id}`, {
                     isBlock: true
                 })
-                .then(() => {
-                    refetchUser();
-                    Swal.fire('Block' ,'', 'warning')
+                    .then(() => {
+                        refetchUser();
+                        Swal.fire('Block', '', 'warning')
 
-                })
+                    })
             }
 
-             
-           
+
+
 
 
         })
@@ -61,15 +74,15 @@ const ManageUsers = () => {
                 axiosSecure.patch(`/users/${mu?._id}`, {
                     isBlock: false
                 })
-                .then(() => {
-                    refetchUser();
-                    Swal.fire('UnBlock' ,'', 'success')
+                    .then(() => {
+                        refetchUser();
+                        Swal.fire('UnBlock', '', 'success')
 
-                })
+                    })
             }
 
-             
-           
+
+
 
 
         })
@@ -77,6 +90,70 @@ const ManageUsers = () => {
 
 
     }
+
+    const handleMakeAdmin = mu => {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Make Admin ${mu?.displayName}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, Make admin!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/users/${mu?._id}`, {
+                    role: 'admin'
+                })
+                    .then(() => {
+                        refetchUser();
+                        Swal.fire('Admin', '', 'success')
+
+                    })
+            }
+
+
+
+
+
+        })
+
+
+    }
+
+    const handleRemoveAdmin = (mu) => {
+
+        // if (!staffs.length) {
+        //     Swal.fire('Staff data not loaded yet');
+        //     return;
+        // }
+
+        const isStaff = staffs.find(
+            (s) => s.email === mu.email
+        );
+
+        const role = isStaff ? 'staff' : 'user';
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Remove Admin ${mu.displayName}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, Remove!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/users/${mu._id}`, {
+                    role,
+                }).then(() => {
+                    refetchUser();
+                    Swal.fire('Removed', '', 'success');
+                });
+            }
+        });
+    };
+
+
 
     return (
         <div>
@@ -144,7 +221,7 @@ const ManageUsers = () => {
                                     </td>
                                     {/* <td>{manageUser?.role}</td>
                                                 <td></td> */}
-                                    <td>
+                                    <td className='flex items-center gap-2'>
 
 
                                         {/* <button className="btn btn-square">
@@ -160,6 +237,17 @@ const ManageUsers = () => {
                                                     <MdBlockFlipped />Block
                                                 </button>
                                         }
+                                        {
+                                            manageUser?.role === 'user' || manageUser?.role === 'staff' ?
+                                                <button onClick={() => { handleMakeAdmin(manageUser) }} className="btn text-green-500">
+                                                    <FaUserShield />Make Admin
+                                                </button> :
+
+                                                <button onClick={() => { handleRemoveAdmin(manageUser) }} className="btn text-red-500">
+                                                    <LuUserRoundX />Remove Admin
+                                                </button>
+                                        }
+
 
                                     </td>
                                 </tr>

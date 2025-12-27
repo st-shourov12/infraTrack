@@ -105,7 +105,6 @@ const handleFormSubmit = async (data) => {
             preferredUpzila: upzila,
             password,
             profilePhoto: profilePhotoURL,
-            workStatus : 'Available',
             applicationStatus: 'approved',
             appliedAt: new Date().toISOString(),
             userId: currentUser?._id,
@@ -404,7 +403,7 @@ const handleFormSubmit = async (data) => {
 
 
 
-                    {/* Terms and Conditions */}
+                    {/* Terms and Conditions
                     <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
                         <div className="flex items-start">
                             <input
@@ -420,7 +419,7 @@ const handleFormSubmit = async (data) => {
                                 {errors.terms && <span className="text-red-500 text-sm">{errors.terms.message}</span>}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Submit Button */}
                     <div>

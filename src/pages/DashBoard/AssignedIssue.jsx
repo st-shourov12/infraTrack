@@ -281,19 +281,21 @@ const AssignedIssue = () => {
                                         issue?.status === 'in-progress' ?
                                             <button
                                                 onClick={() => { handleResolved(issue) }}
-                                                className='btn'
+                                                className='btn text-blue-600 bg-blue-300'
                                             >
                                                 <VscWorkspaceTrusted className='text-lg'></VscWorkspaceTrusted>
+                                                Resolve
 
                                             </button> :
 
                                             <button
                                                 onClick={() => handleClosed(issue)}
                                                 disabled={issue?.status === 'closed'}
-                                                className={`btn ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
+                                                className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
                                                     }`}
                                             >
                                                 <IoCheckmarkDoneCircle className="text-lg" />
+                                                Closed
                                             </button>
 
 

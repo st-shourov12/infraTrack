@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import Forbidden from '../components/Shared/Forbidden';
+import LoadingSpinner from '../components/Shared/LoadingSpinner';
 
 const StaffRoute = ({ children }) => {
     const { user } = useAuth();
@@ -17,13 +19,13 @@ const StaffRoute = ({ children }) => {
     });
 
     if (isLoading) {
-        return <span>Loading...</span>;
+        return <LoadingSpinner />
     }
 
     const isStaff = users.some(u => u.role === 'staff');
 
     if (!isStaff) {
-        return <span>Forbidden</span>;
+        return <Forbidden />;
     }
 
     return children;

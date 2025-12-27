@@ -32,11 +32,7 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <Home></Home>
             },
-            {
-                path: 'staff',
-                element: <Staff></Staff>,
-                loader: () => fetch('/city.json').then(res => res.json())
-            },
+            
             {
                 path: 'issues',
                 element: <AllIssueUser />,
@@ -75,6 +71,11 @@ export const router = createBrowserRouter([
             {
                 path: 'myProfile',
                 element: <MyProfile />
+            },
+            {
+                path: 'staff',
+                element: <Staff></Staff>,
+                loader: () => fetch('/city.json').then(res => res.json())
             },
 
             {
