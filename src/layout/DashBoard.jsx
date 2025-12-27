@@ -8,29 +8,30 @@ import { MdOutlineReport, MdOutlineReportProblem, MdSpaceDashboard } from 'react
 import { CgProfile } from 'react-icons/cg';
 import { FaCreditCard } from 'react-icons/fa6';
 import { GoIssueOpened } from 'react-icons/go';
-import useAuth from '../hooks/useAuth';
-import useAxiosSecure from '../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+// import useAuth from '../hooks/useAuth';
+// import useAxiosSecure from '../hooks/useAxiosSecure';
+// import { useQuery } from '@tanstack/react-query';
+import useRole from '../hooks/useRole';
 
 const DashBoard = () => {
 
-    const { user } = useAuth();
-    const axiosSecure = useAxiosSecure();
+    // const { user } = useAuth();
+    // const axiosSecure = useAxiosSecure();
 
-    const { data: users = []} = useQuery({
-        queryKey: ['user', user?.email],
-        enabled: !!user?.email,
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/users?email=${user.email}`);
-            return res.data;
-        }
-    });
-
+    // const { data: users = []} = useQuery({
+    //     queryKey: ['user', user?.email],
+    //     enabled: !!user?.email,
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get(`/users?email=${user.email}`);
+    //         return res.data;
+    //     }
+    // });
+    const {role} = useRole();
     
 
-    const isAdmin = users.some(u => u.role === 'admin');
-    const isStaff = users.some(u => u.role === 'staff');
-    const isUser = users.some(u => u.role === 'user');
+    // const isAdmin = users.some(u => u.role === 'admin');
+    // const isStaff = users.some(u => u.role === 'staff');
+    // const isUser = users.some(u => u.role === 'user');
     
 
 
@@ -79,14 +80,14 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Report Issue</span>
                             </Link>
                         </li>
-                        {isUser && <li>
+                        <li>
                             <Link to={'/dashboard/my-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Issues">
                                 {/* My Issues icon */}
                                 <MdOutlineReportProblem className='text-lg' />
                                 <span className="is-drawer-close:hidden">My Issues</span>
                             </Link>
-                        </li>}
-                        {isAdmin && <li>
+                        </li>
+                        {role === 'admin' && <li>
                             <Link to={'/dashboard/all-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="All Issues">
                                 {/* All Issues icon */}
                                 <AiOutlineIssuesClose className='text-lg' />
@@ -100,28 +101,28 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Assign Issues</span>
                             </Link>
                         </li> */}
-                        {isAdmin && <li>
+                        {role === 'admin' && <li>
                             <Link to={'/dashboard/manage-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Manage Users">
                                 {/* Manage Users icon */}
                                 <HiMiniUsers className='text-lg' />
                                 <span className="is-drawer-close:hidden">Manage Users</span>
                             </Link>
                         </li>}
-                        {isAdmin && <li>
+                        {role === 'admin' && <li>
                             <Link to={'/dashboard/manage-staff'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Manage Staff">
                                 {/* Manage Staff icon */}
                                 <GrUserSettings className='text-lg' />
                                 <span className="is-drawer-close:hidden">Manage Staff</span>
                             </Link>
                         </li>}
-                        {isStaff &&<li>
+                        {role === 'staff' &&<li>
                             <Link to={'/dashboard/assign-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Assign Issue">
                                 {/* Manage Staff icon */}
                                 <GoIssueOpened className='text-lg' />
-                                <span className="is-drawer-close:hidden">Assign Issue</span>
+                                <span className="is-drawer-close:hidden">Assigned Issue</span>
                             </Link>
                         </li>}
-                        {isAdmin && <li>
+                        {role === 'admin' && <li>
                             <Link to={'/dashboard/payment-history'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Payment History">
                                 {/* Manage Staff icon */}
                                 <FaCreditCard className='text-lg' />
