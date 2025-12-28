@@ -7,6 +7,8 @@ import { Filter } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 // import { useForm } from 'react-hook-form';
+import { GiCrossMark } from "react-icons/gi";
+import { FaCheck } from 'react-icons/fa6';
 
 const AssignedIssue = () => {
 
@@ -25,7 +27,7 @@ const AssignedIssue = () => {
 
     const staff = staffs[0]
 
-    const { data: assignIssue = [] , refetch:issueFetch} = useQuery({
+    const { data: assignIssue = [], refetch: issueFetch } = useQuery({
         queryKey: ['issues', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues`);
@@ -69,53 +71,134 @@ const AssignedIssue = () => {
         return filtered;
     }, [filters, issues]);
 
-    const handleResolved = (issue) => {
-  const { _id, category, timeline, assignedStaff } = issue;
+    const handleAccept = (issue) => {
 
-  
+         const { _id, category, timeline, assignedStaff } = issue;
 
-  const updateIssue = {
-    status: 'resolved',
-    timeline: [
-      {
-        id: 2,
-        status: "resolved",
-        message: `${category} issue is resolved.`,
-        updatedBy: assignedStaff?.name,
-        role: 'staff',
-        date: new Date().toISOString(),
-      },
-      ...timeline,
-    ]
-  };
 
-  axiosSecure.patch(`/issues/${_id}`, updateIssue)
-    .then(res => {
-      if (res.data.modifiedCount) {
 
-        const updateStaff = {
-         
-          workStatus: 'Available'
+        const updateIssue = {
+            status: 'in-progress',
+            timeline: [
+                {
+                    id: 3,
+                    status: "in-progress",
+                    message: `${category} issue is in progress.`,
+                    updatedBy: assignedStaff?.name,
+                    role: 'staff',
+                    date: new Date().toISOString(),
+                },
+                ...timeline,
+            ]
         };
 
-        axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
-          .then(() => {
-            issueFetch();
-            Swal.fire({
-              icon: 'success',
-              title: 'Issue resolved',
-              timer: 1000,
+        axiosSecure.patch(`/issues/${_id}`, updateIssue)
+            .then(res => {
+                if (res.data.modifiedCount) {
+
+                    const updateStaff = {
+
+                        workStatus: 'Busy'
+                    };
+
+                    axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
+                        .then(() => {
+                            issueFetch();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Issue accepted by staff',
+                                timer: 1000,
+                            });
+                        });
+                }
             });
-          });
-      }
-    });
-};
+
+    }
+    const handleReject = (issue) => {
+
+         const { _id, category, timeline, assignedStaff } = issue;
+
+
+
+        const updateIssue = {
+            status: 'rejected',
+            timeline: [
+                {
+                    id: 3,
+                    status: "rejected",
+                    message: `${category} issue is rejected.`,
+                    updatedBy: assignedStaff?.name,
+                    role: 'staff',
+                    date: new Date().toISOString(),
+                },
+                ...timeline,
+            ]
+        };
+
+        axiosSecure.patch(`/issues/${_id}`, updateIssue)
+            .then(res => {
+                if (res.data.modifiedCount) {
+
+                    const updateStaff = {
+
+                        workStatus: 'Available'
+                    };
+
+                    axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
+                        .then(() => {
+                            issueFetch();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Issue rejected',
+                                timer: 1000,
+                            });
+                        });
+                }
+            });
+
+    }
+
+    const handleResolved = (issue) => {
+        const { _id, category, timeline, assignedStaff } = issue;
+
+
+
+        const updateIssue = {
+            status: 'resolved',
+            timeline: [
+                {
+                    id: 2,
+                    status: "resolved",
+                    message: `${category} issue is resolved.`,
+                    updatedBy: assignedStaff?.name,
+                    role: 'staff',
+                    date: new Date().toISOString(),
+                },
+                ...timeline,
+            ]
+        };
+
+        axiosSecure.patch(`/issues/${_id}`, updateIssue)
+            .then(res => {
+                if (res.data.modifiedCount) {
+
+                    
+                            issueFetch();
+                            Swal.fire({
+                                icon: 'success',
+                                title: `${category} issue is resolved.`,
+                                timer: 1000,
+                            });
+                      
+                }
+            });
+    };
 
     const handleClosed = (issue) => {
         console.log(issue)
         const { _id, category, timeline, assignedStaff } = issue;
 
-       
+
 
         const updateIssue = {
             status: 'closed',
@@ -139,19 +222,19 @@ const AssignedIssue = () => {
                 if (res.data.modifiedCount) {
 
                     const updateStaff = {
-                       
-                        workStatus : 'Available',
+
+                        workStatus: 'Available',
                     }
 
                     axiosSecure.patch(`/issues/${staff?._id}`, updateStaff)
-                    .then()
+                        .then()
 
                     issueFetch()
 
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Issue closed',
+                        title: `${category} issue is closed.`,
                         timer: 1000,
                     });
                 }
@@ -243,9 +326,9 @@ const AssignedIssue = () => {
 
                             </th>
                             <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                            <th></th>
+                            <th>Priority</th>
+                            <th>Location</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -265,38 +348,68 @@ const AssignedIssue = () => {
                                         </div>
                                         <div>
                                             <div className="font-bold">{issue?.category}</div>
-                                            <div className="text-sm opacity-50">United States</div>
+                                            <div className="text-sm opacity-50">{issue?.assignedStaff?.email}</div>
                                         </div>
                                     </div>
                                 </td>
+                                <td>{issue?.priority}</td>
                                 <td>
-                                    Zemlak, Daniel and Leannon
+                                    {issue?.district}, {issue?.upzila}
                                     <br />
-                                    <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                    <span className="badge badge-ghost badge-sm">{issue?.location}</span>
                                 </td>
-                                <td>Purple</td>
-                                <th>
 
+                                <th>
                                     {
-                                        issue?.status === 'in-progress' ?
+                                        issue?.status === 'pending' &&
+
+                                        <>
+
                                             <button
-                                                onClick={() => { handleResolved(issue) }}
+                                                onClick={() => { handleAccept(issue) }}
                                                 className='btn text-blue-600 bg-blue-300'
                                             >
-                                                <VscWorkspaceTrusted className='text-lg'></VscWorkspaceTrusted>
-                                                Resolve
+                                                <FaCheck className='text-lg'></FaCheck>
+                                                Accpet
 
-                                            </button> :
-
-                                            <button
-                                                onClick={() => handleClosed(issue)}
-                                                disabled={issue?.status === 'closed'}
-                                                className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
-                                                    }`}
-                                            >
-                                                <IoCheckmarkDoneCircle className="text-lg" />
-                                                Closed
                                             </button>
+                                            <button
+                                                onClick={() => { handleReject(issue) }}
+                                                className='btn text-red-600 bg-red-300'
+                                            >
+                                                <GiCrossMark className='text-lg'></GiCrossMark>
+                                                Reject
+
+                                            </button>
+
+
+                                        </>
+
+                                    }
+
+                                    {
+                                        issue?.status === 'in-progress' &&
+                                        <button
+                                            onClick={() => { handleResolved(issue) }}
+                                            className='btn text-blue-600 bg-blue-300'
+                                        >
+                                            <VscWorkspaceTrusted className='text-lg'></VscWorkspaceTrusted>
+                                            Resolve
+
+                                        </button>}
+
+                                    {
+
+                                        issue?.status === 'resolved' || issue?.status === 'closed' &&
+                                        <button
+                                            onClick={() => handleClosed(issue)}
+                                            disabled={issue?.status === 'closed'}
+                                            className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
+                                                }`}
+                                        >
+                                            <IoCheckmarkDoneCircle className="text-lg" />
+                                            Closed
+                                        </button>
 
 
 
@@ -310,7 +423,7 @@ const AssignedIssue = () => {
 
 
 
-                        
+
 
                     </tbody>
 

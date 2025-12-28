@@ -271,7 +271,7 @@ const AllIssues = () => {
           status: 'rejected',
           timeline: [
             {
-              id: 6,
+              id: 4,
               status: 'Rejected',
               message: 'Issue rejected',
               updatedBy: user?.displayName || 'Admin',
@@ -308,7 +308,7 @@ const AllIssues = () => {
       if (result.isConfirmed) {
         // update issue
         await axiosSecure.patch(`/issues/${selectedIssue._id}`, {
-          status: 'in-progress',
+          
           assignedStaff: {
             name: staff.fullName,
             email: staff.email,
@@ -319,7 +319,7 @@ const AllIssues = () => {
           timeline: [
             {
               id: 4,
-              status: 'in-progress',
+              status: 'assigned',
               message: `Issue assigned to ${staff.fullName}`,
               updatedBy: user?.displayName || 'Admin',
               role: 'admin',
@@ -489,15 +489,7 @@ const AllIssues = () => {
                                         View Details
                                     </Link>
 
-                                    {
-                                        issue?.status === 'pending' && 
                                     
-
-                                    <button onClick={() => { handleRejectIssue(issue) }} className='bg-red-400 w-full px-3 py-2 rounded-lg text-red-800'>
-                                        Reject
-
-                                    </button>
-                                    }
                                
 
                             </div>
@@ -571,6 +563,27 @@ const AllIssues = () => {
 
 
                                     </tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                          {
+                                        selectedIssue?.status === 'pending' && 
+                                    
+
+                                    <button onClick={() => { handleRejectIssue(selectedIssue) }} className='bg-red-400 w-full px-3 py-2 rounded-lg text-red-800'>
+                                        Reject
+
+                                    </button>
+                                    }
+
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                      </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
