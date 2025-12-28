@@ -72,6 +72,8 @@ const ReportIssue = () => {
         const profileImg = image[0];
         const photoURL = profileImg ? await imageUpload(profileImg) : '';
 
+        const priorities = priority ? priority : 'Normal'
+
 
 
 
@@ -82,13 +84,15 @@ const ReportIssue = () => {
             category,
             description,
             photo: photoURL,
-            priority,
+            priority : priorities,
             region,
             district,
             upzila,
             location,
             userRole: xrole,
             status: 'pending',
+            upvoted : 0 ,
+            upvotedBy : null,
             boosted: false,
             timeline: [
                 {
@@ -140,6 +144,8 @@ const ReportIssue = () => {
                                 title: "Submission Failed",
                                 text: error?.response?.data?.message || 'Something went wrong',
                             });
+
+                            navigate('/dashboard/myProfile')
                         });
 
                 }

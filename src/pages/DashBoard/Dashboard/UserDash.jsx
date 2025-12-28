@@ -55,7 +55,7 @@ const UserDash = () => {
     const latestIssues = issues.slice(0, 6)
     const latestPayments = payment.slice(0, 6)
 
-    const totalAmount = payments?.reduce(
+    const totalAmount = payment?.reduce(
         (sum, p) => sum + Number(p.amount || 0),
         0
     ) || 0;
@@ -78,48 +78,43 @@ const UserDash = () => {
     // Chart data
     const issueStatusData = [
         { name: 'Closed', value: stats.closedIssues, color: '#10b981' },
+        { name: 'Resolved', value: stats.resolvedIssues, color: '#22c55e' },
         { name: 'Pending', value: stats.pendingIssues, color: '#f59e0b' },
         { name: 'In Progress', value: stats.inProgressIssues, color: '#efd044ff' },
         { name: 'Rejected', value: stats.rejectedIssues, color: '#ef4444ff' }
     ].filter(item => item.value > 0);
 
 
+    const getMonthlyPaymentData = (payments) => {
+        const map = {};
 
-    // const monthlyData = [
-    //     { month: 'Jul', issues: 45, resolved: 38, payment: 8500 },
-    //     { month: 'Aug', issues: 52, resolved: 44, payment: 9200 },
-    //     { month: 'Sep', issues: 48, resolved: 42, payment: 8800 },
-    //     { month: 'Oct', issues: 51, resolved: 47, payment: 9800 },
-    //     { month: 'Nov', issues: 39, resolved: 35, payment: 7650 },
-    //     { month: 'Dec', issues: 12, resolved: 8, payment: 1800 }
-    // ];
+        payments.forEach(p => {
+            if (!p?.createdAt || !p?.amount) return;
 
-    // Latest issues
-    //   const latestIssues = [
-    //     { id: '#2847', title: 'Payment gateway error', status: 'Pending', priority: 'High', date: '2025-12-24' },
-    //     { id: '#2846', title: 'UI bug on mobile', status: 'Resolved', priority: 'Medium', date: '2025-12-24' },
-    //     { id: '#2845', title: 'Login issues', status: 'Pending', priority: 'Critical', date: '2025-12-23' },
-    //     { id: '#2844', title: 'Feature request - Dark mode', status: 'Rejected', priority: 'Low', date: '2025-12-23' },
-    //     { id: '#2843', title: 'Database sync issue', status: 'Resolved', priority: 'High', date: '2025-12-22' }
-    //   ];
+            const date = new Date(p.createdAt);
+            const monthKey = date.toLocaleString('en-US', {
+                month: 'short',
+                year: 'numeric'
+            });
 
-    // Latest payments
-    //   const latestPayments = [
-    //     { id: 'PAY-1234', user: 'John Doe', amount: 250, method: 'Credit Card', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1233', user: 'Jane Smith', amount: 180, method: 'PayPal', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1232', user: 'Mike Johnson', amount: 320, method: 'Bank Transfer', date: '2025-12-23', status: 'Pending' },
-    //     { id: 'PAY-1231', user: 'Sarah Williams', amount: 150, method: 'Credit Card', date: '2025-12-23', status: 'Completed' },
-    //     { id: 'PAY-1230', user: 'Robert Brown', amount: 290, method: 'PayPal', date: '2025-12-22', status: 'Completed' }
-    //   ];
+            if (!map[monthKey]) {
+                map[monthKey] = 0;
+            }
 
-    // Latest users
-    //   const latestUsers = [
-    //     { id: 'USR-5678', name: 'Emily Davis', email: 'emily.d@email.com', date: '2025-12-24', issues: 2 },
-    //     { id: 'USR-5677', name: 'David Wilson', email: 'david.w@email.com', date: '2025-12-24', issues: 1 },
-    //     { id: 'USR-5676', name: 'Lisa Anderson', email: 'lisa.a@email.com', date: '2025-12-23', issues: 3 },
-    //     { id: 'USR-5675', name: 'James Martinez', email: 'james.m@email.com', date: '2025-12-23', issues: 0 },
-    //     { id: 'USR-5674', name: 'Maria Garcia', email: 'maria.g@email.com', date: '2025-12-22', issues: 1 }
-    //   ];
+            map[monthKey] += Number(p.amount);
+        });
+
+        return Object.keys(map).map(month => ({
+            month,
+            payment: map[month]
+        }));
+    };
+
+
+    const monthlyPaymentData = getMonthlyPaymentData(payment);
+
+
+
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -287,6 +282,36 @@ const UserDash = () => {
                         ) : (
                             <p className="text-center text-gray-500">
                                 No issue data available
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Monthly Payment Analytics
+                        </h3>
+
+                        {monthlyPaymentData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={monthlyPaymentData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="month" />
+                                    <YAxis />
+                                    <Tooltip
+                                        formatter={(value) => [`৳${value}`, 'Total Payment']}
+                                    />
+                                    <Legend />
+                                    <Bar
+                                        dataKey="payment"
+                                        name="Total Payment"
+                                        fill="#8b5cf6"
+                                        radius={[6, 6, 0, 0]}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <p className="text-center text-gray-500">
+                                No payment data available
                             </p>
                         )}
                     </div>

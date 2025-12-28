@@ -5,12 +5,16 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import { FcAssistant } from 'react-icons/fc';
 // import Staff from '../Staff/Staff';
-// import Swal from 'sweetalert2';
+
 import { MdOutlineAssignmentInd } from 'react-icons/md';
 import { IoPersonRemove } from 'react-icons/io5';
+// import useAuth from '../hooks/useAuth';
+// import useAxiosSecure from '../hooks/useAxiosSecure';
+import { Filter } from 'lucide-react';
+import { FaVoteYea } from "react-icons/fa";
+import Swal from 'sweetalert2';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
-import { Filter } from 'lucide-react';
 
 
 
@@ -21,17 +25,17 @@ const AllIssueUser = () => {
 
     // const [showModal, setShowModal] = useState(false);
     // const [selectedIssue, setSelectedIssue] = useState(null);
-     const [filters, setFilters] = useState({
-            status: 'all',
-            category: 'all',
-            priority: 'all'
-        });
-        // const [showEditModal, setShowEditModal] = useState(false);
-        // const [editingIssue, setEditingIssue] = useState(null);
-        const [showFilters, setShowFilters] = useState(false);
+    const [filters, setFilters] = useState({
+        status: 'all',
+        category: 'all',
+        priority: 'all'
+    });
+    // const [showEditModal, setShowEditModal] = useState(false);
+    // const [editingIssue, setEditingIssue] = useState(null);
+    const [showFilters, setShowFilters] = useState(false);
 
 
-    const { data: allIssue = [] } = useQuery({
+    const { data: allIssue = [] , refetch : issueFetch } = useQuery({
         queryKey: ['allIssues', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues`)
@@ -166,6 +170,31 @@ const AllIssueUser = () => {
         return filtered;
     }, [filters, allIssue]);
 
+    const handleVote = (issue) => {
+        const {upvoted , _id , category } = issue ;
+        console.log(typeof upvoted );
+        const upvote = upvoted + 1
+        console.log(upvote);
+        axiosSecure.patch(`/issues/${_id}`, {upvoted : upvote})
+                    .then((res) => {
+                        if (res.data.modifiedCount) {
+        
+                            
+        
+                            issueFetch()
+        
+        
+                            Swal.fire({
+                                icon: 'success',
+                                title: `${category} issue is upvoted.`,
+                                timer: 1000,
+                            });
+                        }
+                    })
+
+
+    }
+
 
     return (
         <div className='max-w-5/6 mx-auto'>
@@ -254,6 +283,7 @@ const AllIssueUser = () => {
                             <div className="absolute top-8 right-8 badge badge-lg badge-neutral">
                                 #{i + 1}
                             </div>
+
                         </figure>
 
                         <div className="card-body">
@@ -302,7 +332,7 @@ const AllIssueUser = () => {
                             </div>
 
                             {/* Location Info */}
-                            <div className="mt-3 space-y-2">
+                            <div className="mt-3 flex justify-between items-center space-y-2">
                                 <div className="flex items-start gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 text-primaryshrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -314,6 +344,10 @@ const AllIssueUser = () => {
                                         <p className="text-xs text-gray-400">{issue?.region}</p>
                                     </div>
                                 </div>
+                                <button onClick={()=> handleVote(issue)} className="bg-blue-300 py-2 text-xs gap-1 text-center flex justify-center items-center px-3 rounded-lg text-blue-700">
+                                    <FaVoteYea  className='text-lg'/>
+                                    {issue?.upvoted}
+                                </button>
                             </div>
 
                             {/* Date */}

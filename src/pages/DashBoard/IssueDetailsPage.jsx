@@ -5,7 +5,9 @@ import { Link, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { LiaSkullCrossbonesSolid } from "react-icons/lia";
 import UpdateIssue from '../ReportIssue/UpdateIssue';
+import { FaVoteYea } from 'react-icons/fa';
 
 
 
@@ -75,7 +77,7 @@ const IssueDetailsPage = () => {
             Swal.fire({
               icon: "success",
               title: "Deleted!",
-              
+
             });
           })
 
@@ -87,48 +89,129 @@ const IssueDetailsPage = () => {
     setShowPaymentModal(true);
   };
 
-  const processPayment = () => {
+
+
+
+  const processPayment = async () => {
+
+    const paymentInfo = {
+      cost: Number(100),
+      userId: currentUser?._id,
+      userEmail: currentUser?.email,
+      userName: currentUser?.displayName,
+      photo: currentUser?.photoURL,
+      issueId: issue?._id,
+    }
+    const res = await axiosSecure.post('/payment-checkout-session', paymentInfo)
+
+    window.location.assign(res.data.url);
+
+
+  }
+
+  // const update = {
+
+  //   priority: "High",
+  //   boosted: true,
+  //   timeline: [
+  //     {
+  //       id: 3,
+  //       status: "boost",
+  //       message: "Issue priority boosted to High through payment (৳100)",
+  //       updatedBy: `${currentUser.email} (${currentUser?.role})`,
+  //       role: "citizen",
+  //       date: new Date().toISOString()
+  //     },
+  //     ...issue.timeline
+  //   ]
+  // };
+  // axiosSecure.patch(`/issues/${issue?._id}`, update)
+  //   .then(() => {
+  //     setShowPaymentModal(false);
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: 'Issue Boasted',
+  //       timer: 2000,
+  //     });
+
+  //   });
 
 
 
 
-    const update = {
 
-      priority: "High",
-      boosted: true,
-      timeline: [
-        {
-          id: 3,
-          status: "boost",
-          message: "Issue priority boosted to High through payment (৳100)",
-          updatedBy: `${currentUser.email} (${currentUser?.role})`,
-          role: "citizen",
-          date: new Date().toISOString()
-        },
-        ...issue.timeline
-      ]
-    };
-    axiosSecure.patch(`/issues/${issue?._id}`, update)
-      .then(() => {
-        setShowPaymentModal(false);
-        Swal.fire({
-          icon: 'success',
-          title: 'Issue Boasted',
-          timer: 2000,
-        });
+  const handleVote = (issue) => {
+    const { upvoted, upvotedBy, _id, category, reporterEmail } = issue;
 
+    const upvote = upvoted + 1;
+    const isSameUser = reporterEmail === currentUser.email;
+    const worthyVoter = currentUser?.email !== issue?.upvotedBy?.some(s => s.email)
+
+
+    if (!isSameUser && worthyVoter) {
+
+      const update =
+      {
+        upvoted: upvote,
+        upvotedBy: [
+          { email: currentUser.email },
+            ...upvotedBy
+        ],
+        
+      }
+
+
+      axiosSecure.patch(`/issues/${_id}`,update)
+        .then((res) => {
+          if (res.data.modifiedCount) {
+
+
+            refetch()
+
+
+            Swal.fire({
+              icon: 'success',
+              title: `${category} issue is upvoted.`,
+              timer: 1000,
+            });
+
+
+
+
+
+          }
+        })
+    } else if (isSameUser) {
+      Swal.fire({
+        icon: 'warning',
+        title: `You can not vote your own issue`,
+        timer: 1000,
       });
 
+    }
+    else if (!worthyVoter) {
+      Swal.fire({
+        icon: 'warning',
+        title: `You can vote only once`,
+        timer: 1000,
+      });
+
+    }
 
 
-  };
+
+  }
 
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending': return 'badge-warning';
+      case 'boost': return 'badge-secondary';
+      case 'assigned': return 'badge-accent';
+      case 'rejected': return 'badge-error';
       case 'in-progress': return 'badge-info';
       case 'resolved': return 'badge-success';
       case 'closed': return 'badge-neutral';
+
       default: return 'badge-ghost';
     }
   };
@@ -149,6 +232,8 @@ const IssueDetailsPage = () => {
         return <CheckCircle className="w-6 h-6 text-success" />;
       case 'in-progress':
         return <Clock className="w-6 h-6 text-info" />;
+      case 'rejected':
+        return <LiaSkullCrossbonesSolid className="w-6 h-6 text-red-800" />;
       case 'boost':
         return <TrendingUp className="w-6 h-6 text-warning" />;
       case 'assigned':
@@ -183,12 +268,16 @@ const IssueDetailsPage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Issue Card */}
             <div className="card bg-base-100 shadow-xl">
-              <figure className="px-6 pt-6">
+              <figure className="px-6 relative pt-6">
                 <img
                   src={issue?.photo}
                   alt={issue?.category}
                   className="rounded-xl w-full h-96 object-cover"
                 />
+                <button onClick={() => handleVote(issue)} className="bg-blue-300 py-2 text-xs gap-1 text-center flex justify-center absolute top-8 right-8 items-center px-3 rounded-lg text-blue-700">
+                  <FaVoteYea className='text-lg' />
+                  {issue?.upvoted}
+                </button>
               </figure>
               <div className="card-body">
                 <div className="flex flex-wrap justify-between items-start gap-4">
@@ -376,6 +465,7 @@ const IssueDetailsPage = () => {
                       <div className="avatar">
                         <div className="w-16 rounded-full ring ring-info ring-offset-base-100 ring-offset-2">
                           <img src={issue?.assignedStaff.photo} alt={issue?.assignedStaff.name} />
+
                         </div>
                       </div>
                       <div>

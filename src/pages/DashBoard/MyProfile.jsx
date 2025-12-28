@@ -35,10 +35,7 @@ export default function MyProfile() {
 
     const latestPayment = payments.filter(p => p?.userEmail === user?.email);
 
-    console.log(latestPayment)
 
-
-    console.log('pay', latestPayment);
 
     // USER FROM DB
     const x = users.find(us => us.email === user?.email);
@@ -281,7 +278,7 @@ export default function MyProfile() {
 
                         {/* Premium Benefits */}
 
-                        {x?.isPremium && latestPayment.length > 0 && (
+                        {x?.isPremium || latestPayment.length > 0 && (
                             <div className="mt-6">
                                 <h3 className="text-lg font-semibold mb-2">Pay Reciept</h3>
 

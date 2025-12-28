@@ -56,6 +56,10 @@ const AdminDash = () => {
     const latestUsers = users.slice(0, 6);
     const latestPayments = payments.slice(0, 6);
 
+
+
+
+
     const totalAmount = payments?.reduce(
         (sum, p) => sum + Number(p.amount || 0),
         0
@@ -70,7 +74,7 @@ const AdminDash = () => {
         rejectedIssues: rejectedIssue.lentgh,
     };
 
-   
+
 
 
     // const issueStatusData = [
@@ -88,16 +92,49 @@ const AdminDash = () => {
     ].filter(item => item.value > 0);
 
 
+    const getMonthlyPaymentData = (payments) => {
+        const map = {};
+
+        payments.forEach(p => {
+            if (!p?.createdAt || !p?.amount) return;
+
+            const date = new Date(p.createdAt);
+            const monthKey = date.toLocaleString('en-US', {
+                month: 'short',
+                year: 'numeric'
+            });
+
+            if (!map[monthKey]) {
+                map[monthKey] = 0;
+            }
+
+            map[monthKey] += Number(p.amount);
+        });
+
+        return Object.keys(map).map(month => ({
+            month,
+            payment: map[month]
+        }));
+    };
 
 
-    const monthlyData = [
-        { month: 'Jul', issues: 45, resolved: 38, payment: 8500 },
-        { month: 'Aug', issues: 52, resolved: 44, payment: 9200 },
-        { month: 'Sep', issues: 48, resolved: 42, payment: 8800 },
-        { month: 'Oct', issues: 51, resolved: 47, payment: 9800 },
-        { month: 'Nov', issues: 39, resolved: 35, payment: 7650 },
-        { month: 'Dec', issues: 12, resolved: 8, payment: 1800 }
-    ];
+    const monthlyPaymentData = getMonthlyPaymentData(payments);
+
+
+
+
+
+
+
+
+    // const monthlyData = [
+    //     { month: 'Jul', issues: 45, resolved: 38, payment: 8500 },
+    //     { month: 'Aug', issues: 52, resolved: 44, payment: 9200 },
+    //     { month: 'Sep', issues: 48, resolved: 42, payment: 8800 },
+    //     { month: 'Oct', issues: 51, resolved: 47, payment: 9800 },
+    //     { month: 'Nov', issues: 39, resolved: 35, payment: 7650 },
+    //     { month: 'Dec', issues: 12, resolved: 8, payment: 1800 }
+    // ];
 
 
     const getStatusColor = (status) => {
@@ -271,7 +308,7 @@ const AdminDash = () => {
                     </div>
 
                     {/* Monthly Issues Trend */}
-                    <div className="bg-white rounded-lg shadow p-6">
+                    {/* <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Issues Trend</h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <LineChart data={monthlyData}>
@@ -284,7 +321,40 @@ const AdminDash = () => {
                                 <Line type="monotone" dataKey="resolved" stroke="#10b981" name="Resolved" strokeWidth={2} />
                             </LineChart>
                         </ResponsiveContainer>
+                    </div> */}
+
+                    <div className="bg-white rounded-lg shadow p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Monthly Payment Analytics
+                        </h3>
+
+                        {monthlyPaymentData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={monthlyPaymentData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="month" />
+                                    <YAxis />
+                                    <Tooltip
+                                        formatter={(value) => [`৳${value}`, 'Total Payment']}
+                                    />
+                                    <Legend />
+                                    <Bar
+                                        dataKey="payment"
+                                        name="Total Payment"
+                                        fill="#8b5cf6"
+                                        radius={[6, 6, 0, 0]}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <p className="text-center text-gray-500">
+                                No payment data available
+                            </p>
+                        )}
                     </div>
+
+
+
 
                     {/* Monthly Payment Trend */}
                     {/* <div className="bg-white rounded-lg shadow p-6 lg:col-span-2">
@@ -396,19 +466,23 @@ const AdminDash = () => {
                             <table className="w-full">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">NID</th>
+                                       
+                                        
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestStaff.map((user) => (
                                         <tr key={user?._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user?.nid}</td>
+                                            
+                                            
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.fullName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user?.email}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.department}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user?.preferredDistrict}, {user?.preferredUpzila}</td>
                                         </tr>
                                     ))}
                                 </tbody>

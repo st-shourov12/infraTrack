@@ -326,6 +326,7 @@ const AssignedIssue = () => {
 
                             </th>
                             <th>Name</th>
+                            <th>Upvoted</th>
                             <th>Priority</th>
                             <th>Location</th>
                             <th>Action</th>
@@ -352,6 +353,7 @@ const AssignedIssue = () => {
                                         </div>
                                     </div>
                                 </td>
+                                <td>{issue?.upvoted}</td>
                                 <td>{issue?.priority}</td>
                                 <td>
                                     {issue?.district}, {issue?.upzila}
@@ -397,10 +399,38 @@ const AssignedIssue = () => {
                                             Resolve
 
                                         </button>}
+                                    {
+                                        issue?.status === 'rejected' &&
+                                        <button
+                                                onClick={() => { handleReject(issue) }}
+                                                disabled={issue?.status === 'rejected'}
+                                                className='btn text-red-600 bg-red-300 btn-disabled opacity-50 cursor-not-allowed'
+                                            >
+                                                <GiCrossMark className='text-lg'></GiCrossMark>
+                                                Reject
+
+                                        </button>}
 
                                     {
 
-                                        issue?.status === 'resolved' || issue?.status === 'closed' &&
+                                        issue?.status === 'resolved'  &&
+                                        <button
+                                            onClick={() => handleClosed(issue)}
+                                            disabled={issue?.status === 'closed'}
+                                            className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
+                                                }`}
+                                        >
+                                            <IoCheckmarkDoneCircle className="text-lg" />
+                                            Closed
+                                        </button>
+
+
+
+                                    }
+
+                                    {
+
+                                        issue?.status === 'closed'  &&
                                         <button
                                             onClick={() => handleClosed(issue)}
                                             disabled={issue?.status === 'closed'}

@@ -284,12 +284,13 @@ const Staff = () => {
                                     </label>
                                     <input
                                         type="file"
-                                        {...register('profileImage', { required: "Profile photo is required" })}
+                                        {...register('profileImage')}
                                         accept="image/*"
                                         className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 bg-gray-100 border border-dashed border-blue-300 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 p-1"
                                     />
-                                    {errors.profileImage && <span className="text-red-500 text-sm">{errors.profileImage.message}</span>}
+                                    {/* {errors.profileImage && <span className="text-red-500 text-sm">{errors.profileImage.message}</span>} */}
                                     <p className="mt-1 text-xs text-gray-400">PNG, JPG or JPEG (max 5MB)</p>
+                                    {/* , { required: "Profile photo is required" } */}
                                 </div>
                             </fieldset>
                         </div>

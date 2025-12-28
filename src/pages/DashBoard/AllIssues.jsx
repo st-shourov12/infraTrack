@@ -1,197 +1,3 @@
-// import { useQuery } from '@tanstack/react-query';
-// import React, { useState } from 'react';
-// import useAuth from '../../hooks/useAuth';
-// import useAxiosSecure from '../../hooks/useAxiosSecure';
-// import { FaMagnifyingGlass } from 'react-icons/fa6';
-// import { Link } from 'react-router';
-// import { FcAssistant } from 'react-icons/fc';
-// import Staff from '../Staff/Staff';
-// import Swal from 'sweetalert2';
-// import { MdOutlineAssignmentInd } from 'react-icons/md';
-// import { IoPersonRemove } from 'react-icons/io5';
-
-
-
-
-// const AllIssues = () => {
-//     const { user } = useAuth();
-//     const axiosSecure = useAxiosSecure();
-
-//     const [showModal, setShowModal] = useState(false);
-//     const [selectedIssue, setSelectedIssue] = useState(null);
-
-
-
-//     const { data: allIssue = [] , refetch:issuefetch } = useQuery({
-//         queryKey: ['allIssues', user?.email],
-//         queryFn: async () => {
-//             const res = await axiosSecure.get(`/issues`)
-//             return res.data
-//         }
-//     })
-
-//     const { data: allStaff = [], refetch } = useQuery({
-//         queryKey: ['allStaff', user?.email],
-//         queryFn: async () => {
-//             const res = await axiosSecure.get(`/staffs`)
-//             return res.data
-//         }
-//     })
-
-//     const worth = allStaff.filter(p => p.applicationStatus === 'approved')
-
-//     const exactStaffUp = selectedIssue
-//         ? worth.filter(
-//             staff => staff.preferredUpzila === selectedIssue.upzila
-//         )
-//         : [];
-//     const exactStaffZila = selectedIssue
-//         ? worth.filter(
-//             staff => staff.preferredDistrict === selectedIssue.district
-//         )
-//         : [];
-
-//     const exactStaff = exactStaffUp.length > 0 ? exactStaffUp : exactStaffZila;
-
-
-//     const handleRejectIssue = (issue) => {
-
-//         const {timeline} = issue;
-
-
-//         Swal.fire({
-//             title: 'Are you sure?',
-//             text: `Reject ${issue?.category}?`,
-//             icon: 'warning',
-//             showCancelButton: true,
-//             confirmButtonColor: '#d33',
-//             confirmButtonText: 'Yes!',
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-
-
-
-//                 const updateIssue = {
-//                     status: 'rejected',
-
-//                     timeline: [
-
-//                         {
-//                             id: 6,
-//                             status: "Rejected",
-//                             message: `Issue rejected`,
-//                             updatedBy: "Shourov",
-//                             role: 'admin',
-//                             date: new Date().toISOString(),
-//                         },
-//                         ...timeline
-
-//                     ]
-//                 }
-//                 axiosSecure.patch(`/issues/${issue._id}`, updateIssue)
-//                     .then((res) => {
-//                         if (res.data.modifiedCount) {
-//                             refetch();
-//                             issuefetch()
-//                             Swal.fire('Rejected', '', 'warning');
-//                         }
-//                     });
-//             }
-
-
-//         }
-//         )
-
-//     }
-
-
-
-
-
-
-//     const handleAssign = (staff) => {
-
-//         const { _id, email, fullName, profilePhoto, phone, department, userRole } = staff
-//         const { timeline } = selectedIssue;
-//         Swal.fire({
-//             title: 'Are you sure?',
-//             text: `Assign ${staff.fullName}?`,
-//             icon: 'warning',
-//             showCancelButton: true,
-//             confirmButtonColor: '#d33',
-//             confirmButtonText: 'Yes!',
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-                
-//                             refetch();
-//                             issuefetch();
-
-//                             const updateIssue = {
-//                                 status: 'in-progress',
-//                                 assignedStaff: {
-//                                     name: fullName,
-//                                     email: email,
-//                                     photo: profilePhoto,
-//                                     phone: phone,
-//                                     department: department
-//                                 },
-//                                 timeline: [
-
-//                                     {
-//                                         id: 4,
-//                                         status: "in-progress",
-//                                         message: `Issue assigned to Staff: ${fullName} from ${department} Department`,
-//                                         updatedBy: "Admin",
-//                                         role: userRole,
-//                                         date: new Date().toISOString(),
-//                                     },
-//                                     ...timeline,
-//                                 ]
-//                             }
-//                             axiosSecure.patch(`/issues/${selectedIssue._id}`, updateIssue)
-//                             .then((res)=>{console.log(res.data)})
-
-//                         }
-//                     });
-
-//             }
-        
-//     };
-
-//     const handleAssignRemove = async (staff) => {
-//         Swal.fire({
-//             title: 'Are you sure?',
-//             text: `Cancel Assign ${staff.fullName}?`,
-//             icon: 'warning',
-//             showCancelButton: true,
-//             confirmButtonColor: '#d33',
-//             confirmButtonText: 'Yes!',
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-//                 axiosSecure
-//                     .patch(`/staffs/${staff._id}`, {
-//                         workStatus: 'Available',
-//                     })
-//                     .then((res) => {
-//                         if (res.data.modifiedCount) {
-
-//                             refetch();
-//                         }
-//                     });
-//             }
-//         });
-//     };
-
-
-
-
-
-
-
-// export default AllIssues;
-
-
-
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
@@ -460,13 +266,14 @@ const AllIssues = () => {
                             {/* Action Button */}
                             <div className="card-actions justify-end mt-4">
 
-                                { 
-                                    issue?.status === 'pending' || issue?.status === 'in-progress'  ?  <button
+                                {/* { 
+                                    issue?.status === 'pending' || issue?.status === 'in-progress'  ?   */}
+                                    <button
                                         onClick={() => {
 
                                             setShowModal(true);
                                             setSelectedIssue(issue);
-                                            console.log(issue);
+                                            
                                         }
 
 
@@ -475,10 +282,11 @@ const AllIssues = () => {
                                     >
                                         <FcAssistant className='text-xl' />
                                         Assign
-                                    </button> :
+                                    </button>
+                                     {/* :
                                     
                                         <span className={`text-green-600 bg-green-300 ${issue?.status === 'rejected' ? 'text-red-600 bg-red-300 ' : 'text-green-600 bg-green-300 '} px-3 py-2 rounded-xl`}>{issue?.status === 'rejected' ? 'Rejected' : 'Assign'}</span>
-                                }
+                                } */}
 
                                 
 
@@ -532,7 +340,7 @@ const AllIssues = () => {
                                                     <td>{staff?.department}</td>
                                                     <td>{staff?.workStatus}</td>
                                                     <td>
-                                                        {!selectedIssue?.assignedStaff ?
+                                                        {selectedIssue?.assignedStaff?.email !== staff?.email &&
 
 
                                                             <button onClick={() => {
@@ -543,7 +351,9 @@ const AllIssues = () => {
                                                                 <MdOutlineAssignmentInd className='text-lg' />
                                                                 Assign
 
-                                                            </button> :
+                                                            </button> }
+
+                                                            { selectedIssue?.assignedStaff?.email === staff?.email &&
                                                             <button onClick={() => {
 
                                                                 handleAssignRemove(staff);

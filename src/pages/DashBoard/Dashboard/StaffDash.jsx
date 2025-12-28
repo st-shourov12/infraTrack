@@ -26,7 +26,12 @@ const StaffDash = () => {
     )
 
 
-    const issues = myIssues.filter(p => p.assignedStaff?.email === user?.email)
+    const issues = myIssues.filter(p => p.assignedStaff?.email === user?.email);
+    
+
+
+
+    const filteredIssues = issues.filter(p => p?.status !== 'closed')
 
 
 
@@ -51,7 +56,7 @@ const StaffDash = () => {
     const inProgressIssue = issues.filter(p => p.status === 'in-progress')
 
 
-    const latestIssues = myIssues
+    const latestIssues = myIssues.slice(0,6)
     // const latestPayments = payments 
 
     // const totalAmount = payments?.reduce(
@@ -78,6 +83,7 @@ const StaffDash = () => {
     // Chart data
     const issueStatusData = [
         { name: 'Closed', value: stats.closedIssues, color: '#10b981' },
+        { name: 'Resolved', value: stats.resolvedIssues, color: '#10aaaa' },
         { name: 'Pending', value: stats.pendingIssues, color: '#f59e0b' },
         { name: 'In Progress', value: stats.inProgressIssues, color: '#ef4444' }
     ].filter(item => item.value > 0);
@@ -139,7 +145,7 @@ const StaffDash = () => {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-1">Welcome to DashBoard</p>
+                    <p className="text-gray-600 mt-1">Welcome to Staff DashBoard</p>
                 </div>
 
                 {/* Stats Cards */}
@@ -175,6 +181,9 @@ const StaffDash = () => {
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Resolved Issues</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.resolvedIssues}</h3>
+                                <p className="text-gray-600 text-sm mt-2">
+                                    Issue will be closed soon
+                                </p>
 
                             </div>
                             <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />
@@ -354,7 +363,82 @@ const StaffDash = () => {
                 </div>
 
                 {/* Latest Data Tables */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white rounded-lg shadow p-6">
+
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Today's task</h3>
+                    <div className="mb-8">
+
+                        {
+                            filteredIssues.length > 0 ?
+
+
+                                <div className="overflow-x-auto">
+                                    <table className="table">
+                                        {/* head */}
+                                        <thead>
+                                            <tr>
+                                                <th>
+
+                                                </th>
+                                                <th>Name</th>
+                                                <th>Upvoted</th>
+                                                <th>Priority</th>
+                                                <th>Status</th>
+                                                <th>Location</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {filteredIssues.map((issue, i) => (
+                                                <tr key={issue?._id}>
+                                                    <th>
+                                                        {i + 1}
+                                                    </th>
+                                                    <td>
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="avatar">
+                                                                <div className="mask mask-squircle h-12 w-12">
+                                                                    <img
+                                                                        src={issue?.photo}
+                                                                        alt={issue?.category} />
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-bold">{issue?.category}</div>
+                                                                <div className="text-sm opacity-50">{issue?.assignedStaff?.email}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{issue?.upvoted}</td>
+                                                    <td>{issue?.priority}</td>
+                                                    <td>{issue?.status}</td>
+                                                    <td>
+                                                        {issue?.district}, {issue?.upzila}
+                                                        <br />
+                                                        <span className="badge badge-ghost badge-sm">{issue?.location}</span>
+                                                    </td>
+
+
+                                                </tr>))
+                                            }
+
+
+
+
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                :
+                                <p className="text-center text-gray-500">
+                                    No issue data available
+                                </p>
+                        }
+                    </div>
+
+
+
                     {/* Latest Issues */}
                     {/* <div className="bg-white rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
