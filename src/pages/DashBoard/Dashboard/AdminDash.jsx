@@ -241,7 +241,7 @@ const AdminDash = () => {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-gray-500 text-sm font-medium">Active Issues (In Progress)</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.inProgressIssues}</h3>
+                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats?.inProgressIssues}</h3>
                                 <p className="text-gray-600 text-sm mt-2">
                                     {stats.pendingIssues} pending
                                 </p>
@@ -436,7 +436,7 @@ const AdminDash = () => {
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestPayments.map((payment, i) => (
-                                        <tr key={payment.id} className="hover:bg-gray-50">
+                                        <tr key={payment._id} className="hover:bg-gray-50">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{i + 1}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment?.userName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">${payment?.amount}</td>

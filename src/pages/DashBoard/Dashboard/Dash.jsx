@@ -25,8 +25,7 @@ const Dash = () => {
     const userPCityzen = users.filter(user => user?.role === 'premium-citizen');
     const citizen =  userCityzen.length !== 0  ?  userCityzen : userPCityzen ;
 
-    console.log(userAdmin)
-
+    
     return (
         <div>
             {

@@ -281,7 +281,7 @@ const AllIssues = () => {
                                         className="btn"
                                     >
                                         <FcAssistant className='text-xl' />
-                                        Assign
+                                        {issue?.status === 'pending' ? 'Assign' : 'Assigned'}
                                     </button>
                                      {/* :
                                     
