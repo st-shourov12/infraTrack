@@ -1,33 +1,33 @@
 import React from 'react';
 import useAuth from "../hooks/useAuth";
- import useAxiosSecure from '../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
-// import useRole from '../hooks/useRole';
+//  import useAxiosSecure from '../hooks/useAxiosSecure';
+// import { useQuery } from '@tanstack/react-query';
+import useRole from '../hooks/useRole';
 import LoadingSpinner from '../components/Shared/LoadingSpinner'
 import Forbidden from '../components/Shared/Forbidden';
 
 const AdminRoute = ({ children }) => {
-    const {user,  loading } = useAuth();
-    const axiosSecure = useAxiosSecure();
+    const {  loading } = useAuth();
+    // const axiosSecure = useAxiosSecure();
 
-    const { data: users = []} = useQuery({
-        queryKey: ['user', user?.email],
-        enabled: !!user?.email,
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/users?email=${user.email}`);
-            return res.data;
-        }
-    });
+    // const { data: users = []} = useQuery({
+    //     queryKey: ['user', user?.email],
+    //     enabled: !!user?.email,
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get(`/users?email=${user.email}`);
+    //         return res.data;
+    //     }
+    // });
     
-    // const {role , roleLoading} = useRole();
+    const {role , roleLoading} = useRole();
     // console.log('role', role)
-    const isAdmin = users.some(u => u.role === 'admin');
+    // const isAdmin = users.some(u => u.role === 'admin');
 
-    if (loading) {
+    if (loading || roleLoading) {
         return <LoadingSpinner></LoadingSpinner>
     }
 
-    if(!isAdmin){
+    if(role !== 'admin'){
         return <Forbidden></Forbidden>
     }
 

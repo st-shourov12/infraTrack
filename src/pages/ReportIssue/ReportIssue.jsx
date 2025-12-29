@@ -92,7 +92,7 @@ const ReportIssue = () => {
             userRole: xrole,
             status: 'pending',
             upvoted : 0 ,
-            upvotedBy : null,
+            
             boosted: false,
             timeline: [
                 {
@@ -137,7 +137,7 @@ const ReportIssue = () => {
                             navigate('/dashboard/my-issues')
                         })
                         .catch(error => {
-                            console.error('Axios error:', error);
+                            console.log('Axios error:', error);
 
                             Swal.fire({
                                 icon: "error",

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Link } from 'react-router';
@@ -19,29 +19,27 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 
 
 
-const AllIssueUser = () => {
+const AllIssueUser2 = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    // const [showModal, setShowModal] = useState(false);
-    // const [selectedIssue, setSelectedIssue] = useState(null);
+
     const [filters, setFilters] = useState({
         status: 'all',
         category: 'all',
         priority: 'all'
     });
-    // const [showEditModal, setShowEditModal] = useState(false);
-    // const [editingIssue, setEditingIssue] = useState(null);
+
     const [showFilters, setShowFilters] = useState(false);
 
 
-    const { data: allIssue = [] , refetch : issueFetch } = useQuery({
-        queryKey: ['allIssues', user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/issues`)
-            return res.data
-        }
-    })
+    // const { data: allIssue = [] , refetch : issueFetch } = useQuery({
+    //     queryKey: ['allIssues', user?.email],
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get(`/issues`)
+    //         return res.data
+    //     }
+    // })
 
       const { data: users = [] } = useQuery({
         queryKey: ['user', user?.email],
@@ -54,111 +52,37 @@ const AllIssueUser = () => {
     
       const currentUser = users[0];
 
-    // const { data: allStaff = [], refetch } = useQuery({
-    //     queryKey: ['allStaff', user?.email],
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/staffs`)
-    //         return res.data
-    //     }
-    // })
+    //   pagination
 
-    // const worth = allStaff.filter(p => p.applicationStatus === 'approved')
-
-    // const exactStaffUp = selectedIssue
-    //     ? worth.filter(
-    //         staff => staff.preferredUpzila === selectedIssue.upzila
-    //     )
-    //     : [];
-    // const exactStaffZila = selectedIssue
-    //     ? worth.filter(
-    //         staff => staff.preferredDistrict === selectedIssue.district
-    //     )
-    //     : [];
-
-    // const exactStaff = exactStaffUp.length > 0 ? exactStaffUp : exactStaffZila;
+      const [getIssue , setIssue ] = useState([]);
+      const [totalIssue , setTotalIssue] = useState(0);
+      const [totalPage , setTotalPage] = useState(0);
+      const [currentPage , setCurrentPage] = useState(0)
 
 
+      useEffect(() => {
+        axiosSecure.get(`/allIssue?limit=6&skip=${currentPage * 6}`)
+        .then(res =>{
+            setIssue(res.data.issues);
+            setTotalIssue(res.data.count);
+
+            const page = Math.ceil(res.data.count / 6)
+            setTotalPage(page)
+        })
+
+        
+        
+
+      },[currentPage])
+
+      console.log('ss' , getIssue, totalIssue, totalPage );
 
 
 
-
-    // const handleAssign = (staff) => {
-
-    //     const {_id,email, fullName, profilePhoto , phone, department, userRole} = staff
-    //     const {timeline} = selectedIssue ;
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: `Assign ${staff.fullName}?`,
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#d33',
-    //         confirmButtonText: 'Yes!',
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axiosSecure.patch(`/staffs/${staff._id}`, {
-    //                     workStatus: 'Assigned',
-
-    //             })
-    //                 .then((res) => {
-    //                     if (res.data.modifiedCount) {
-    //                         refetch();
-
-    //                         const updateIssue = {
-    //                             status: 'in-progress',
-    //                             assignedStaff: {
-    //                                 name: fullName  ,
-    //                                 email: email,
-    //                                 photo: profilePhoto,
-    //                                 phone: phone,
-    //                                 department: department
-    //                             },
-    //                             timeline: [
-
-    //                                 {
-    //                                     id: 4,
-    //                                     status: "assigned",
-    //                                     message: `Issue assigned to Staff: ${fullName} from ${department} Department`,
-    //                                     updatedBy: "Admin",
-    //                                     role: userRole,
-    //                                     date: new Date().toISOString(),
-    //                                 },
-    //                                 ...timeline,
-    //                             ]
-    //                         }
-    //                         axiosSecure.patch(`/issues/${selectedIssue._id}`, updateIssue)
-    //                     }
-    //             });
-
-    //         }
-    //     });
-    // };
-
-    // const handleAssignRemove = async (staff) => {
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: `Cancel Assign ${staff.fullName}?`,
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#d33',
-    //         confirmButtonText: 'Yes!',
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axiosSecure
-    //                 .patch(`/staffs/${staff._id}`, {
-    //                     workStatus: 'Available',
-    //                 })
-    //                 .then((res) => {
-    //                     if (res.data.modifiedCount) {
-
-    //                         refetch();
-    //                     }
-    //                 });
-    //         }
-    //     });
-    // };
+    //   end pagination
 
     const filteredIssues = useMemo(() => {
-        let filtered = [...allIssue];
+        let filtered = [...getIssue];
 
         if (filters.status !== 'all') {
             filtered = filtered.filter(
@@ -179,7 +103,7 @@ const AllIssueUser = () => {
         }
 
         return filtered;
-    }, [filters, allIssue]);
+    }, [filters, getIssue]);
 
     
       const handleVote = (issue) => {
@@ -208,7 +132,7 @@ const AllIssueUser = () => {
               if (res.data.modifiedCount) {
     
     
-                issueFetch()
+                // issueFetch()
     
     
                 Swal.fire({
@@ -411,20 +335,6 @@ const AllIssueUser = () => {
                             {/* Action Button */}
                             <div className="card-actions justify-end mt-4">
 
-                                {/* <button
-                                    onClick={() => {
-
-                                        setShowModal(true);
-                                        setSelectedIssue(issue);
-                                        console.log(issue);
-                                    }
-
-
-                                    }
-                                    className="btn"
-                                >
-                                    <FcAssistant className='text-xl' />
-                                </button> */}
                                 <Link
                                     to={`/issues/${issue._id}`}
                                     className="btn btn-primary btn-sm w-full">
@@ -438,80 +348,28 @@ const AllIssueUser = () => {
 
             </div>
 
+            <div className="flex flex-wrap justify-center items-center gap-3 py-5">
 
-            {/*
-                showModal && selectedIssue && (
-                    <div className="modal modal-open">
-                        <div className="modal-box max-w-2xl">
-                            <h2 className="text-2xl font-bold mb-6">
-                                Assign Staff {exactStaff?.length}
-                            </h2>
+                {
+                    currentPage > 0 && <button onClick={()=>{setCurrentPage(currentPage - 1)}} className="btn">Prev</button>
+                }
+                
+                {
+                    [...Array(totalPage).keys()].map((i) =>(
+                        <button onClick={()=>{setCurrentPage(i)}} key={i} className={`btn ${i === currentPage && ' btn-primary'}`}>{ i + 1}</button>
+                    ))
+                }
 
-                            <div className="overflow-x-auto">
-                                <table className="table table-zebra">
-                                    
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Location</th>
-                                            <th>Department</th>
-                                            <th>Work Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            exactStaff.map((staff, i) => (
-                                                <tr key={staff?._id}>
-                                                    <th> {i + 1}</th>
-                                                    <td>{staff?.fullName}</td>
-                                                    <td>
-                                                        {staff?.preferredDistrict}, {staff?.preferredUpzila}
-                                                    </td>
-                                                    <td>{staff?.department}</td>
-                                                    <td>{staff?.workStatus}</td>
-                                                    <td>
-                                                        {staff?.workStatus === 'Available' ?
+                {
+                    currentPage < totalPage -1 && <button onClick={()=>{setCurrentPage(currentPage + 1)}} className="btn">Next</button>
+                }
+                
+            </div>
 
 
-                                                            <button onClick={() => {
-
-                                                                handleAssign(staff);
-
-                                                            }} className='btn'>
-                                                                <MdOutlineAssignmentInd className='text-lg' />
-
-                                                            </button> :
-                                                            <button onClick={() => {
-
-                                                                handleAssignRemove(staff);
-
-                                                            }} className='btn'>
-                                                                <IoPersonRemove className='text-lg' />
-
-                                                            </button>
-
-                                                        }
-                                                    </td>
-
-                                                </tr>
-                                            ))
-
-                                        }
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div className="modal-backdrop" onClick={() => { setShowModal(false)}}></div>
-                    </div>
-                )
-            */}
+            
         </div>
     );
 };
 
-export default AllIssueUser;
+export default AllIssueUser2;

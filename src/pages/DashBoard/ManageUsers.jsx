@@ -7,6 +7,7 @@ import { MdBlockFlipped } from 'react-icons/md';
 import { CgUnblock } from 'react-icons/cg';
 import Swal from 'sweetalert2';
 import { LuUserRoundX, LuUserX } from 'react-icons/lu';
+import Heading from '../../components/Shared/Heading';
 
 const ManageUsers = () => {
     // const { user } = useAuth()
@@ -156,14 +157,16 @@ const ManageUsers = () => {
 
 
     return (
-        <div>
-            <h3>
-                {users.length}
-            </h3>
-            <div className="overflow-x-auto">
+        <div className="max-w-7xl mx-auto py-8 px-4">
+           <Heading
+                center={false}
+                title="Manage Users"
+                subtitle="Add, authorized, explore the role"
+            />
+            <div className="overflow-x-auto bg-white rounded-lg shadow my-5">
                 <table className="table table-zebra">
                     {/* head */}
-                    <thead>
+                    <thead className="bg-base-200">
                         <tr>
                             <th></th>
                             <th>User</th>

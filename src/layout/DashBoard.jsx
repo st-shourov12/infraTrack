@@ -9,33 +9,33 @@ import { CgProfile } from 'react-icons/cg';
 import { FaCreditCard } from 'react-icons/fa6';
 import { GoIssueOpened } from 'react-icons/go';
 // import { RiSdCardFill } from 'react-icons/ri';
-// import useAuth from '../hooks/useAuth';
-// import useAxiosSecure from '../hooks/useAxiosSecure';
-// import { useQuery } from '@tanstack/react-query';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+
 import useRole from '../hooks/useRole';
-// import useRole from '../hooks/useRole';
 
 const DashBoard = () => {
 
-    // const { user } = useAuth();
-    // const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const { role } = useRole();
     console.log(role);
 
-    // const { data: users = [] } = useQuery({
-    //     queryKey: ['user', user?.email],
-    //     enabled: !!user?.email,
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/users?email=${user.email}`);
-    //         return res.data;
-    //     }
-    // });
+    const { data: users = [] } = useQuery({
+        queryKey: ['user', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user.email}`);
+            return res.data;
+        }
+    });
 
 
 
-    // const isAdmin = users.some(u => u.role === 'admin');
-    // const isStaff = users.some(u => u.role === 'staff');
-    // const isUser = users.some(u => u.role === 'user');
+    const isAdmin = users.some(u => u.role === 'admin');
+    const isStaff = users.some(u => u.role === 'staff');
+    const isUser = users.some(u => u.role === 'user');
 
 
 
@@ -134,7 +134,7 @@ const DashBoard = () => {
                                 </Link>
                             </li>
                         </>}
-                        {role === 'staff' && <li>
+                        {isStaff && <li>
                             <Link to={'/dashboard/assign-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Assign Issue">
                                 {/* Manage Staff icon */}
                                 <GoIssueOpened className='text-lg' />
@@ -142,7 +142,7 @@ const DashBoard = () => {
                             </Link>
                         </li>}
                         {
-                            role === 'admin'
+                           isAdmin
                             
                             && <li>
                             <Link to={'/dashboard/payment-history'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Payment History">

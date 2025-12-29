@@ -18,10 +18,10 @@ import PaymentCancelled from "../pages/DashBoard/Payment/PaymentCancelled";
 import IssueDetailsPage from "../pages/DashBoard/IssueDetailsPage";
 import Staff from "../pages/Staff/Staff";
 import AssignedIssue from "../pages/DashBoard/AssignedIssue";
-import AllIssueUser from "../pages/AllIssueUser";
 import Dash from "../pages/DashBoard/Dashboard/Dash";
 import AdminRoute from "./AdminRoute";
 import StaffRoute from "./StaffRoute";
+import AllIssueUser2 from "../pages/AllIssueUser2";
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
             
             {
                 path: 'issues',
-                element: <AllIssueUser />,
+                element: <AllIssueUser2 />,
                 
             },
             {
