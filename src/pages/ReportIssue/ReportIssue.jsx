@@ -92,7 +92,7 @@ const ReportIssue = () => {
             userRole: xrole,
             status: 'pending',
             upvoted : 0 ,
-            upvotedby: [], 
+            upvotedBy: [], 
             
             boosted: false,
             timeline: [
@@ -174,11 +174,11 @@ const ReportIssue = () => {
                         <fieldset className='flex justify-between items-center gap-5'>
                             <fieldset className='w-full fieldset flex flex-col justify-between gap-2 '>
                                 <label htmlFor="username" className='label'>Reporter Name</label>
-                                <input className=' w-full input' type="text" id="username" {...register("reporterName")} defaultValue={user?.displayName} />
+                                <input className=' w-full input' type="text" id="username" {...register("reporterName")} defaultValue={user?.displayName} readOnly/>
                             </fieldset>
                             <fieldset className='w-full fieldset flex flex-col justify-between gap-2 '>
                                 <label htmlFor="email" className='label'>Email</label>
-                                <input type="email" id="email" {...register("reporterEmail")} defaultValue={user?.email} className="input w-full" />
+                                <input type="email" id="email" {...register("reporterEmail")} defaultValue={user?.email} className="input w-full" readOnly />
                             </fieldset>
                         </fieldset>
                         <fieldset className='flex justify-between items-center gap-5'>

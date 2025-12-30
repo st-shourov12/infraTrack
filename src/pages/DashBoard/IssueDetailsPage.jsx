@@ -140,67 +140,68 @@ const IssueDetailsPage = () => {
 
 
 
-  const handleVote = (issue) => {
-    const { upvoted, upvotedBy, _id, category, reporterEmail } = issue;
+    const handleVote = (issue) => {
+        const { upvoted, _id, category, reporterEmail } = issue;
 
-    const upvote = upvoted + 1;
-    const isSameUser = reporterEmail === currentUser.email;
-    const worthyVoter = currentUser?.email !== issue?.upvotedBy?.some(s => s.email)
-
-
-    if (!isSameUser && worthyVoter) {
-
-      const update =
-      {
-        upvoted: upvote,
-        upvotedBy: [
-          { email: currentUser.email },
-            ...upvotedBy
-        ],
-        
-      }
+        const upvote = upvoted + 1;
+        const isSameUser = reporterEmail === currentUser?.email;
+        const worthyVoter = issue?.upvotedBy?.some(u => u.email === currentUser.email);
+        console.log(isSameUser, worthyVoter);
 
 
-      axiosSecure.patch(`/issues/${_id}`,update)
-        .then((res) => {
-          if (res.data.modifiedCount) {
+        if (!isSameUser && !worthyVoter) {
+
+            const update =
+            {
+                upvoted: upvote,
+                upvotedBy: [
+                    { email: currentUser.email },
+                    ...(issue.upvotedBy || [])
+                ],
+
+            }
 
 
-            refetch()
+            axiosSecure.patch(`/issues/${_id}`, update)
+                .then((res) => {
+                    if (res.data.modifiedCount) {
 
 
+                        refetch()
+
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${category} issue is upvoted.`,
+                            timer: 1000,
+                        });
+
+
+
+
+
+                    }
+                })
+        } else if (isSameUser) {
             Swal.fire({
-              icon: 'success',
-              title: `${category} issue is upvoted.`,
-              timer: 1000,
+                icon: 'warning',
+                title: `You can not vote your own issue`,
+                timer: 1000,
             });
 
+        }
+        else if (worthyVoter) {
+            Swal.fire({
+                icon: 'warning',
+                title: `You can vote only once`,
+                timer: 1000,
+            });
+
+        }
 
 
-
-
-          }
-        })
-    } else if (isSameUser) {
-      Swal.fire({
-        icon: 'warning',
-        title: `You can not vote your own issue`,
-        timer: 1000,
-      });
 
     }
-    else if (!worthyVoter) {
-      Swal.fire({
-        icon: 'warning',
-        title: `You can vote only once`,
-        timer: 1000,
-      });
-
-    }
-
-
-
-  }
 
   const getStatusColor = (status) => {
     switch (status) {

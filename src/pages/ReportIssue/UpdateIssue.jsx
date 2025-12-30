@@ -24,11 +24,7 @@ const UpdateIssue = ({setShowEditModal ,refetch, editingIssue}) => {
         "Other",
     ];
 
-    const priorities = [
-        
-        'Medium',
-        'Low'
-    ]
+  
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -154,9 +150,9 @@ const UpdateIssue = ({setShowEditModal ,refetch, editingIssue}) => {
                         <select {...register("priority")} defaultValue={editingIssue?.priority} className="select w-full">
                             
                             <option disabled={true}>High</option>
-                            {
-                                priorities.map((priority, index) => <option key={index}>{priority}</option>)
-                            }
+                            <option >Medium</option>
+                            <option >Normal</option>
+                           
 
 
                         </select>

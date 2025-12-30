@@ -278,7 +278,7 @@ export default function MyProfile() {
 
                         {/* Premium Benefits */}
 
-                        {x?.isPremium || latestPayment.length > 0 && (
+                        { latestPayment.length > 0 && (
                             <div className="mt-6">
                                 <h3 className="text-lg font-semibold mb-2">Pay Reciept</h3>
 
@@ -287,7 +287,7 @@ export default function MyProfile() {
                                         key={p._id}
                                         href={`http://localhost:3000/invoice/${p._id}`}
                                         target="_blank"
-                                        className=" text-white flex flex-col items-center justify-center gap-2 btn bg-green-600 hover:bg-green-700"
+                                        className=" text-white flex flex-col items-center rounded-xl justify-center gap-2 btn bg-green-600 hover:bg-green-700"
                                     >
                                         {p.invoiceId} - Download Invoice (PDF)
                                     </a>

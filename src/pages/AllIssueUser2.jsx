@@ -1,15 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Link } from 'react-router';
-import { FcAssistant } from 'react-icons/fc';
-// import Staff from '../Staff/Staff';
+import LoadingSpinner from '../components/Shared/LoadingSpinner'
 
-import { MdOutlineAssignmentInd } from 'react-icons/md';
-import { IoPersonRemove } from 'react-icons/io5';
-// import useAuth from '../hooks/useAuth';
-// import useAxiosSecure from '../hooks/useAxiosSecure';
 import { Filter } from 'lucide-react';
 import { FaVoteYea } from "react-icons/fa";
 import Swal from 'sweetalert2';
@@ -55,43 +50,30 @@ const AllIssueUser2 = () => {
     //   pagination
 
     const [getIssue, setIssue] = useState([]);
-    const [totalIssue, setTotalIssue] = useState(0);
+    // const [totalIssue, setTotalIssue] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0)
     const [searchText, setSearchText] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
 
-    // useEffect(() => {
-    //     axiosSecure.get(
-    //         `/allIssue?limit=6&skip=${currentPage * 6}&search=${searchText}
-    // &status=${filters.status}
-    // &category=${filters.category}
-    // &priority=${filters.priority}`
-    //     )
-    //         .then(res => {
-    //             setIssue(res.data.issues);
-    //             setTotalIssue(res.data.count);
-    //             setTotalPage(Math.ceil(res.data.count / 6));
-    //         });
-    // }, [
-    //     axiosSecure,
-    //     currentPage,
-    //     searchText,
-    //     filters.status,
-    //     filters.category,
-    //     filters.priority
-    // ]);
 
     useEffect(() => {
+        setLoading(true);
+
         axiosSecure.get(
-            `/allIssues?limit=6&skip=${currentPage * 6}&search=${searchText}&status=${filters.status}&category=${filters.category}&priority=${filters.priority}`
+            `/allIssues?limit=6&skip=${currentPage * 6}&search=${searchText}&status=${filters.status}&category=${filters.category}&priority=${filters.priority}&sorting=${-1}`
         )
             .then(res => {
                 setIssue(res.data.issues);
-                setTotalIssue(res.data.count);
+                // setTotalIssue(res.data.count);
                 setTotalPage(Math.ceil(res.data.count / 6));
+            })
+            .finally(() => {
+                setLoading(false);
             });
+
     }, [
         axiosSecure,
         currentPage,
@@ -99,17 +81,18 @@ const AllIssueUser2 = () => {
         filters.status,
         filters.category,
         filters.priority
-    ])
+    ]);
+
 
 
     const handleFilterChange = (name, value) => {
-  setFilters(prev => ({ ...prev, [name]: value }));
-  setCurrentPage(0);
-};
+        setFilters(prev => ({ ...prev, [name]: value }));
+        setCurrentPage(0);
+    };
 
 
 
-    console.log('ss', getIssue, totalIssue, totalPage);
+    // console.log('ss', getIssue, totalIssue, totalPage);
 
 
 
@@ -143,22 +126,30 @@ const AllIssueUser2 = () => {
 
 
 
+    const handleToggle = () => {
+        setShowFilters(!showFilters)
+    }
+
+
+
+
     const handleVote = (issue) => {
-        const { upvoted, upvotedBy, _id, category, reporterEmail } = issue;
+        const { upvoted, _id, category, reporterEmail } = issue;
 
         const upvote = upvoted + 1;
-        const isSameUser = reporterEmail === currentUser.email;
-        const worthyVoter = currentUser?.email !== issue?.upvotedBy?.some(s => s.email)
+        const isSameUser = reporterEmail === currentUser?.email;
+        const worthyVoter = issue?.upvotedBy?.some(u => u.email === currentUser.email);
+        console.log(isSameUser, worthyVoter);
 
 
-        if (!isSameUser && worthyVoter) {
+        if (!isSameUser && !worthyVoter) {
 
             const update =
             {
                 upvoted: upvote,
                 upvotedBy: [
                     { email: currentUser.email },
-                    ...upvotedBy
+                    ...(issue.upvotedBy || [])
                 ],
 
             }
@@ -184,6 +175,21 @@ const AllIssueUser2 = () => {
 
                     }
                 })
+
+            setIssue(prev =>
+                prev.map(item =>
+                    item._id === issue._id
+                        ? {
+                            ...item,
+                            upvoted: item.upvoted + 1,
+                            upvotedBy: [
+                                { email: currentUser.email },
+                                ...(item.upvotedBy || [])
+                            ]
+                        }
+                        : item
+                )
+            );
         } else if (isSameUser) {
             Swal.fire({
                 icon: 'warning',
@@ -192,7 +198,7 @@ const AllIssueUser2 = () => {
             });
 
         }
-        else if (!worthyVoter) {
+        else if (worthyVoter) {
             Swal.fire({
                 icon: 'warning',
                 title: `You can vote only once`,
@@ -235,7 +241,7 @@ const AllIssueUser2 = () => {
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
                     <button
-                        onClick={() => setShowFilters(!showFilters)}
+                        onClick={() => handleToggle()}
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
                     >
                         <Filter size={20} />
@@ -264,7 +270,7 @@ const AllIssueUser2 = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                             <select
                                 value={filters.category}
-                               onChange={(e) => handleFilterChange('category', e.target.value)}
+                                onChange={(e) => handleFilterChange('category', e.target.value)}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Categories</option>
@@ -289,14 +295,19 @@ const AllIssueUser2 = () => {
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Priorities</option>
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="normal">Low</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Normal">Normal</option>
                             </select>
                         </div>
                     </div>
                 )}
             </div>
+
+
+            {
+                loading && <LoadingSpinner />
+            }
 
 
 
