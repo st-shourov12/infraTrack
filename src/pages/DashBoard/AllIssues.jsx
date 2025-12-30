@@ -170,7 +170,7 @@ const AllIssues = () => {
             issue._id === selectedIssue._id
               ? {
                 ...issue,
-                status: 'in-progress',
+                
                 assignedStaff: {
                   name: staff.fullName,
                   email: staff.email,

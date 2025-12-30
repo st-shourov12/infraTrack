@@ -6,6 +6,7 @@ import Caategory from './Caategory';
 import Features from './Features';
 import HomeCharts from './HomeCharts'
 import Premium from './Premium'
+import HowItWorks from './HowItWorks'
 
 const Home = () => {
     return (
@@ -23,6 +24,9 @@ const Home = () => {
 
             </Container>
             <Premium />
+            
+                <HowItWorks></HowItWorks>
+           
         </div>
     );
 };

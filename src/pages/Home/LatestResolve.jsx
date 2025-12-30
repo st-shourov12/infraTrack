@@ -12,20 +12,20 @@ const LatestResolve = () => {
     const { data: issues = []} = useQuery({
             queryKey: ['myIssues'],
             queryFn: async () => {
-                const res = await axiosSecure.get(`/latestResolve`);
+                const res = await axiosSecure.get(`/issues?status=closed`);
                 return res.data;
             },
            
         });
 
       
-        const filteredIssues = issues;
+        
     return (
         <div className='py-16 md:py-24'>
             <Heading center={true} title="Latest Resolved Issue" subtitle="Resolve Issue smoothly with our skilled staff"></Heading>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredIssues.map((issue, i) => (
+                {issues.map((issue, i) => (
                     <Link to={`/issues/${issue?._id}`} key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
                         <figure className="px-6 pt-6 relative">
                             <img

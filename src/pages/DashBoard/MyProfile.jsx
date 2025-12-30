@@ -79,7 +79,7 @@ export default function MyProfile() {
             });
 
             // MongoDB
-            await axiosSecure.patch(`/users/${x._id}`, {
+            await axiosSecure.patch(`/users/${x?._id}`, {
                 displayName: name,
                 photoURL,
             });

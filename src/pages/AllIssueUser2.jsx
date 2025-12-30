@@ -306,8 +306,7 @@ const AllIssueUser2 = () => {
 
 
             {
-                loading && <LoadingSpinner />
-            }
+                loading ? <LoadingSpinner />:
 
 
 
@@ -413,7 +412,7 @@ const AllIssueUser2 = () => {
                     </div>
                 ))}
 
-            </div>
+            </div>}
 
             <div className="flex flex-wrap justify-center items-center gap-3 py-5">
 

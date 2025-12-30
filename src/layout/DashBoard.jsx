@@ -84,7 +84,7 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Report Issue</span>
                             </Link>
                         </li>
-                        {
+                        {role === 'user' &&
                             <li>
                                 <Link to={'/dashboard/my-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Issues">
                                     {/* My Issues icon */}

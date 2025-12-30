@@ -17,96 +17,49 @@ import bannerImg2 from '../../assets/bg-infra2.jpg';
 import bannerImg3 from '../../assets/bg-ifra3.jpg';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../hooks/useAuth';
+
 
 const Hero = () => {
 
     const axiosSecure = useAxiosSecure();
 
-    const { data: issues = []} = useQuery({
-            queryKey: ['myIssues'],
-            queryFn: async () => {
-                const res = await axiosSecure.get(`/issues`);
-                return res.data;
-            },
-           
-        });
+    const { data: allIssues = [] } = useQuery({
+        queryKey: ['issues'],
+        queryFn: async () => {
+        const res = await axiosSecure.get(`/issues`);
+        return res.data;
+        },
+    });
+    const { user} = useAuth();
+
+    const { data: users = [] } = useQuery({
+    queryKey: ['users', user?.email],
+    enabled: !!user?.accessToken, 
+    queryFn: async () => {
+        const res = await axiosSecure.get('/users');
+        return res.data;
+    }
+    });
+    const { data: staffs = [] } = useQuery({
+    queryKey: ['users', user?.email],
+    enabled: !!user?.accessToken, 
+    queryFn: async () => {
+        const res = await axiosSecure.get('/staffs');
+        return res.data;
+    }
+    });
 
 
-    const { data: users =[]} = useQuery({
-            queryKey: ['users'],
-            queryFn: async () => {
-                const res = await axiosSecure.get(`/users`);
-                return res.data;
-            },
-           
-        });
-    const { data: staffs =[]} = useQuery({
-            queryKey: ['staffs'],
-            queryFn: async () => {
-                const res = await axiosSecure.get(`/staffs`);
-                return res.data;
-            },
-           
-        });
-
-
-
-
-
-        const closedIssue = issues.filter(r => r.status === 'closed')
-        const close = closedIssue.length == 0 ? 0 : closedIssue.lentgh
-
-        console.log(closedIssue);
+    console.log(allIssues);
 
 
 
-        
+  const closedIssue = allIssues.filter(p => p.status === 'closed');
+  const parse = Math.ceil(Number(closedIssue?.length) / Number(allIssues.length) * 100)
 
 
-    // const slides = [
-    //     {
-    //         id: 1,
-    //         image: bannerImg1,
-    //         badge: "🏙️ Report Issues",
-    //         title: "Building Better Cities Together",
-    //         subtitle: "Your voice matters. Report civic issues in your community and track their resolution in real-time.",
-    //         stats: [
-    //             { number: count[0] , label: "Issues Reported" },
-    //             { number: "8,932", label: "Issues Resolved" },
-    //             { number: "24hrs", label: "Avg Response Time" }
-    //         ],
-    //         primaryBtn: { text: "Report Issue Now", link: "/report-issue" },
-    //         secondaryBtn: { text: "View All Issues", link: "/all-issues" }
-    //     },
-    //     {
-    //         id: 2,
-    //         image: bannerImg2,
-    //         badge: "📊 Track Progress",
-    //         title: "Real-Time Infrastructure Monitoring",
-    //         subtitle: "Stay updated with live tracking, instant notifications, and transparent resolution updates from your local government.",
-    //         stats: [
-    //             { number: "5,200+", label: "Active Citizens" },
-    //             { number: "95%", label: "Success Rate" },
-    //             { number: "48hrs", label: "Resolution Time" }
-    //         ],
-    //         primaryBtn: { text: "Track My Issues", link: "/dashboard" },
-    //         secondaryBtn: { text: "How It Works", link: "/how-it-works" }
-    //     },
-    //     {
-    //         id: 3,
-    //         image: bannerImg3,
-    //         badge: "🚀 Join Community",
-    //         title: "Empower Your Neighborhood",
-    //         subtitle: "Vote on priority issues, collaborate with neighbors, and witness the transformation of your city through collective action.",
-    //         stats: [
-    //             { number: "1,250+", label: "Communities" },
-    //             { number: "15K+", label: "Total Votes" },
-    //             { number: "100%", label: "Transparency" }
-    //         ],
-    //         primaryBtn: { text: "Get Started Free", link: "/register" },
-    //         secondaryBtn: { text: "Success Stories", link: "/success-stories" }
-    //     }
-    // ];
+
 
     return (
         <div className="relative">
@@ -180,7 +133,7 @@ const Hero = () => {
                                                     className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
                                                 >
                                                     <div className="text-2xl md:text-3xl font-bold text-orange-400">
-                                                        {issues.length}
+                                                        {allIssues?.length}
                                                         
                                                     </div>
                                                     <div className="text-sm text-gray-300 mt-1">
@@ -192,7 +145,7 @@ const Hero = () => {
                                                     className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
                                                 >
                                                     <div className="text-2xl md:text-3xl font-bold text-orange-400">
-                                                        {close}
+                                                        {closedIssue?.length}
                                                         
                                                     </div>
                                                     <div className="text-sm text-gray-300 mt-1">
@@ -316,7 +269,7 @@ const Hero = () => {
                                                     className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
                                                 >
                                                     <div className="text-2xl md:text-3xl font-bold text-orange-400">
-                                                         {((close / issues?.lentgh) * 100).toFixed(1)}
+                                                         {parse} %
                                                         
                                                     </div>
                                                     <div className="text-sm text-gray-300 mt-1">
@@ -428,7 +381,7 @@ const Hero = () => {
                                                     className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
                                                 >
                                                     <div className="text-2xl md:text-3xl font-bold text-orange-400">
-                                                        {issues.length}
+                                                        Responsible
                                                         
                                                     </div>
                                                     <div className="text-sm text-gray-300 mt-1">

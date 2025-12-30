@@ -195,7 +195,7 @@ const AssignedIssue = () => {
     };
 
     const handleClosed = (issue) => {
-        console.log(issue)
+
         const { _id, category, timeline, assignedStaff } = issue;
 
 
