@@ -92,6 +92,7 @@ const ReportIssue = () => {
             userRole: xrole,
             status: 'pending',
             upvoted : 0 ,
+            upvotedby: [], 
             
             boosted: false,
             timeline: [

@@ -41,132 +41,169 @@ const AllIssueUser2 = () => {
     //     }
     // })
 
-      const { data: users = [] } = useQuery({
+    const { data: users = [] } = useQuery({
         queryKey: ['user', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-          const res = await axiosSecure.get(`/users?email=${user.email}`);
-          return res.data;
+            const res = await axiosSecure.get(`/users?email=${user.email}`);
+            return res.data;
         }
-      });
-    
-      const currentUser = users[0];
+    });
+
+    const currentUser = users[0];
 
     //   pagination
 
-      const [getIssue , setIssue ] = useState([]);
-      const [totalIssue , setTotalIssue] = useState(0);
-      const [totalPage , setTotalPage] = useState(0);
-      const [currentPage , setCurrentPage] = useState(0)
+    const [getIssue, setIssue] = useState([]);
+    const [totalIssue, setTotalIssue] = useState(0);
+    const [totalPage, setTotalPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0)
+    const [searchText, setSearchText] = useState('');
 
 
-      useEffect(() => {
-        axiosSecure.get(`/allIssue?limit=6&skip=${currentPage * 6}`)
-        .then(res =>{
-            setIssue(res.data.issues);
-            setTotalIssue(res.data.count);
 
-            const page = Math.ceil(res.data.count / 6)
-            setTotalPage(page)
-        })
+    // useEffect(() => {
+    //     axiosSecure.get(
+    //         `/allIssue?limit=6&skip=${currentPage * 6}&search=${searchText}
+    // &status=${filters.status}
+    // &category=${filters.category}
+    // &priority=${filters.priority}`
+    //     )
+    //         .then(res => {
+    //             setIssue(res.data.issues);
+    //             setTotalIssue(res.data.count);
+    //             setTotalPage(Math.ceil(res.data.count / 6));
+    //         });
+    // }, [
+    //     axiosSecure,
+    //     currentPage,
+    //     searchText,
+    //     filters.status,
+    //     filters.category,
+    //     filters.priority
+    // ]);
 
-        
-        
+    useEffect(() => {
+        axiosSecure.get(
+            `/allIssues?limit=6&skip=${currentPage * 6}&search=${searchText}&status=${filters.status}&category=${filters.category}&priority=${filters.priority}`
+        )
+            .then(res => {
+                setIssue(res.data.issues);
+                setTotalIssue(res.data.count);
+                setTotalPage(Math.ceil(res.data.count / 6));
+            });
+    }, [
+        axiosSecure,
+        currentPage,
+        searchText,
+        filters.status,
+        filters.category,
+        filters.priority
+    ])
 
-      },[currentPage])
 
-      console.log('ss' , getIssue, totalIssue, totalPage );
+    const handleFilterChange = (name, value) => {
+  setFilters(prev => ({ ...prev, [name]: value }));
+  setCurrentPage(0);
+};
+
+
+
+    console.log('ss', getIssue, totalIssue, totalPage);
 
 
 
     //   end pagination
 
-    const filteredIssues = useMemo(() => {
-        let filtered = [...getIssue];
+    // const filteredIssues = useMemo(() => {
+    //     let filtered = [...getIssue];
 
-        if (filters.status !== 'all') {
-            filtered = filtered.filter(
-                issue => issue.status === filters.status
-            );
-        }
+    //     if (filters.status !== 'all') {
+    //         filtered = filtered.filter(
+    //             issue => issue.status === filters.status
+    //         );
+    //     }
 
-        if (filters.category !== 'all') {
-            filtered = filtered.filter(
-                issue => issue.category === filters.category
-            );
-        }
+    //     if (filters.category !== 'all') {
+    //         filtered = filtered.filter(
+    //             issue => issue.category === filters.category
+    //         );
+    //     }
 
-        if (filters.priority !== 'all') {
-            filtered = filtered.filter(
-                issue => issue.priority?.toLowerCase() === filters.priority
-            );
-        }
+    //     if (filters.priority !== 'all') {
+    //         filtered = filtered.filter(
+    //             issue => issue.priority?.toLowerCase() === filters.priority
+    //         );
+    //     }
 
-        return filtered;
-    }, [filters, getIssue]);
+    //     return filtered;
+    // }, [filters, getIssue]);
 
-    
-      const handleVote = (issue) => {
+    const filteredIssues = getIssue;
+
+
+
+    const handleVote = (issue) => {
         const { upvoted, upvotedBy, _id, category, reporterEmail } = issue;
-    
+
         const upvote = upvoted + 1;
         const isSameUser = reporterEmail === currentUser.email;
         const worthyVoter = currentUser?.email !== issue?.upvotedBy?.some(s => s.email)
-    
-    
+
+
         if (!isSameUser && worthyVoter) {
-    
-          const update =
-          {
-            upvoted: upvote,
-            upvotedBy: [
-              { email: currentUser.email },
-                ...upvotedBy
-            ],
-            
-          }
-    
-    
-          axiosSecure.patch(`/issues/${_id}`,update)
-            .then((res) => {
-              if (res.data.modifiedCount) {
-    
-    
-                // issueFetch()
-    
-    
-                Swal.fire({
-                  icon: 'success',
-                  title: `${category} issue is upvoted.`,
-                  timer: 1000,
-                });
-    
-    
-    
-    
-    
-              }
-            })
+
+            const update =
+            {
+                upvoted: upvote,
+                upvotedBy: [
+                    { email: currentUser.email },
+                    ...upvotedBy
+                ],
+
+            }
+
+
+            axiosSecure.patch(`/issues/${_id}`, update)
+                .then((res) => {
+                    if (res.data.modifiedCount) {
+
+
+                        // issueFetch()
+
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${category} issue is upvoted.`,
+                            timer: 1000,
+                        });
+
+
+
+
+
+                    }
+                })
         } else if (isSameUser) {
-          Swal.fire({
-            icon: 'warning',
-            title: `You can not vote your own issue`,
-            timer: 1000,
-          });
-    
+            Swal.fire({
+                icon: 'warning',
+                title: `You can not vote your own issue`,
+                timer: 1000,
+            });
+
         }
         else if (!worthyVoter) {
-          Swal.fire({
-            icon: 'warning',
-            title: `You can vote only once`,
-            timer: 1000,
-          });
-    
+            Swal.fire({
+                icon: 'warning',
+                title: `You can vote only once`,
+                timer: 1000,
+            });
+
         }
-    
-    
-    
-      }
+
+
+
+    }
 
 
     return (
@@ -174,6 +211,25 @@ const AllIssueUser2 = () => {
             <h2 className="text-2xl font-bold mb-6 text-center my-5">
                 All Issues : {filteredIssues?.length}
             </h2>
+
+            <div className="flex justify-center mb-4">
+                <div className="flex w-full max-w-md gap-2">
+                    <input
+                        type="text"
+                        placeholder="Search by category, location..."
+                        value={searchText}
+                        onChange={(e) => {
+                            setSearchText(e.target.value);
+                            setCurrentPage(0);
+                        }}
+                        className="input input-bordered w-full"
+                    />
+                    <button className="btn btn-primary">
+                        <FaMagnifyingGlass />
+                    </button>
+                </div>
+            </div>
+
 
             <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
                 <div className="flex items-center justify-between mb-4">
@@ -193,7 +249,7 @@ const AllIssueUser2 = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                             <select
                                 value={filters.status}
-                                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                                onChange={(e) => handleFilterChange('status', e.target.value)}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Status</option>
@@ -208,7 +264,7 @@ const AllIssueUser2 = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                             <select
                                 value={filters.category}
-                                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                               onChange={(e) => handleFilterChange('category', e.target.value)}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Categories</option>
@@ -229,7 +285,7 @@ const AllIssueUser2 = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
                             <select
                                 value={filters.priority}
-                                onChange={(e) => setFilters({ ...filters, priority: e.target.value })}
+                                onChange={(e) => handleFilterChange('priority', e.target.value)}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Priorities</option>
@@ -317,8 +373,8 @@ const AllIssueUser2 = () => {
                                         <p className="text-xs text-gray-400">{issue?.region}</p>
                                     </div>
                                 </div>
-                                <button onClick={()=> handleVote(issue)} className="bg-blue-300 py-2 text-xs gap-1 text-center flex justify-center items-center px-3 rounded-lg text-blue-700">
-                                    <FaVoteYea  className='text-lg'/>
+                                <button onClick={() => handleVote(issue)} className="bg-blue-300 py-2 text-xs gap-1 text-center flex justify-center items-center px-3 rounded-lg text-blue-700">
+                                    <FaVoteYea className='text-lg' />
                                     {issue?.upvoted}
                                 </button>
                             </div>
@@ -351,23 +407,23 @@ const AllIssueUser2 = () => {
             <div className="flex flex-wrap justify-center items-center gap-3 py-5">
 
                 {
-                    currentPage > 0 && <button onClick={()=>{setCurrentPage(currentPage - 1)}} className="btn">Prev</button>
+                    currentPage > 0 && <button onClick={() => { setCurrentPage(currentPage - 1) }} className="btn">Prev</button>
                 }
-                
+
                 {
-                    [...Array(totalPage).keys()].map((i) =>(
-                        <button onClick={()=>{setCurrentPage(i)}} key={i} className={`btn ${i === currentPage && ' btn-primary'}`}>{ i + 1}</button>
+                    [...Array(totalPage).keys()].map((i) => (
+                        <button onClick={() => { setCurrentPage(i) }} key={i} className={`btn ${i === currentPage && ' btn-primary'}`}>{i + 1}</button>
                     ))
                 }
 
                 {
-                    currentPage < totalPage -1 && <button onClick={()=>{setCurrentPage(currentPage + 1)}} className="btn">Next</button>
+                    currentPage < totalPage - 1 && <button onClick={() => { setCurrentPage(currentPage + 1) }} className="btn">Next</button>
                 }
-                
+
             </div>
 
 
-            
+
         </div>
     );
 };
