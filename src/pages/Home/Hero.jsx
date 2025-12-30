@@ -31,14 +31,7 @@ const Hero = () => {
            
         });
 
-    const { data: count = 0} = useQuery({
-            queryKey: ['myIssues'],
-            queryFn: async () => {
-                const res = await axiosSecure.get(`/issue/count`);
-                return res.data;
-            },
-           
-        });
+
     const { data: users =[]} = useQuery({
             queryKey: ['users'],
             queryFn: async () => {
@@ -70,50 +63,50 @@ const Hero = () => {
         
 
 
-    const slides = [
-        {
-            id: 1,
-            image: bannerImg1,
-            badge: "🏙️ Report Issues",
-            title: "Building Better Cities Together",
-            subtitle: "Your voice matters. Report civic issues in your community and track their resolution in real-time.",
-            stats: [
-                { number: count[0] , label: "Issues Reported" },
-                { number: "8,932", label: "Issues Resolved" },
-                { number: "24hrs", label: "Avg Response Time" }
-            ],
-            primaryBtn: { text: "Report Issue Now", link: "/report-issue" },
-            secondaryBtn: { text: "View All Issues", link: "/all-issues" }
-        },
-        {
-            id: 2,
-            image: bannerImg2,
-            badge: "📊 Track Progress",
-            title: "Real-Time Infrastructure Monitoring",
-            subtitle: "Stay updated with live tracking, instant notifications, and transparent resolution updates from your local government.",
-            stats: [
-                { number: "5,200+", label: "Active Citizens" },
-                { number: "95%", label: "Success Rate" },
-                { number: "48hrs", label: "Resolution Time" }
-            ],
-            primaryBtn: { text: "Track My Issues", link: "/dashboard" },
-            secondaryBtn: { text: "How It Works", link: "/how-it-works" }
-        },
-        {
-            id: 3,
-            image: bannerImg3,
-            badge: "🚀 Join Community",
-            title: "Empower Your Neighborhood",
-            subtitle: "Vote on priority issues, collaborate with neighbors, and witness the transformation of your city through collective action.",
-            stats: [
-                { number: "1,250+", label: "Communities" },
-                { number: "15K+", label: "Total Votes" },
-                { number: "100%", label: "Transparency" }
-            ],
-            primaryBtn: { text: "Get Started Free", link: "/register" },
-            secondaryBtn: { text: "Success Stories", link: "/success-stories" }
-        }
-    ];
+    // const slides = [
+    //     {
+    //         id: 1,
+    //         image: bannerImg1,
+    //         badge: "🏙️ Report Issues",
+    //         title: "Building Better Cities Together",
+    //         subtitle: "Your voice matters. Report civic issues in your community and track their resolution in real-time.",
+    //         stats: [
+    //             { number: count[0] , label: "Issues Reported" },
+    //             { number: "8,932", label: "Issues Resolved" },
+    //             { number: "24hrs", label: "Avg Response Time" }
+    //         ],
+    //         primaryBtn: { text: "Report Issue Now", link: "/report-issue" },
+    //         secondaryBtn: { text: "View All Issues", link: "/all-issues" }
+    //     },
+    //     {
+    //         id: 2,
+    //         image: bannerImg2,
+    //         badge: "📊 Track Progress",
+    //         title: "Real-Time Infrastructure Monitoring",
+    //         subtitle: "Stay updated with live tracking, instant notifications, and transparent resolution updates from your local government.",
+    //         stats: [
+    //             { number: "5,200+", label: "Active Citizens" },
+    //             { number: "95%", label: "Success Rate" },
+    //             { number: "48hrs", label: "Resolution Time" }
+    //         ],
+    //         primaryBtn: { text: "Track My Issues", link: "/dashboard" },
+    //         secondaryBtn: { text: "How It Works", link: "/how-it-works" }
+    //     },
+    //     {
+    //         id: 3,
+    //         image: bannerImg3,
+    //         badge: "🚀 Join Community",
+    //         title: "Empower Your Neighborhood",
+    //         subtitle: "Vote on priority issues, collaborate with neighbors, and witness the transformation of your city through collective action.",
+    //         stats: [
+    //             { number: "1,250+", label: "Communities" },
+    //             { number: "15K+", label: "Total Votes" },
+    //             { number: "100%", label: "Transparency" }
+    //         ],
+    //         primaryBtn: { text: "Get Started Free", link: "/register" },
+    //         secondaryBtn: { text: "Success Stories", link: "/success-stories" }
+    //     }
+    // ];
 
     return (
         <div className="relative">

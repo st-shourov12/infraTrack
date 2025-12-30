@@ -1,6 +1,11 @@
 import React from 'react';
 import Container from '../../components/Shared/Container';
 import Hero from './Hero';
+import LatestResolve from './LatestResolve';
+import Caategory from './Caategory';
+import Features from './Features';
+import HomeCharts from './HomeCharts'
+import Premium from './Premium'
 
 const Home = () => {
     return (
@@ -9,9 +14,15 @@ const Home = () => {
 
             <Hero></Hero>
             <Container>
-                home page
+                <LatestResolve></LatestResolve>
+                <HomeCharts />
+                <Caategory></Caategory>
+                <Features></Features>
+                
+
 
             </Container>
+            <Premium />
         </div>
     );
 };

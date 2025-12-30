@@ -202,6 +202,7 @@ const AssignedIssue = () => {
 
         const updateIssue = {
             status: 'closed',
+            closedAt: new Date().toISOString(),
 
             timeline: [
 
