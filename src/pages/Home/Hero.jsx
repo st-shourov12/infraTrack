@@ -51,7 +51,7 @@ const Hero = () => {
     });
 
 
-    console.log(allIssues);
+    
 
 
 
