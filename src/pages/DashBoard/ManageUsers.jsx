@@ -202,15 +202,15 @@ const ManageUsers = () => {
 
                                     <td className=''>
                                         {manageUser?.isPremium ?
-                                            <span className='bg-green-300 px-4 py-2 rounded-lg text-green-700'>Premium</span> :
-                                            <span className='bg-red-300 px-4 py-2 rounded-lg text-red-700'>Free</span>
+                                            <span className=' text-green-700'>Premium</span> :
+                                            <span className=' text-red-700'>Free</span>
                                         }
 
                                     </td>
                                     <td className=''>
-                                        {manageUser?.role === 'premium-citizen' ?
-                                            <span className='bg-green-300 px-4 py-2 rounded-lg text-green-700'>{manageUser?.role}</span> :
-                                            <span className='bg-red-300 px-4 py-2 rounded-lg text-red-700'>{manageUser?.role}</span>
+                                        {manageUser?.role === 'admin' ?
+                                            <span className=' text-green-700'>{manageUser?.role}</span> :
+                                            <span className=' text-red-700'>{manageUser?.role}</span>
                                         }
 
                                     </td>

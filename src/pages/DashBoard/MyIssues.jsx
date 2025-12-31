@@ -5,6 +5,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import UpdateIssue from '../ReportIssue/UpdateIssue';
 import { NavLink } from 'react-router';
+import IssueFound from '../../components/Shared/IssueFound';
 
 
 const MyIssues = () => {
@@ -217,9 +218,7 @@ const MyIssues = () => {
                 {/* Issues List */}
                 <div className="space-y-4">
                     {filteredIssues.length === 0 ? (
-                        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-                            <p className="text-gray-500 text-lg">No issues found</p>
-                        </div>
+                        <IssueFound />
                     ) : (
                         filteredIssues.map((issue) => (
                             <div key={issue._id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">

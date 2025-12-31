@@ -76,9 +76,7 @@ const AllIssues = () => {
 
 
   const {
-    data: allStaff = [],
-    refetch: staffFetch,
-  } = useQuery({
+    data: allStaff = [],refetch: staffFetch  } = useQuery({
     queryKey: ['allStaff'],
     enabled: !!user?.email,
     queryFn: async () => {
