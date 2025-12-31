@@ -73,7 +73,7 @@ const AssignedIssue = () => {
 
     const handleAccept = (issue) => {
 
-         const { _id, category, timeline, assignedStaff } = issue;
+        const { _id, category, timeline, assignedStaff } = issue;
 
 
 
@@ -92,31 +92,44 @@ const AssignedIssue = () => {
             ]
         };
 
-        axiosSecure.patch(`/issues/${_id}`, updateIssue)
-            .then(res => {
-                if (res.data.modifiedCount) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to Accept`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
 
-                    const updateStaff = {
+                axiosSecure.patch(`/issues/${_id}`, updateIssue)
+                    .then(res => {
+                        if (res.data.modifiedCount) {
 
-                        workStatus: 'Busy'
-                    };
+                            const updateStaff = {
 
-                    axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
-                        .then(() => {
-                            issueFetch();
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Issue accepted by staff',
-                                timer: 1000,
-                            });
-                        });
-                }
-            });
+                                workStatus: 'Busy'
+                            };
+
+                            axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
+                                .then(() => {
+                                    issueFetch();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Issue accepted by staff',
+                                        timer: 1000,
+                                    });
+                                });
+                        }
+                    });
+
+            }
+        })
 
     }
     const handleReject = (issue) => {
 
-         const { _id, category, timeline, assignedStaff } = issue;
+        const { _id, category, timeline, assignedStaff } = issue;
 
 
 
@@ -135,26 +148,41 @@ const AssignedIssue = () => {
             ]
         };
 
-        axiosSecure.patch(`/issues/${_id}`, updateIssue)
-            .then(res => {
-                if (res.data.modifiedCount) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to Reject`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
 
-                    const updateStaff = {
 
-                        workStatus: 'Available'
-                    };
+                axiosSecure.patch(`/issues/${_id}`, updateIssue)
+                    .then(res => {
+                        if (res.data.modifiedCount) {
 
-                    axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
-                        .then(() => {
-                            issueFetch();
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Issue rejected',
-                                timer: 1000,
-                            });
-                        });
-                }
-            });
+                            const updateStaff = {
+
+                                workStatus: 'Available'
+                            };
+
+                            axiosSecure.patch(`/staffs/${staff?._id}`, updateStaff)
+                                .then(() => {
+                                    issueFetch();
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Issue rejected',
+                                        timer: 1000,
+                                    });
+                                });
+                        }
+                    });
+
+
+            }
+        })
 
     }
 
@@ -178,20 +206,36 @@ const AssignedIssue = () => {
             ]
         };
 
-        axiosSecure.patch(`/issues/${_id}`, updateIssue)
-            .then(res => {
-                if (res.data.modifiedCount) {
 
-                    
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Resolve`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+                axiosSecure.patch(`/issues/${_id}`, updateIssue)
+                    .then(res => {
+                        if (res.data.modifiedCount) {
+
+
                             issueFetch();
                             Swal.fire({
                                 icon: 'success',
                                 title: `${category} issue is resolved.`,
                                 timer: 1000,
                             });
-                      
-                }
-            });
+
+                        }
+                    });
+
+            }
+        })
+
     };
 
     const handleClosed = (issue) => {
@@ -218,28 +262,44 @@ const AssignedIssue = () => {
 
             ]
         }
-        axiosSecure.patch(`/issues/${_id}`, updateIssue)
-            .then((res) => {
-                if (res.data.modifiedCount) {
-
-                    const updateStaff = {
-
-                        workStatus: 'Available',
-                    }
-
-                    axiosSecure.patch(`/issues/${staff?._id}`, updateStaff)
-                        .then()
-
-                    issueFetch()
 
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: `${category} issue is closed.`,
-                        timer: 1000,
-                    });
-                }
-            })
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Closing this issue ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+                axiosSecure.patch(`/issues/${_id}`, updateIssue)
+                    .then((res) => {
+                        if (res.data.modifiedCount) {
+        
+                            const updateStaff = {
+        
+                                workStatus: 'Available',
+                            }
+        
+                            axiosSecure.patch(`/issues/${staff?._id}`, updateStaff)
+                                .then()
+        
+                            issueFetch()
+        
+        
+                            Swal.fire({
+                                icon: 'success',
+                                title: `${category} issue is closed.`,
+                                timer: 1000,
+                            });
+                        }
+                    })
+
+            }
+        })
     }
 
     // const handleStatus = (data) => {
@@ -403,18 +463,18 @@ const AssignedIssue = () => {
                                     {
                                         issue?.status === 'rejected' &&
                                         <button
-                                                onClick={() => { handleReject(issue) }}
-                                                disabled={issue?.status === 'rejected'}
-                                                className='btn text-red-600 bg-red-300 btn-disabled opacity-50 cursor-not-allowed'
-                                            >
-                                                <GiCrossMark className='text-lg'></GiCrossMark>
-                                                Reject
+                                            onClick={() => { handleReject(issue) }}
+                                            disabled={issue?.status === 'rejected'}
+                                            className='btn text-red-600 bg-red-300 btn-disabled opacity-50 cursor-not-allowed'
+                                        >
+                                            <GiCrossMark className='text-lg'></GiCrossMark>
+                                            Reject
 
                                         </button>}
 
                                     {
 
-                                        issue?.status === 'resolved'  &&
+                                        issue?.status === 'resolved' &&
                                         <button
                                             onClick={() => handleClosed(issue)}
                                             disabled={issue?.status === 'closed'}
@@ -431,7 +491,7 @@ const AssignedIssue = () => {
 
                                     {
 
-                                        issue?.status === 'closed'  &&
+                                        issue?.status === 'closed' &&
                                         <button
                                             onClick={() => handleClosed(issue)}
                                             disabled={issue?.status === 'closed'}

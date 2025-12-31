@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { imageUpload } from '../../Utils';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 export default function MyProfile() {
 
@@ -24,7 +25,7 @@ export default function MyProfile() {
 
     const { data: payments = [] } = useQuery({
         queryKey: ['payment'],
-        
+
         queryFn: async () => {
             const res = await axiosSecure.get(
                 `/payments`
@@ -54,7 +55,7 @@ export default function MyProfile() {
     const closeIssue = issues.filter(p => p.status == 'closed');
 
     const parse = Math.ceil((closeIssue.length / issues.length) * 100)
-    
+
 
     const [isEditing, setIsEditing] = useState(false);
     // const [editData, setEditData] = useState({
@@ -85,11 +86,24 @@ export default function MyProfile() {
             });
 
             await refetchUser();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `Profile Updated`,
+                showConfirmButton: false,
+                timer: 1500
+            });
             setIsEditing(false);
-        } catch (err) {
-            console.error('Profile update failed:', err);
+        } catch (error) {
+            Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: `${error.message}`,
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
-        console.log(user);
+        
     };
 
 
@@ -222,11 +236,11 @@ export default function MyProfile() {
                                     <p className="text-sm text-gray-600">Reports</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${closeIssue.length}` : 0 }</p>
+                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${closeIssue.length}` : 0}</p>
                                     <p className="text-sm text-gray-600">Closed</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${parse} %` : 0 }</p>
+                                    <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${parse} %` : 0}</p>
                                     <p className="text-sm text-gray-600">Success Rate</p>
                                 </div>
                             </div>
@@ -274,11 +288,11 @@ export default function MyProfile() {
                                 )}
                         </div>
 
-                        
+
 
                         {/* Premium Benefits */}
 
-                        { latestPayment.length > 0 && (
+                        {latestPayment.length > 0 && (
                             <div className="mt-6">
                                 <h3 className="text-lg font-semibold mb-2">Pay Reciept</h3>
 

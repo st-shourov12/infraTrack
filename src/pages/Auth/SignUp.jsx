@@ -48,7 +48,7 @@ const SignUp = () => {
                 updateUserProfile({ displayName: data.name, photoURL })
                   .then(() => {
                     Swal.fire({
-                      position: "top-center",
+                      position: "top-end",
                       icon: "success",
                       title: "Sign Up Successfully",
                       showConfirmButton: false,
@@ -58,7 +58,7 @@ const SignUp = () => {
                   })
                   .catch(error => {
                     Swal.fire({
-                      position: "top-center",
+                      position: "top-end",
                       icon: "warning",
                       title: `${error.message}`,
                       showConfirmButton: false,
@@ -69,7 +69,7 @@ const SignUp = () => {
           })
           .catch(() => {
             Swal.fire({
-              position: "top-center",
+              position: "top-end",
               icon: "warning",
               title: "Image upload failed",
               showConfirmButton: false,
@@ -101,7 +101,7 @@ const SignUp = () => {
         axiosSecure.post('/users', userInfo)
           .then(() => {
             Swal.fire({
-              position: "top-center",
+              position: "top-end",
               icon: "success",
               title: "Google Sign Up Successfully",
               showConfirmButton: false,
@@ -112,7 +112,7 @@ const SignUp = () => {
       })
       .catch(error => {
         Swal.fire({
-          position: "top-center",
+          position: "top-end",
           icon: "warning",
           title: `${error.message}`,
           showConfirmButton: false,

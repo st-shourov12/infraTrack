@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import UpdateIssue from '../ReportIssue/UpdateIssue';
 import { NavLink } from 'react-router';
 import IssueFound from '../../components/Shared/IssueFound';
+import Swal from 'sweetalert2';
 
 
 const MyIssues = () => {
@@ -69,10 +70,16 @@ const MyIssues = () => {
         if (window.confirm('Are you sure you want to delete this issue?')) {
             try {
                 await axiosSecure.delete(`/issues/${id}`);
+                Swal.fire('Deleted!', 'issue removed.', 'success');
                 refetch();
             } catch (error) {
-                console.error('Error deleting issue:', error);
-                alert('Failed to delete issue');
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: `${error.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         }
     };
@@ -284,7 +291,7 @@ const MyIssues = () => {
                                                     Delete
                                                 </button>
 
-                                                
+
                                                 <NavLink
                                                     to={`/issues/${issue._id}`}
                                                     className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
