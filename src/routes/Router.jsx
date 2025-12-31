@@ -22,6 +22,10 @@ import Dash from "../pages/DashBoard/Dashboard/Dash";
 import AdminRoute from "./AdminRoute";
 import StaffRoute from "./StaffRoute";
 import AllIssueUser2 from "../pages/AllIssueUser2";
+import Error from "../components/Shared/Error";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import NotFound from "../components/Shared/NotFound";
 
 export const router = createBrowserRouter([
     {
@@ -32,18 +36,28 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <Home></Home>
             },
-            
+
             {
                 path: 'issues',
                 element: <AllIssueUser2 />,
-                
+
+            },
+            {
+                path: 'about',
+                element: <About />,
+
+            },
+            {
+                path: 'contact',
+                element: <Contact />,
+
             },
             {
                 path: 'issues/:issueId',
                 element: <IssueDetailsPage />,
-                
+
             },
-            
+
         ]
     },
     {
@@ -53,6 +67,11 @@ export const router = createBrowserRouter([
     {
         path: '/signUp',
         element: <SignUp />
+    },
+    {
+        path: '*',
+        // element: <Error></Error>,
+        Component: NotFound
     },
     {
         path: '/dashboard',
@@ -77,10 +96,14 @@ export const router = createBrowserRouter([
                 element: <Staff></Staff>,
                 loader: () => fetch('/city.json').then(res => res.json())
             },
+            // {
+            //     path: '*',
+            //     element: <NotFound></NotFound>
+            // },
 
             {
                 path: 'all-issues',
-                element: <AdminRoute><AllIssues /></AdminRoute> 
+                element: <AdminRoute><AllIssues /></AdminRoute>
             },
             {
                 path: `all-issues/:userId`,
@@ -92,7 +115,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'payment-history',
-                element: <AdminRoute><PaymentHistory /></AdminRoute> 
+                element: <AdminRoute><PaymentHistory /></AdminRoute>
             },
             {
                 path: 'payment-success',

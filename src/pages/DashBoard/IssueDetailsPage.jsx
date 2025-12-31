@@ -11,6 +11,7 @@ import { FaVoteYea } from 'react-icons/fa';
 
 
 
+
 // Mock current user - replace with actual auth
 
 
@@ -42,6 +43,10 @@ const IssueDetailsPage = () => {
   });
 
   const currentUser = users[0];
+
+  // if (issueId == issue?._id) {
+  //   return <NotFound />
+  // }
 
 
 

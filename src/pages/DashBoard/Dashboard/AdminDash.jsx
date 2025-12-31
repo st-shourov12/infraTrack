@@ -7,6 +7,7 @@ import { GrCompliance } from 'react-icons/gr';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+import { FaDownload } from 'react-icons/fa';
 // import { RechartsDevtools } from '@recharts/devtools';
 
 const AdminDash = () => {
@@ -441,14 +442,16 @@ const AdminDash = () => {
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment?.userName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">${payment?.amount}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <a
-
-                                                    href={`http://localhost:3000/invoice/${payment?._id}`}
-                                                    target="_blank"
-                                                    className=" text-white flex flex-col items-center justify-center gap-2 btn bg-green-600 hover:bg-green-700"
-                                                >
-                                                    Download
-                                                </a>
+                                                <td className="px-6">
+                                                    <a
+                                                        href={`http://localhost:3000/invoice/${payment?._id}`}
+                                                        target="_blank"
+                                                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300"
+                                                    >
+                                                        <FaDownload />
+                                                        Invoice
+                                                    </a>
+                                                </td>
                                             </td>
                                         </tr>
                                     ))}
@@ -466,8 +469,8 @@ const AdminDash = () => {
                             <table className="w-full">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                       
-                                        
+
+
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th>
@@ -477,8 +480,8 @@ const AdminDash = () => {
                                 <tbody className="divide-y divide-gray-200">
                                     {latestStaff.map((user) => (
                                         <tr key={user?._id} className="hover:bg-gray-50">
-                                            
-                                            
+
+
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.fullName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user?.email}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.department}</td>

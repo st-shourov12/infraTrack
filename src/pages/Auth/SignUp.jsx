@@ -1,268 +1,242 @@
 import { Link, useLocation, useNavigate } from 'react-router'
-import { FcGoogle } from 'react-icons/fc'
 
-import { TbFidgetSpinner } from 'react-icons/tb'
-import useAuth from '../../hooks/useAuth'
-import Heading from '../../components/Shared/Heading'
-import { useForm } from 'react-hook-form'
-import useAxiosSecure from '../../hooks/useAxiosSecure'
-import axios from 'axios'
-
+import { FcGoogle } from 'react-icons/fc';
+import { TbFidgetSpinner } from 'react-icons/tb';
+import { FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi'; // Added icons
+import useAuth from '../../hooks/useAuth';
+import Heading from '../../components/Shared/Heading';
+import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInGoogle, loading } = useAuth();
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const from = location.state || '/';
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // form submit handler
   const handleSignUp = async (data) => {
-
     const { photo } = data;
     const profileImg = photo[0];
 
-    // // 1. store the image in form data
-    // const formData = new FormData();
-    // formData.append('image', profileImg);
-    // // 2. send the photo to store and get the ul
-    // const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
-    // const res =  await axios.post(image_API_URL, formData);
-    // const photoURL = res.data.data.url;
-    // const photoURL = await imageUpload(profileImg);
-    // // create user and show toast and store in mongodb database
-    // createUser(data.email, data.password).
-    // then(res => 
-    //   console.log(res.user)
-    // )
-    // toast.success('User created successfully');
-    // // update user profile to firebase
-    // const userProfile = {
-    //     displayName: data.name,
-    //     photoURL: photoURL
-    // }
-    // await updateUserProfile(userProfile);
-    // navigate(from, { replace: true });
-
-
     createUser(data.email, data.password)
       .then(() => {
-
-        // 1. store the image in form data
         const formData = new FormData();
         formData.append('image', profileImg);
 
-        // 2. send the photo to store and get the ul
-        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
 
         axios.post(image_API_URL, formData)
           .then(res => {
             const photoURL = res.data.data.url;
 
-            // create user in the database
+            // Save user to database
             const userInfo = {
               email: data.email,
               displayName: data.name,
               photoURL: photoURL,
               role: 'user'
-            }
+            };
+
             axiosSecure.post('/users', userInfo)
-              .then(res => {
-                if (res.data.insertedId) {
-                  console.log('user created in the database');
-                }
-              })
-
-
-            // update user profile to firebase
-            const userProfile = {
-              displayName: data.name,
-              photoURL: photoURL
-            }
-
-            updateUserProfile(userProfile)
               .then(() => {
-                console.log('user profile updated done.')
-                navigate(location.state || '/');
-              })
-              .catch(error => console.log(error))
+                // Update Firebase profile
+                updateUserProfile({ displayName: data.name, photoURL })
+                  .then(() => {
+                    Swal.fire({
+                      position: "top-center",
+                      icon: "success",
+                      title: "Sign Up Successfully",
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                    navigate(from, { replace: true });
+                  })
+                  .catch(error => {
+                    Swal.fire({
+                      position: "top-center",
+                      icon: "warning",
+                      title: `${error.message}`,
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                  });
+              });
           })
-
-
-
+          .catch(() => {
+            Swal.fire({
+              position: "top-center",
+              icon: "warning",
+              title: "Image upload failed",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          });
       })
       .catch(error => {
-        console.log(error)
-      })
+        Swal.fire({
+          position: "top-center",
+          icon: "warning",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+  };
 
-  }
-
-  // Handle Google Signin
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = () => {
     signInGoogle()
       .then(result => {
-        console.log(result.user);
-
-
-        // create user in the database
         const userInfo = {
           email: result.user.email,
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
           role: 'user'
-        }
+        };
 
         axiosSecure.post('/users', userInfo)
-          .then(res => {
-            console.log('user data has been stored', res.data)
-            navigate(location.state || '/');
-          })
-
+          .then(() => {
+            Swal.fire({
+              position: "top-center",
+              icon: "success",
+              title: "Google Sign Up Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate(from, { replace: true });
+          });
       })
       .catch(error => {
-        console.log(error)
-      })
+        Swal.fire({
+          position: "top-center",
+          icon: "warning",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+  };
 
-
-  }
   return (
-    <div className='flex justify-center items-center min-h-screen bg-white'>
-      <div className='flex flex-col max-w-md p-6 rounded-xl sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          {<Heading title="Sign Up" subtitle="Welcome to Infratrack"></Heading>}
-        </div>
-        <form
-          onSubmit={handleSubmit(handleSignUp)}
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                {...register("name", { required: true })}
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-blue-500 bg-gray-100 text-gray-900'
-                data-temp-mail-org='0'
-              />
-              {
-                errors.name?.type === 'required' && <p className="text-red-500 my-1 text-xs">Name is required</p>
-              }
-            </div>
-            {/* Image */}
-            <div>
-              <label
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl p-8 md:p-10 border border-white/20">
+          <div className="text-center mb-8">
+            <Heading center={true} title="Create Account" subtitle="Join Infratrack today" />
+          </div>
 
-                className='block mb-2 text-sm font-medium text-gray-700'
-              >
-                Profile Image
-              </label>
-              <input
-                type="file" {...register('photo', { required: true })}
-                accept='image/*'
-                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4  file:rounded-md file:border-0  file:text-sm file:font-semibold  file:bg-blue-50 file:text-blue-700  hover:file:bg-blue-100  bg-gray-100 border border-dashed border-blue-300 rounded-md cursor-pointer  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 p-1'
-              />
-              <p className='mt-1 text-xs text-gray-400'>
-                PNG, JPG or JPEG (max 2MB)
-              </p>
-              {
-                errors.photo?.type === 'required' && <p className="text-red-500 my-1 text-xs">Photo is required</p>
-              }
-            </div>
-            <div>
-              <label className='block mb-2 text-sm'>
-                Email
-              </label>
-              <input
-                type='email'
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address"
-                  }
-                })}
-                placeholder='Email'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-blue-500 bg-gray-100 text-gray-900'
-              />
-              {errors.email && <p className="text-red-500 my-1 text-xs">{errors.email.message}</p>}
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label className='text-sm mb-2'>
-                  Password
-                </label>
+          <form onSubmit={handleSubmit(handleSignUp)} className="space-y-6">
+            <div className="space-y-5">
+              {/* Name */}
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <div className="relative">
+                  <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="text"
+                    {...register("name", { required: "Name is required" })}
+                    placeholder="Enter your name"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+                {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name.message}</p>}
               </div>
-              <input
-                type="password"
-                {...register('password', {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters"
-                  },
-                  pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/
-                    ,
-                    message: 'Password must have at least one small, capital letters and special character'
-                  }
 
-                })}
-                placeholder='Password'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-blue-500 bg-gray-100 text-gray-900'
-              />
-              {errors.password && <p className="text-red-500 my-1 text-xs">{errors.password.message}</p>}
+              {/* Profile Image */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image</label>
+                <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-all">
+                  <FiCamera className="mx-auto text-3xl text-gray-400 mb-2" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    {...register("photo", { required: "Profile photo is required" })}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <p className="text-sm text-gray-600">Click to upload (PNG, JPG up to 2MB)</p>
+                </div>
+                {errors.photo && <p className="text-red-600 text-xs mt-1">{errors.photo.message}</p>}
+              </div>
+
+              {/* Email */}
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <div className="relative">
+                  <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="email"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email address" }
+                    })}
+                    placeholder="Enter your email"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+                {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
+              </div>
+
+              {/* Password */}
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div className="relative">
+                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="password"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: { value: 6, message: "Password must be at least 6 characters" },
+                      pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/, message: "Must include uppercase, lowercase, and special character" }
+                    })}
+                    placeholder="Create a strong password"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+                {errors.password && <p className="text-red-600 text-xs mt-1">{errors.password.message}</p>}
+              </div>
             </div>
-          </div>
 
-          <div>
             <button
-              type='submit'
-              className='bg-blue-500 hover:bg-blue-700 w-full rounded-md py-3 text-white'
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70"
             >
-              {loading ? (
-                <TbFidgetSpinner className='animate-spin m-auto' />
-              ) : (
-                'Sign Up'
-              )}
+              {loading ? <TbFidgetSpinner className="animate-spin mx-auto text-xl" /> : 'Sign Up'}
             </button>
-          </div>
-        </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Signup with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <div
-          onClick={handleGoogleSignIn}
-          className='flex justify-center items-center space-x-2 border my-3 py-2 border-gray-300 rounded-xl cursor-pointer hover:bg-blue-200'
-        >
-          <FcGoogle size={32} />
+          </form>
 
-          <p>Sign Up with Google</p>
-        </div>
-        <p className='px-6 text-sm text-center text-gray-700'>
-          Already have an account?{' '}
-          <Link
-            state={from}
-            to='/login'
-            className='hover:underline font-medium hover:text-blue-500 text-gray-800'
+          <div className="my-6 flex items-center">
+            <div className="flex-1 h-px bg-gray-300"></div>
+            <p className="px-4 text-sm text-gray-600">Or sign up with</p>
+            <div className="flex-1 h-px bg-gray-300"></div>
+          </div>
+
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full flex items-center justify-center gap-3 py-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg"
           >
-            Login
-          </Link>
-          .
-        </p>
+            <FcGoogle size={28} />
+            <span className="font-medium text-gray-800">Continue with Google</span>
+          </button>
+
+          <p className="mt-8 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              state={from}
+              className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

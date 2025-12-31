@@ -214,8 +214,8 @@ const AllIssueUser2 = () => {
 
     return (
         <div className='max-w-5/6 mx-auto'>
-            <h2 className="text-2xl font-bold mb-6 text-center my-5">
-                All Issues : {filteredIssues?.length}
+            <h2 className="text-4xl lg:text-2xl font-bold mb-6 text-center my-5">
+                All Issues 
             </h2>
 
             <div className="flex justify-center mb-4">

@@ -7,7 +7,8 @@ import Features from './Features';
 import HomeCharts from './HomeCharts'
 import Premium from './Premium'
 import HowItWorks from './HowItWorks'
-import BeforeAfter from './BeforeAfter'
+// import BeforeAfter from './BeforeAfter'
+import AppDownload from './AppDownLoad';
 
 const Home = () => {
     return (
@@ -27,7 +28,8 @@ const Home = () => {
             <Premium />
             
                 <HowItWorks></HowItWorks>
-                <BeforeAfter></BeforeAfter>
+                {/* <BeforeAfter></BeforeAfter> */}
+                <AppDownload></AppDownload>
            
         </div>
     );

@@ -164,6 +164,7 @@ const AllIssues = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         // update issue
+        
 
         setIssue(prev =>
           prev.map(issue =>
@@ -210,6 +211,7 @@ const AllIssues = () => {
         await axiosSecure.patch(`/staffs/${staff._id}`, {
           workStatus: 'Busy',
         });
+        Swal.fire('Assigned', '', 'success');
 
 
         staffFetch();
@@ -261,7 +263,7 @@ const AllIssues = () => {
 
   return (
     <div className='max-w-5/6 mx-auto'>
-      <h2 className="text-2xl font-bold mb-6 text-center my-5">
+      <h2 className="text-2xl md:text-4xl font-bold mb-6 text-center my-5">
         All Issues : {getIssue?.length}
       </h2>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Heading from '../../components/Shared/Heading';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { imageUpload } from '../../Utils';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -33,6 +33,7 @@ const Staff = () => {
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+     const navigate = useNavigate()
 
     const { data: users = [] } = useQuery({
         queryKey: ['user', user?.email],
@@ -134,6 +135,7 @@ const Staff = () => {
                                 title: "Application Submitted!",
                                 text: "Your staff application has been submitted successfully. We'll review it soon!",
                             });
+                            navigate('/dashboard/myProfile')
                         })
                         .catch(error => {
                             console.error('Axios error:', error);

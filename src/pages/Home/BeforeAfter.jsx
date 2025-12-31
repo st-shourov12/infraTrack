@@ -38,6 +38,8 @@ const BeforeAfter = () => {
 
                 <SwiperSlide>
 
+                    {/* potholes  service */}
+
                     <div className="relative w-full h-100">
 
                         <img
@@ -75,6 +77,8 @@ const BeforeAfter = () => {
                 </SwiperSlide>
                 <SwiperSlide>
 
+                    {/* broken bench */}
+
                     <div className="relative w-full h-100">
 
                         <img
@@ -111,6 +115,8 @@ const BeforeAfter = () => {
 
                 </SwiperSlide>
                 <SwiperSlide>
+
+                    {/* traffic service */}
 
                     <div className="relative w-full h-100">
 

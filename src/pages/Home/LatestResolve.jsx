@@ -26,7 +26,7 @@ const LatestResolve = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {issues.map((issue, i) => (
-                    <Link to={`/issues/${issue?._id}`} key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+                    <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
                         <figure className="px-6 pt-6 relative">
                             <img
                                 src={issue?.photo}
@@ -101,6 +101,7 @@ const LatestResolve = () => {
                             </div>
 
                             {/* Date */}
+
                             <div className="text-xs text-gray-400 mt-2">
                                 Reported: {new Date(issue?.createdAt).toLocaleDateString('en-US', {
                                     year: 'numeric',
@@ -108,10 +109,15 @@ const LatestResolve = () => {
                                     day: 'numeric'
                                 })}
                             </div>
+                            <Link 
+                                to={`/issues/${issue._id}`}
+                                className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300">
+                                View Details
+                            </Link>
 
                            
                         </div>
-                    </Link>
+                    </div>
                 ))}
 
             </div>

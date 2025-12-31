@@ -6,7 +6,7 @@ const Premium = () => {
     return (
         <div className='bg-linear-to-r from-blue-600 to-orange-500 py-20'>
            
-            <h2 className='text-3xl font-bold mb-2 text-center text-white'>Premium Subscription</h2>
+            <h2 className='text-3xl font-bold mb-2 text-center text-white'>Premiumship Benefits</h2>
             <p className="text-white text-center">Buy Premium Subscription for better Experience</p>
 
             <div className='max-w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 mt-10'>
