@@ -13,14 +13,14 @@ import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
-import useRole from '../hooks/useRole';
+// import useRole from '../hooks/useRole';
 
 const DashBoard = () => {
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const { role } = useRole();
-    console.log(role);
+
+
 
     const { data: users = [] } = useQuery({
         queryKey: ['user', user?.email],
@@ -35,7 +35,9 @@ const DashBoard = () => {
 
     const isAdmin = users.some(u => u.role === 'admin');
     const isStaff = users.some(u => u.role === 'staff');
-    // const isUser = users.some(u => u.role === 'user');
+    const isUser = users.some(u => u.role === 'user');
+
+
 
 
 
@@ -84,7 +86,7 @@ const DashBoard = () => {
                                 <span className="is-drawer-close:hidden">Report Issue</span>
                             </Link>
                         </li>
-                        {role === 'user' &&
+                        {isUser &&
                             <li>
                                 <Link to={'/dashboard/my-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="My Issues">
                                     {/* My Issues icon */}
@@ -94,7 +96,7 @@ const DashBoard = () => {
                             </li>
                         }
                         {
-                            role === 'user' && <li>
+                            isUser && <li>
                                 <Link to={'/dashboard/staff'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="Be a Staff">
                                     {/* My Issues icon */}
                                     <GrUserWorker className='text-lg' />
@@ -102,7 +104,7 @@ const DashBoard = () => {
                                 </Link>
                             </li>
                         }
-                        {role === 'admin' && 
+                        {isAdmin && 
                         <>
                             <li>
                                 <Link to={'/dashboard/all-issues'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right py-2" data-tip="All Issues">

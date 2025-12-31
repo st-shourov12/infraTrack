@@ -8,26 +8,33 @@ import useAuth from '../../../hooks/useAuth';
 const StaffDash = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    // const { data: users = [] } = useQuery({
-    //     queryKey: ['user', user?.email],
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/users?email=${user?.email}`)
-    //         return res.data
-    //     }
-    // });
+     const { data: staffs = [] } = useQuery({
+        queryKey: ['staffs', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/staffs?email=${user?.email}`);
+            return res.data;
+        }
+    })
 
-    const { data: myIssues = [] } = useQuery({
+    const staff = staffs[0]
+
+    const { data: assignIssue = [], } = useQuery({
         queryKey: ['issues', user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/issues`)
-            return res.data
+            const res = await axiosSecure.get(`/issues`);
+            return res.data;
         }
-    }
-    )
+    })
+
+    const issues = assignIssue.filter(p => p?.assignedStaff?.email === staff?.email)
+    console.log(issues);
 
 
-    const issues = myIssues.filter(p => p.assignedStaff?.email === user?.email);
-    
+
+
+
+
+
 
 
 
@@ -56,13 +63,7 @@ const StaffDash = () => {
     const inProgressIssue = issues.filter(p => p.status === 'in-progress')
 
 
-    const latestIssues = myIssues.slice(0,6)
-    // const latestPayments = payments 
-
-    // const totalAmount = payments?.reduce(
-    //     (sum, p) => sum + Number(p.amount || 0),
-    //     0
-    // ) || 0;
+    const latestIssues = issues.slice(0, 6)
 
 
 
@@ -90,41 +91,6 @@ const StaffDash = () => {
 
 
 
-    // const monthlyData = [
-    //     { month: 'Jul', issues: 45, resolved: 38, payment: 8500 },
-    //     { month: 'Aug', issues: 52, resolved: 44, payment: 9200 },
-    //     { month: 'Sep', issues: 48, resolved: 42, payment: 8800 },
-    //     { month: 'Oct', issues: 51, resolved: 47, payment: 9800 },
-    //     { month: 'Nov', issues: 39, resolved: 35, payment: 7650 },
-    //     { month: 'Dec', issues: 12, resolved: 8, payment: 1800 }
-    // ];
-
-    // Latest issues
-    //   const latestIssues = [
-    //     { id: '#2847', title: 'Payment gateway error', status: 'Pending', priority: 'High', date: '2025-12-24' },
-    //     { id: '#2846', title: 'UI bug on mobile', status: 'Resolved', priority: 'Medium', date: '2025-12-24' },
-    //     { id: '#2845', title: 'Login issues', status: 'Pending', priority: 'Critical', date: '2025-12-23' },
-    //     { id: '#2844', title: 'Feature request - Dark mode', status: 'Rejected', priority: 'Low', date: '2025-12-23' },
-    //     { id: '#2843', title: 'Database sync issue', status: 'Resolved', priority: 'High', date: '2025-12-22' }
-    //   ];
-
-    // Latest payments
-    //   const latestPayments = [
-    //     { id: 'PAY-1234', user: 'John Doe', amount: 250, method: 'Credit Card', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1233', user: 'Jane Smith', amount: 180, method: 'PayPal', date: '2025-12-24', status: 'Completed' },
-    //     { id: 'PAY-1232', user: 'Mike Johnson', amount: 320, method: 'Bank Transfer', date: '2025-12-23', status: 'Pending' },
-    //     { id: 'PAY-1231', user: 'Sarah Williams', amount: 150, method: 'Credit Card', date: '2025-12-23', status: 'Completed' },
-    //     { id: 'PAY-1230', user: 'Robert Brown', amount: 290, method: 'PayPal', date: '2025-12-22', status: 'Completed' }
-    //   ];
-
-    // Latest users
-    //   const latestUsers = [
-    //     { id: 'USR-5678', name: 'Emily Davis', email: 'emily.d@email.com', date: '2025-12-24', issues: 2 },
-    //     { id: 'USR-5677', name: 'David Wilson', email: 'david.w@email.com', date: '2025-12-24', issues: 1 },
-    //     { id: 'USR-5676', name: 'Lisa Anderson', email: 'lisa.a@email.com', date: '2025-12-23', issues: 3 },
-    //     { id: 'USR-5675', name: 'James Martinez', email: 'james.m@email.com', date: '2025-12-23', issues: 0 },
-    //     { id: 'USR-5674', name: 'Maria Garcia', email: 'maria.g@email.com', date: '2025-12-22', issues: 1 }
-    //   ];
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -170,7 +136,10 @@ const StaffDash = () => {
                                 <p className="text-gray-500 text-sm font-medium">Closed Issues</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.closedIssues}</h3>
                                 <p className="text-gray-600 text-sm mt-2">
-                                    {((stats.closedIssues / stats.totalIssues) * 100).toFixed(1)}% closing rate
+                                    {stats.totalIssues
+                                        ? ((stats.closedIssues / stats.totalIssues) * 100).toFixed(1)
+                                        : 0}
+                                    % closing rate
                                 </p>
                             </div>
                             <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />

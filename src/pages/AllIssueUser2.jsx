@@ -10,6 +10,7 @@ import { FaVoteYea } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import useAuth from '../hooks/useAuth';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import IssueFound from '../components/Shared/IssueFound';
 
 
 
@@ -216,6 +217,8 @@ const AllIssueUser2 = () => {
         <div className='max-w-5/6 mx-auto'>
             <h2 className="text-4xl lg:text-2xl font-bold mb-6 text-center my-5">
                 All Issues 
+
+
             </h2>
 
             <div className="flex justify-center mb-4">
@@ -304,9 +307,15 @@ const AllIssueUser2 = () => {
                 )}
             </div>
 
-
             {
+                
+
+
+            
                 loading ? <LoadingSpinner />:
+
+                filteredIssues.length === 0 ? 
+                <IssueFound></IssueFound> :
 
 
 

@@ -53,7 +53,7 @@ export default function MyProfile() {
 
     const closeIssue = issues.filter(p => p.status == 'closed');
 
-    const parse = (closeIssue.length / issues.length) * 100
+    const parse = Math.ceil((closeIssue.length / issues.length) * 100)
     
 
     const [isEditing, setIsEditing] = useState(false);

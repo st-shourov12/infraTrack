@@ -9,6 +9,7 @@
 ## 🔗 Github URL
 
 **Website GitHub Link:** [https://github.com/st-shourov12/infraTrack](https://github.com/st-shourov12/infraTrack)
+
 **Server Github Link:** [https://github.com/st-shourov12/infraTrack-Server](https://github.com/st-shourov12/infraTrack-Server)
 ---
 ---
@@ -16,6 +17,7 @@
 ## 🔗 Live Site URL
 
 **Website Live Link:** [https://infratrackservice.netlify.app](https://infratrackservice.netlify.app)
+
 **Server Live Link:** [https://infratrack-server.vercel.app](https://infratrack-server.vercel.app/) 
 ---
 
@@ -357,11 +359,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact & Support
 
-- **Email:** support@infratrack.com
+- **Email:** [Email](https://shourovsc38@gmail.com)
 - **Website:** [https://infratrackservice.netlify.app](https://infratrackservice.netlify.app)
-- **GitHub:** [https://github.com/st-shourov12](https://github.com/st-shourov12)
-- **Facebook:** [https://facebook.com/infratrack](https://www.facebook.com/mirazulislam.shourov)
-- **FaLinkedinIn:** [https://twitter.com/infratrack](https://www.linkedin.com/in/miraz-shourov/)
+- **GitHub:** [Github](https://github.com/st-shourov12)
+- **Facebook:** [Facebook](https://www.facebook.com/mirazulislam.shourov)
+- **LinkedinIn:** [LinkedIN](https://www.linkedin.com/in/miraz-shourov/)
 
 ---
 

@@ -87,10 +87,11 @@ const Staff2 = () => {
                 profileImage
             } = data;
 
-            const profileImgFile = profileImage?.[0];
-            const profilePhotoURL = profileImgFile
-                ? await imageUpload(profileImgFile)
-                : '';
+            const profileImgFile = profileImage[0];
+
+
+            const profilePhotoURL = profileImgFile ? await imageUpload(profileImgFile) : currentUser?.photoURL || '';
+
 
             const confirm = await Swal.fire({
                 title: "Create Staff Account?",
@@ -102,39 +103,43 @@ const Staff2 = () => {
 
             if (!confirm.isConfirmed) return;
 
-          
-            await axiosSecure.post('/create-user', {
+
+            axiosSecure.post('/create-user', {
                 email,
                 password,
                 role: 'staff',
                 displayName: fullName,
                 profilePhoto: profilePhotoURL,
 
-        
-            });
 
-            const staffApplicationData = {
-                fullName,
-                email,
-                phone,
-                nid,
-                department,
-                qualification,
-                experience: parseInt(experience),
-                preferredRegion: region,
-                preferredDistrict: district,
-                preferredUpzila: upzila,
-                password,
-                profilePhoto: profilePhotoURL,
-                applicationStatus: 'approved',
-                appliedAt: new Date().toISOString(),
-                userId: currentUser?._id,
-                userRole: 'staff',
-            };
+            }).then((res) => {
 
-            await axiosSecure.post('/staffs', staffApplicationData);
+                const staffApplicationData = {
+                    fullName,
+                    email,
+                    phone,
+                    nid,
+                    department,
+                    qualification,
+                    experience: parseInt(experience),
+                    preferredRegion: region,
+                    preferredDistrict: district,
+                    preferredUpzila: upzila,
+                    password,
+                    profilePhoto: profilePhotoURL,
+                    applicationStatus: 'approved',
+                    appliedAt: new Date().toISOString(),
+                    uid: res.data.uid,
+                    userRole: 'staff',
+                };
 
-            Swal.fire("Success", "Staff created successfully", "success");
+                axiosSecure.post('/staffs', staffApplicationData).then(()=>{
+
+                    Swal.fire("Success", "Staff created successfully", "success");
+                });
+
+            })
+
 
         } catch (error) {
             console.error(error);
@@ -146,105 +151,6 @@ const Staff2 = () => {
         }
     };
 
-
-    // const handleFormSubmit = async (data) => {
-    //     try {
-    //         const {
-    //             fullName,
-    //             email,
-    //             phone,
-    //             nid,
-    //             department,
-    //             qualification,
-    //             experience,
-    //             region,
-    //             district,
-    //             upzila,
-    //             password,
-    //             profileImage
-    //         } = data;
-
-    //         const profileImgFile = profileImage?.[0];
-    //         const profilePhotoURL = profileImgFile
-    //             ? await imageUpload(profileImgFile)
-    //             : currentUser?.photoURL || '';
-
-            // const staffApplicationData = {
-            //     fullName,
-            //     email,
-            //     phone,
-            //     nid,
-            //     department,
-            //     qualification,
-            //     experience: parseInt(experience),
-            //     preferredRegion: region,
-            //     preferredDistrict: district,
-            //     preferredUpzila: upzila,
-            //     password,
-            //     profilePhoto: profilePhotoURL,
-            //     applicationStatus: 'approved',
-            //     appliedAt: new Date().toISOString(),
-            //     userId: currentUser?._id,
-            //     userRole: 'staff',
-            // };
-
-    //         const result = await Swal.fire({
-    //             title: "Submit Application?",
-    //             text: "You are appointing a staff member!",
-    //             icon: "question",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#3085d6",
-    //             cancelButtonColor: "#d33",
-    //             confirmButtonText: "Yes, Submit!"
-    //         });
-
-    //         if (!result.isConfirmed) return;
-
-
-
-    //             await axiosSecure.post('/create-user', {
-    //                 email: data.email,
-    //                 password: data.password,
-    //                 role: 'staff',        // user / staff
-    //                 displayName: data.name,
-    //             });
-
-    //             Swal.fire('Success', 'User created successfully', 'success');
-
-
-
-
-    //         await updateUserProfile({
-    //             displayName: fullName,
-    //             photoURL: profilePhotoURL
-    //         });
-
-
-    //         await axiosSecure.post('/users', {
-    //             email,
-    //             displayName: fullName,
-    //             photoURL: profilePhotoURL,
-    //             role: 'staff'
-    //         });
-
-
-    //         await axiosSecure.post('/staffs', staffApplicationData);
-
-    //         Swal.fire({
-    //             icon: "success",
-    //             title: "Application Submitted!",
-    //             text: "Your staff application has been submitted successfully. We'll review it soon!",
-    //         });
-
-    //     } catch (error) {
-    //         console.error(error);
-    //         Swal.fire({
-    //             icon: "error",
-    //             title: "Submission Failed",
-    //             text: error?.response?.data?.message || error.message || "Something went wrong",
-    //         });
-    //     }
-    // };
 
 
     return (

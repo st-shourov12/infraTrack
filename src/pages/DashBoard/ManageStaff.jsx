@@ -432,16 +432,22 @@ const ManageStaff = () => {
             confirmButtonText: 'Yes, reject!',
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure
-                    .patch(`/staffs/${staff._id}`, {
-                        applicationStatus: 'rejected',
-                    })
-                    .then((res) => {
-                        if (res.data.modifiedCount) {
-                            refetch();
-                            Swal.fire('Rejected', '', 'warning');
-                        }
-                    });
+
+                if(staff?.userId){
+
+                    axiosSecure
+                        .patch(`/staffs/${staff._id}`, {
+                            applicationStatus: 'rejected',
+                        })
+                        .then((res) => {
+                            if (res.data.modifiedCount) {
+                                refetch();
+                                Swal.fire('Rejected', '', 'warning');
+                            }
+                        });
+                }
+                Swal.fire('Directed appointed staff cant be rejected', '', 'warning');
+
             }
         });
     };
@@ -456,18 +462,28 @@ const ManageStaff = () => {
             password,
         });
 
-        if (res.data.modifiedCount) {
-            await axiosSecure.patch(`/users/${selectedStaff?.userId}`, {role : 'staff'})
-            refetch();
-            setShowAppModal(false);
-            setSelectedStaff(null);
-            resetAdd();
+         selectedStaff?.userId 
 
+        if (res.data.modifiedCount) {
+            if (selectedStaff?.userId) {
+                await axiosSecure.patch(`/users/${selectedStaff?.userId}`, {role : 'staff'})
+                refetch();
+                setShowAppModal(false);
+                setSelectedStaff(null);
+                resetAdd();
+    
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Staff Approved',
+                    timer: 2000,
+                });
+                
+            }
             Swal.fire({
-                icon: 'success',
-                title: 'Staff Approved',
-                timer: 2000,
-            });
+                    icon: 'success',
+                    title: 'Added by admin already',
+                    timer: 2000,
+                });
         }
     };
 
