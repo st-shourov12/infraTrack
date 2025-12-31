@@ -79,7 +79,7 @@ const PaymentSuccess = () => {
 
             {paymentInfo.paymentId && (
                 <a
-                    href={`http://localhost:3000/invoice/${paymentInfo.paymentId}`}
+                    href={`https://infratrack-server.vercel.app/invoice/${paymentInfo.paymentId}`}
                     target="_blank"
                     className="btn btn-primary mt-4"
                 >

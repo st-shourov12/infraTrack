@@ -408,7 +408,7 @@ const PaymentHistory = () => {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <a
-                                                        href={`http://localhost:3000/invoice/${payment?._id}`}
+                                                        href={`https://infratrack-server.vercel.app/invoice/${payment?._id}`}
                                                         target="_blank"
                                                         className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-300"
                                                     >

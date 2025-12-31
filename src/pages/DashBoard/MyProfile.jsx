@@ -285,7 +285,7 @@ export default function MyProfile() {
                                 {latestPayment.map(p => (
                                     <a
                                         key={p._id}
-                                        href={`http://localhost:3000/invoice/${p._id}`}
+                                        href={`https://infratrack-server.vercel.app/invoice/${p._id}`}
                                         target="_blank"
                                         className=" text-white flex flex-col items-center rounded-xl justify-center gap-2 btn bg-green-600 hover:bg-green-700"
                                     >

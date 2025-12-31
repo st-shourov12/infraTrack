@@ -28,7 +28,7 @@ const Hero = () => {
         queryKey: ['issues'],
         queryFn: async () => {
         const res = await axiosSecure.get(`/issues`);
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data.issues || [];
         },
     });
     const { user} = useAuth();
@@ -55,7 +55,7 @@ const Hero = () => {
 
 
 
-  const closedIssue = allIssues.filter(p => p.status === 'closed');
+  const closedIssue = allIssues?.filter(p => p.status === 'closed');
   const parse = Math.ceil(Number(closedIssue?.length) / Number(allIssues.length) * 100)
 
 
@@ -316,12 +316,7 @@ const Hero = () => {
                                                 </svg>
                                             </Link>
 
-                                            {/* <Link
-                                                to={slide.secondaryBtn.link}
-                                                className="inline-flex items-center justify-center px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border-2 border-white/50 backdrop-blur-sm hover:border-white transition-all duration-300"
-                                            >
-                                                {slide.secondaryBtn.text}
-                                            </Link> */}
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -440,12 +435,7 @@ const Hero = () => {
                                                 </svg>
                                             </Link>
 
-                                            {/* <Link
-                                                to={slide.secondaryBtn.link}
-                                                className="inline-flex items-center justify-center px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border-2 border-white/50 backdrop-blur-sm hover:border-white transition-all duration-300"
-                                            >
-                                                {slide.secondaryBtn.text}
-                                            </Link> */}
+                                            
                                         </div>
                                     </div>
                                 </div>

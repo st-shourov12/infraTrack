@@ -195,7 +195,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow bg-white/90 backdrop-blur-md rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-1 p-4 shadow bg-white/90 backdrop-blur-md rounded-box w-52"
           >
             {menuItems}
           </ul>
@@ -203,7 +203,7 @@ const Navbar = () => {
 
         {/* Logo + Name */}
         <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             InfraTrack
           </span>
         </Link>
@@ -272,7 +272,7 @@ const Navbar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-0 hover:from-blue-700 hover:to-indigo-700 shadow-md px-8"
+            className="btn bg-linear-to-r from-blue-600 to-indigo-600 text-white border-0 hover:from-blue-700 hover:to-indigo-700 shadow-md px-8"
           >
             Login
           </Link>

@@ -419,7 +419,7 @@ const UserDash = () => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <a
 
-                                                    href={`http://localhost:3000/invoice/${payment?._id}`}
+                                                    href={`https://infratrack-server.vercel.app/invoice/${payment?._id}`}
                                                     target="_blank"
                                                     className=" text-white flex flex-col items-center justify-center gap-2 btn bg-green-600 hover:bg-green-700"
                                                 >
