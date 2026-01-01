@@ -113,6 +113,8 @@ const UserDash = () => {
 
     const monthlyPaymentData = getMonthlyPaymentData(payment);
 
+    const parse = Math.ceil((rejectedIssue.length / issues.length) * 100)
+
 
 
 
@@ -235,7 +237,7 @@ const UserDash = () => {
                                 <p className="text-gray-500 text-sm font-medium">Rejected</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{isNaN(rejectedIssue.length) ? 0 : rejectedIssue.length}</h3>
                                 <p className="text-gray-600 text-sm mt-2">
-                                    {((stats.rejectedIssues / stats.totalIssues) * 100).toFixed(1)}% rejected rate
+                                    {parse}% rejected rate
                                 </p>
                             </div>
                             <IoCloseCircleSharp className="w-12 h-12 text-orange-700 opacity-80" />

@@ -9,8 +9,18 @@ import Premium from './Premium'
 import HowItWorks from './HowItWorks'
 // import BeforeAfter from './BeforeAfter'
 import AppDownload from './AppDownLoad';
+import useAuth from '../../hooks/useAuth';
+import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 
 const Home = () => {
+
+
+    const {loading} =useAuth();
+
+    if (loading) {
+        return <LoadingSpinner/>
+        
+    }
     return (
         <div>
 

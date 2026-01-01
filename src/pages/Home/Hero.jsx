@@ -376,7 +376,7 @@ const Hero = () => {
                                                     className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300"
                                                 >
                                                     <div className="text-2xl md:text-3xl font-bold text-orange-400">
-                                                        Responsible
+                                                        50+
                                                         
                                                     </div>
                                                     <div className="text-sm text-gray-300 mt-1">

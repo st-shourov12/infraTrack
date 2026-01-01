@@ -1,13 +1,14 @@
 import React from 'react';
 import Heading from '../../components/Shared/Heading';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData, useNavigate } from 'react-router';
+import { useLoaderData, useNavigate, useNavigation } from 'react-router';
 
 import { imageUpload } from '../../Utils';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 
 
 const ReportIssue = () => {
@@ -34,7 +35,7 @@ const ReportIssue = () => {
         }
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
 
 
@@ -84,16 +85,16 @@ const ReportIssue = () => {
             category,
             description,
             photo: photoURL,
-            priority : priorities,
+            priority: priorities,
             region,
             district,
             upzila,
             location,
             userRole: xrole,
             status: 'pending',
-            upvoted : 0 ,
-            upvotedBy: [], 
-            
+            upvoted: 0,
+            upvotedBy: [],
+
             boosted: false,
             timeline: [
                 {
@@ -128,7 +129,7 @@ const ReportIssue = () => {
                         .then(res => {
                             console.log('Issue saved', res.data);
 
-                            
+
 
                             Swal.fire({
                                 icon: "success",
@@ -163,6 +164,15 @@ const ReportIssue = () => {
         });
         // post issue data to the server
     }
+
+
+    const navigation = useNavigation();
+    const isLoading = navigation.state === 'loading';
+
+    if (isLoading) {
+        return <LoadingSpinner />
+    }
+
     return (
         <div className='max-w-5/6 mx-auto py-5'>
 
@@ -174,7 +184,7 @@ const ReportIssue = () => {
                         <fieldset className='flex justify-between items-center gap-5'>
                             <fieldset className='w-full fieldset flex flex-col justify-between gap-2 '>
                                 <label htmlFor="username" className='label'>Reporter Name</label>
-                                <input className=' w-full input' type="text" id="username" {...register("reporterName")} defaultValue={user?.displayName} readOnly/>
+                                <input className=' w-full input' type="text" id="username" {...register("reporterName")} defaultValue={user?.displayName} readOnly />
                             </fieldset>
                             <fieldset className='w-full fieldset flex flex-col justify-between gap-2 '>
                                 <label htmlFor="email" className='label'>Email</label>

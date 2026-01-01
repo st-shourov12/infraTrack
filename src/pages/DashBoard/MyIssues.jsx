@@ -66,22 +66,46 @@ const MyIssues = () => {
         setShowEditModal(true);
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this issue?')) {
-            try {
-                await axiosSecure.delete(`/issues/${id}`);
-                Swal.fire('Deleted!', 'issue removed.', 'success');
-                refetch();
-            } catch (error) {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "warning",
-                    title: `${error.message}`,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+    // const handleDelete = async (id) => {
+    //     if (window.confirm('Are you sure you want to delete this issue?')) {
+    //         try {
+    //             await axiosSecure.delete(`/issues/${id}`);
+    //             Swal.fire('Deleted!', 'issue removed.', 'success');
+    //             refetch();
+    //         } catch (error) {
+    //             Swal.fire({
+    //                 position: "top-end",
+    //                 icon: "warning",
+    //                 title: `${error.message}`,
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             });
+    //         }
+    //     }
+    // };
+
+    const handleDelete = (issue) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Delete ${issue?.category}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, reject!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/issues/${issue?._id}`)
+                    .then(() => {
+                        refetch();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Deleted!",
+
+                        });
+                    })
+
             }
-        }
+        })
     };
 
     // const handleViewDetails = (id) => {
@@ -228,14 +252,14 @@ const MyIssues = () => {
                         <IssueFound />
                     ) : (
                         filteredIssues.map((issue) => (
-                            <div key={issue._id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div key={issue?._id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                                 <div className="p-6">
                                     <div className="flex flex-col md:flex-row gap-6">
                                         {/* Issue Image */}
                                         <div className="shrink-0">
                                             <img
-                                                src={issue.photo}
-                                                alt={issue.category}
+                                                src={issue?.photo}
+                                                alt={issue?.category}
                                                 className="w-full md:w-48 h-48 object-cover rounded-lg"
                                             />
                                         </div>
@@ -245,29 +269,29 @@ const MyIssues = () => {
                                             <div className="flex items-start justify-between mb-3">
                                                 <div>
                                                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                                                        {issue.category}
+                                                        {issue?.category}
                                                     </h3>
                                                     <div className="flex items-center gap-3">
-                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(issue.status)}`}>
-                                                            {issue.status.charAt(0).toUpperCase() + issue.status.slice(1)}
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(issue?.status)}`}>
+                                                            {issue?.status.charAt(0).toUpperCase() + issue?.status.slice(1)}
                                                         </span>
-                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor(issue.priority)}`}>
-                                                            {issue.priority} Priority
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityColor(issue?.priority)}`}>
+                                                            {issue?.priority} Priority
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <p className="text-gray-600 mb-4 line-clamp-2">{issue.description}</p>
+                                            <p className="text-gray-600 mb-4 line-clamp-2">{issue?.description}</p>
 
                                             <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
                                                 <div>
                                                     <span className="text-gray-500">Location:</span>
-                                                    <span className="ml-2 text-gray-900">{issue.upzila}, {issue.district}</span>
+                                                    <span className="ml-2 text-gray-900">{issue?.upzila}, {issue?.district}</span>
                                                 </div>
                                                 <div>
                                                     <span className="text-gray-500">Region:</span>
-                                                    <span className="ml-2 text-gray-900">{issue.region}</span>
+                                                    <span className="ml-2 text-gray-900">{issue?.region}</span>
                                                 </div>
                                             </div>
 
@@ -284,7 +308,7 @@ const MyIssues = () => {
                                                 )}
 
                                                 <button
-                                                    onClick={() => handleDelete(issue._id)}
+                                                    onClick={() => handleDelete(issue)}
                                                     className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                                                 >
                                                     <Trash2 size={18} />
@@ -293,7 +317,7 @@ const MyIssues = () => {
 
 
                                                 <NavLink
-                                                    to={`/issues/${issue._id}`}
+                                                    to={`/issues/${issue?._id}`}
                                                     className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                                                     <Eye size={18} />
                                                     View Details

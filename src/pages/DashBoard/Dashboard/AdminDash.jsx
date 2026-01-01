@@ -256,7 +256,7 @@ const AdminDash = () => {
                                 <p className="text-gray-500 text-sm font-medium">Rejected</p>
                                 <h3 className="text-3xl font-bold text-gray-900 mt-2">{isNaN(rejectedIssue.length) ? 0 : rejectedIssue.length}</h3>
                                 <p className="text-gray-600 text-sm mt-2">
-                                    {((rejectedIssue.length / stats.totalIssues) * 100).toFixed(1)}% rejected rate
+                                    {Math.ceil((rejectedIssue.length / stats?.totalIssues) * 100)}% rejected rate
 
                                 </p>
                             </div>
