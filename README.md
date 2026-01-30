@@ -16,7 +16,7 @@
 
 ## 🔗 Live Site URL
 
-**Website Live Link:** [https://infratrackservice.netlify.app](https://infratrackservice.netlify.app)
+**Website Live Link:** [https://infra-track.vercel.app](https://infra-track.vercel.app/)
 
 **Server Live Link:** [https://infratrack-server.vercel.app](https://infratrack-server.vercel.app/) 
 ---
@@ -26,8 +26,35 @@
 For testing admin features, use the following credentials:
 
 ```
-Admin Email: admin@infratrack.com
-Admin Password: Admin@123456
+Admin Email: admin@admin.com
+Admin Password: 123@aA
+```
+
+**Note:** Please do not modify or delete critical data when testing.
+
+---
+
+## 🔐 Staff Credentials
+
+For testing staff features, use the following credentials:
+
+```
+Staff Email: staff@astaff.com
+Staff Password: 123@aA
+```
+
+**Note:** Please do not modify or delete critical data when testing.
+
+---
+
+
+## 🔐 Citizen Credentials
+
+For testing citizen features, use the following credentials:
+
+```
+Citizen Email: user@user.com
+Citizen Password: 123@aA
 ```
 
 **Note:** Please do not modify or delete critical data when testing.
@@ -360,7 +387,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact & Support
 
 - **Email:** [Email](https://shourovsc38@gmail.com)
-- **Website:** [https://infratrackservice.netlify.app](https://infratrackservice.netlify.app)
+- **Website:** [https://infra-track.vercel.app/](https://infra-track.vercel.app/)
 - **GitHub:** [Github](https://github.com/st-shourov12)
 - **Facebook:** [Facebook](https://www.facebook.com/mirazulislam.shourov)
 - **LinkedinIn:** [LinkedIN](https://www.linkedin.com/in/miraz-shourov/)
@@ -391,4 +418,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for Better Cities**
 
-© 2025 InfraTrack. All Rights Reserved.
+© 2026 InfraTrack. All Rights Reserved.

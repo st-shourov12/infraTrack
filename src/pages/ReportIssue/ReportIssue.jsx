@@ -166,13 +166,6 @@ const ReportIssue = () => {
     }
 
 
-    const navigation = useNavigation();
-    const isLoading = navigation.state === 'loading';
-
-    if (isLoading) {
-        return <LoadingSpinner />
-    }
-
     return (
         <div className='max-w-5/6 mx-auto py-5'>
 
