@@ -26,20 +26,19 @@ const Footer = () => {
         
     ];
 
-    const resources = [
-        { name: 'Help Center', path: '/help' },
-        { name: 'API Documentation', path: '/api-docs' },
+    // const resources = [
+    //     { name: 'Help Center', path: '/help' },
+    //     { name: 'API Documentation', path: '/api-docs' },
     
-        { name: 'Blog', path: '/blog' },
-        { name: 'Guidelines', path: '/guidelines' },
-        { name: 'FAQ', path: '/faq' }
-    ];
+    //     { name: 'Blog', path: '/blog' },
+    //     { name: 'Guidelines', path: '/guidelines' },
+    //     { name: 'FAQ', path: '/faq' }
+    // ];
 
     const legal = [
-        { name: 'Privacy Policy', path: '/privacy' },
-        { name: 'Terms of Service', path: '/terms' },
-        { name: 'Cookie Policy', path: '/cookies' },
-        { name: 'Data Security', path: '/security' }
+        { name: 'About Us', path: '/about' },
+        { name: 'Contact Us', path: '/contact' },
+        
     ];
 
     const socialLinks = [
@@ -144,16 +143,16 @@ const Footer = () => {
 
                     {/* Resources */}
                     <div>
-                        <h4 className="text-white font-bold text-lg mb-4">Resources</h4>
+                        <h4 className="text-white font-bold text-lg mb-4">Social Links</h4>
                         <ul className="space-y-3">
-                            {resources.map((resource, index) => (
+                            {socialLinks.map((social, index) => (
                                 <li key={index}>
-                                    <Link
-                                        to={resource.path}
+                                    <a
+                                        href={social?.url}
                                         className="text-gray-400 hover:text-white hover:pl-2 transition-all duration-300 inline-block"
                                     >
-                                        {resource.name}
-                                    </Link>
+                                        {social?.name}
+                                    </a>
                                 </li>
                             ))}
                         </ul>
@@ -165,12 +164,12 @@ const Footer = () => {
                         <ul className="space-y-3">
                             {legal.map((item, index) => (
                                 <li key={index}>
-                                    <button
+                                    <Link
                                         to={item.path}
                                         className="text-gray-400 hover:text-white hover:pl-2 transition-all duration-300 inline-block"
                                     >
                                         {item.name}
-                                    </button>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -222,17 +221,14 @@ const Footer = () => {
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <Link to="/privacy" className="hover:text-white transition-colors duration-300">
-                                Privacy
-                            </Link>
+                            <a href='https://github.com/st-shourov12/infraTrack' className="hover:text-white transition-colors duration-300">
+                                Repository
+                            </a>
+                           
                             <span>•</span>
-                            <Link to="/terms" className="hover:text-white transition-colors duration-300">
-                                Terms
-                            </Link>
-                            <span>•</span>
-                            <Link to="/sitemap" className="hover:text-white transition-colors duration-300">
+                            <a href='https://github.com/st-shourov12/infraTrack?tab=readme-ov-file' className="hover:text-white transition-colors duration-300">
                                 Sitemap
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

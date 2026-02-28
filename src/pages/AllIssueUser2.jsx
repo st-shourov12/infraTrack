@@ -64,12 +64,12 @@ const AllIssueUser2 = () => {
         setLoading(true);
 
         axiosSecure.get(
-            `/allIssues?limit=6&skip=${currentPage * 6}&search=${searchText}&status=${filters.status}&category=${filters.category}&priority=${filters.priority}&sorting=${-1}`
+            `/allIssues?limit=8&skip=${currentPage * 8}&search=${searchText}&status=${filters.status}&category=${filters.category}&priority=${filters.priority}&sorting=${-1}`
         )
             .then(res => {
                 setIssue(res.data.issues);
                 // setTotalIssue(res.data.count);
-                setTotalPage(Math.ceil(res.data.count / 6));
+                setTotalPage(Math.ceil(res.data.count / 8));
             })
             .finally(() => {
                 setLoading(false);
@@ -214,8 +214,8 @@ const AllIssueUser2 = () => {
 
 
     return (
-        <div className='max-w-5/6 mx-auto'>
-            <h2 className="text-4xl lg:text-2xl font-bold mb-6 text-center my-5">
+        <div className='max-w-11/12 mx-auto pt-20'>
+            <h2 className="text-xl lg:text-2xl xl:text-5xl font-bold mb-6 text-center my-5">
                 All Issues 
 
 
@@ -319,7 +319,7 @@ const AllIssueUser2 = () => {
 
 
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6">
                 {filteredIssues.map((issue, i) => (
                     <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
                         <figure className="px-6 pt-6 relative">

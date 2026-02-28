@@ -36,10 +36,13 @@ const Home = () => {
 
             </Container>
             <Premium />
-            
+       
+
                 <HowItWorks></HowItWorks>
                 {/* <BeforeAfter></BeforeAfter> */}
                 <AppDownload></AppDownload>
+           
+            
            
         </div>
     );

@@ -61,14 +61,14 @@ const AppDownload = () => {
     ];
 
     return (
-        <section className="py-16 md:py-24 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden relative">
+        <section className="xl:px-20 md:px-10 sm:px-2 px-4 py-16 md:py-24 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden relative">
             
             {/* Background Decorations */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
             <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
 
-            <div className="container mx-auto px-4 md:px-8 lg:px-16 relative z-10">
+            <div className="">
                 
                 {/* Section Header */}
                 <div className="text-center mb-12">
@@ -88,7 +88,7 @@ const AppDownload = () => {
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="grid lg:grid-cols-2 gap-12 justify-between items-center">
                     
                     {/* Left: Phone Mockup */}
                     <div className="relative order-2 lg:order-1">
@@ -292,7 +292,7 @@ const AppDownload = () => {
             </div>
 
             {/* CSS Animations */}
-            {/* <style jsx>{`
+            <style jsx>{`
                 @keyframes blob {
                     0%, 100% {
                         transform: translate(0, 0) scale(1);
@@ -348,7 +348,7 @@ const AppDownload = () => {
                 .animate-fade-in {
                     animation: fade-in 0.5s ease-out forwards;
                 }
-            `}</style> */}
+            `}</style>
         </section>
     );
 };

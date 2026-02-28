@@ -24,7 +24,24 @@ const LatestResolve = () => {
         
     return (
         <div className='py-16 md:py-24'>
-            <Heading center={true} title="Latest Resolved Issue" subtitle="Resolve Issue smoothly with our skilled staff"></Heading>
+            {/* Section Header */}
+                <div className="text-center mb-16">
+                    <div className="inline-block mb-4">
+                        <span className="px-4 py-2 bg-linear-to-r from-blue-100 to-purple-100 text-blue-600 rounded-full text-sm font-semibold">
+                            🟢 Resolved Issues
+                        </span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        
+                        <span className="block text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+                           Latest Resolved Issues
+                        </span>
+                    </h2>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                        From reporting to resolution in 6 simple steps. Our streamlined process ensures your voice is heard and issues are resolved efficiently.
+                    </p>
+                </div>
+            {/* <Heading center={true} title="Latest Resolved Issue" subtitle="Resolve Issue smoothly with our skilled staff"></Heading> */}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {latestIssues.map((issue, i) => (

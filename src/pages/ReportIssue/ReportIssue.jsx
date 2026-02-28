@@ -1,7 +1,7 @@
 import React from 'react';
 import Heading from '../../components/Shared/Heading';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData, useNavigate, useNavigation } from 'react-router';
+import { useLoaderData, useNavigate} from 'react-router';
 
 import { imageUpload } from '../../Utils';
 import useAuth from '../../hooks/useAuth';

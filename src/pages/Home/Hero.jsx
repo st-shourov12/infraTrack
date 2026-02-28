@@ -62,7 +62,7 @@ const Hero = () => {
 
 
     return (
-        <div className="relative">
+        <div className="relative pt-16">
             <Swiper
                 modules={[Autoplay, Navigation, Pagination, A11y, EffectFade]}
                 spaceBetween={0}

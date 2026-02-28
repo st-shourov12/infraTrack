@@ -4,9 +4,11 @@ import { NavLink, Link } from 'react-router';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthContext';
 import Swal from 'sweetalert2';
+// import { useTheme } from '../../hooks/useTheme';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  // const { theme, toggleTheme} = useTheme()
 
   const menuItems = (
     <>
@@ -59,18 +61,41 @@ const Navbar = () => {
           Contact
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            isActive
-              ? 'text-blue-600 font-semibold'
-              : 'text-gray-700 hover:text-blue-600'
-          }
+      {user &&
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-blue-600 font-semibold'
+                : 'text-gray-700 hover:text-blue-600'
+            }
+          >
+            DashBoard
+          </NavLink>
+        </li>}
+      {user &&
+        <li>
+          <NavLink
+            to="/dashboard/myProfile"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-blue-600 font-semibold'
+                : 'text-gray-700 hover:text-blue-600'
+            }
+          >
+            Profile
+          </NavLink>
+        </li>}
+      {/* <li>
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-full bg-gray-100 dark:bg-gray-100 text-gray-800 dark:text-white"
         >
-          DashBoard
-        </NavLink>
-      </li>
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
+      </li> */}
+
     </>
   );
 
@@ -97,7 +122,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-100 ">
+    <div className="navbar top-0 left-0 right-0 z-50 fixed bg-white backdrop-blur-md  shadow-lg border-b border-gray-100 ">
       <div className="navbar-start">
         {/* Mobile menu */}
         <div className="dropdown">

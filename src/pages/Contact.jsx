@@ -2,7 +2,7 @@ import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 pt-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">Contact Us</h1>

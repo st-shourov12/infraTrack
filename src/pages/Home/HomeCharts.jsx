@@ -45,7 +45,24 @@ const HomeCharts = () => {
   return (
     <div>
       <div className=" rounded-lg shadow py-5">
-        <Heading center={true} title="Issue Statistics" subtitle="Explore issue status, know the activity of our community " ></Heading>
+        {/* Section Header */}
+                <div className="text-center mb-16">
+                    <div className="inline-block mb-4">
+                        <span className="px-4 py-2 bg-linear-to-r from-blue-100 to-purple-100 text-blue-600 rounded-full text-sm font-semibold">
+                            📊📈 Statistics
+                        </span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        
+                        <span className="block text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+                           Issue Statistics
+                        </span>
+                    </h2>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Explore issue status, know the activity of our community 
+                    </p>
+                </div>
+        {/* <Heading center={true} title="Issue Statistics" subtitle="Explore issue status, know the activity of our community " ></Heading> */}
 
         {hasData ? (
           <ResponsiveContainer width="100%" height={400}>

@@ -110,8 +110,8 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section className="max-w-11/12 mx-auto bg-white py-5 md:py-10 overflow-hidden">
-            <div className="container mx-auto px-4 md:px-8 lg:px-16">
+        <section className="xl:px-20 md:px-10 sm:px-2 px-4 bg-white py-5 md:py-10 overflow-hidden">
+            <div className="">
                 
                 {/* Section Header */}
                 <div className="text-center mb-16">
@@ -136,7 +136,7 @@ const HowItWorks = () => {
                     {/* Connecting Line */}
                     <div className="absolute top-1/2 left-0 right-0 h-1 bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 transform -translate-y-1/2 z-0"></div>
                     
-                    <div className="relative z-10 grid grid-cols-3 gap-8">
+                    <div className="relative z-10 grid grid-cols-3 justify-between gap-8">
                         {steps.map((step, index) => (
                             <div
                                 key={step.id}

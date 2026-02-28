@@ -259,7 +259,7 @@ const IssueDetailsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-8 px-4">
+    <div className="min-h-screen bg-base-200 py-8 px-4 pt-16">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
