@@ -18,7 +18,7 @@ const LatestResolve = () => {
            
         });
 
-        const latestIssues = issues.slice(0,6)
+        const latestIssues = issues.slice(0,8)
 
       
         
@@ -43,7 +43,7 @@ const LatestResolve = () => {
                 </div>
             {/* <Heading center={true} title="Latest Resolved Issue" subtitle="Resolve Issue smoothly with our skilled staff"></Heading> */}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
                 {latestIssues.map((issue, i) => (
                     <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
                         <figure className="px-6 pt-6 relative">

@@ -1,4 +1,54 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
-@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
+
+
+
+
+@plugin "daisyui/theme" {
+  name: "infratrack";
+  default: true;
+  color-scheme: light;
+
+  --color-primary: oklch(52% 0.223 262);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(65% 0.2 40);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(60% 0.17 162);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(25% 0.02 262);
+  --color-neutral-content: oklch(100% 0 0);
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(96% 0 0);
+  --color-base-300: oklch(92% 0 0);
+  --color-base-content: oklch(25% 0.02 262);
+  --color-info: oklch(60% 0.19 252);
+  --color-success: oklch(65% 0.19 150);
+  --color-warning: oklch(75% 0.18 75);
+  --color-error: oklch(60% 0.22 25);
+}
+
+@plugin "daisyui/theme" {
+ name: "infratrack-dark";
+  color-scheme: dark;
+
+  --color-primary: oklch(60% 0.2 262);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(65% 0.2 40);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(60% 0.17 162);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(35% 0.02 262);
+  --color-neutral-content: oklch(100% 0 0);
+  --color-base-100: oklch(18% 0.02 262);
+  --color-base-200: oklch(22% 0.02 262);
+  --color-base-300: oklch(28% 0.02 262);
+  --color-base-content: oklch(95% 0 0);
+  --color-info: oklch(65% 0.18 252);
+  --color-success: oklch(65% 0.19 150);
+  --color-warning: oklch(75% 0.18 75);
+  --color-error: oklch(65% 0.22 25);
+}
