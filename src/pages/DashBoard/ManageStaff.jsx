@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -65,13 +66,9 @@ const ManageStaff = () => {
             confirmButtonText: 'Yes, reject!',
         }).then((result) => {
             if (result.isConfirmed) {
-
-                if(staff?.userId){
-
+                if (staff?.userId) {
                     axiosSecure
-                        .patch(`/staffs/${staff._id}`, {
-                            applicationStatus: 'rejected',
-                        })
+                        .patch(`/staffs/${staff._id}`, { applicationStatus: 'rejected' })
                         .then((res) => {
                             if (res.data.modifiedCount) {
                                 refetch();
@@ -80,7 +77,6 @@ const ManageStaff = () => {
                         });
                 }
                 Swal.fire('Directed appointed staff cant be rejected', '', 'warning');
-
             }
         });
     };
@@ -90,58 +86,45 @@ const ManageStaff = () => {
         const { id, password } = data;
 
         const res = await axiosSecure.patch(`/staffs/${id}`, {
-           
             applicationStatus: 'approved',
             password,
         });
 
-         selectedStaff?.userId 
+        selectedStaff?.userId
 
         if (res.data.modifiedCount) {
             if (selectedStaff?.userId) {
-                await axiosSecure.patch(`/users/${selectedStaff?.userId}`, {role : 'staff'})
+                await axiosSecure.patch(`/users/${selectedStaff?.userId}`, { role: 'staff' })
                 refetch();
                 setShowAppModal(false);
                 setSelectedStaff(null);
                 resetAdd();
-    
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Staff Approved',
-                    timer: 2000,
-                });
-                
+                Swal.fire({ icon: 'success', title: 'Staff Approved', timer: 2000 });
             }
-            Swal.fire({
-                    icon: 'success',
-                    title: 'Added by admin already',
-                    timer: 2000,
-                });
+            Swal.fire({ icon: 'success', title: 'Added by admin already', timer: 2000 });
         }
     };
 
     return (
         <div className="max-w-7xl mx-auto py-8 px-4">
-            <Heading
-                center={false}
-                title="Manage Staff"
-                subtitle="Add, update, or remove staff members"
-            />
+            
+            <div className="mb-8">
+            <h2 className='text-3xl font-bold lg:text-4xl mb-2'>Manage Staff</h2>
+            <p className='text-gray-700 dark:text-white/75'>Add, update, or remove staff members</p>
+            
+          </div>
 
             {/* Add Staff Button */}
             <div className="flex justify-end mb-6">
-                <button
-                    onClick={() => setShowAddModal(true)}
-                    className="btn btn-primary"
-                >
+                <button onClick={() => setShowAddModal(true)} className="btn rounded-lg border-0 btn-primary">
                     Add Staff
                 </button>
             </div>
 
             {/* ================= TABLE ================= */}
-            <div className="overflow-x-auto bg-white rounded-lg shadow">
+            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
                 <table className="table table-zebra">
-                    <thead className="bg-base-200">
+                    <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                         <tr>
                             <th>#</th>
                             <th>Staff Info</th>
@@ -156,8 +139,8 @@ const ManageStaff = () => {
 
                     <tbody>
                         {staffList.map((staff, index) => (
-                            <tr key={staff._id}>
-                                <th>{index + 1}</th>
+                            <tr key={staff._id} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                <th className="text-gray-700 dark:text-gray-300">{index + 1}</th>
 
                                 <td>
                                     <div className="flex items-center gap-3">
@@ -167,46 +150,41 @@ const ManageStaff = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="font-bold">{staff?.fullName}</div>
-                                            <div className="text-sm opacity-50">{staff?.email}</div>
+                                            <div className="font-bold text-gray-900 dark:text-white">{staff?.fullName}</div>
+                                            <div className="text-sm text-gray-500 dark:text-gray-400">{staff?.email}</div>
                                         </div>
                                     </div>
                                 </td>
 
-                                <td>{staff?.phone}</td>
-                                <td className="font-bold text-blue-800">
+                                <td className="text-gray-700 dark:text-gray-300">{staff?.phone}</td>
+
+                                <td className="font-bold text-blue-800 dark:text-blue-400">
                                     {staff?.department}
                                 </td>
 
-                                <td className="font-bold text-blue-800">
+                                <td className="font-bold text-blue-800 dark:text-blue-400">
                                     {staff?.password}
                                 </td>
 
-                                <td
-                                    className={
-                                        staff.applicationStatus === 'approved'
-                                            ? 'text-green-700'
-                                            : staff.applicationStatus === 'rejected'
-                                                ? 'text-red-800'
-                                                : 'text-yellow-700'
-                                    }
-                                >
+                                <td className={
+                                    staff.applicationStatus === 'approved'
+                                        ? 'text-green-700 dark:text-green-400'
+                                        : staff.applicationStatus === 'rejected'
+                                            ? 'text-red-800 dark:text-red-400'
+                                            : 'text-yellow-700 dark:text-yellow-400'
+                                }>
                                     {staff.applicationStatus}
                                 </td>
 
-                                <td>
+                                <td className="text-gray-700 dark:text-gray-300">
                                     {new Date(staff.appliedAt).toLocaleDateString()}
                                 </td>
 
                                 <td>
                                     <div className="flex gap-2">
                                         {staff.applicationStatus === 'approved' ? (
-                                            <button
-                                                onClick={() => handleReject(staff)}
-                                                className="btn"
-                                            >
-                                                <IoPersonRemoveSharp />Reject
-                                            
+                                            <button onClick={() => handleReject(staff)} className="btn border-0 rounded-lg btn-sm">
+                                                <IoPersonRemoveSharp /> Reject
                                             </button>
                                         ) : (
                                             <button
@@ -215,19 +193,14 @@ const ManageStaff = () => {
                                                     setShowAppModal(true);
                                                     resetAdd();
                                                 }}
-                                                className="btn btn-primary"
+                                                className="btn border-0 rounded-lg btn-sm btn-primary"
                                             >
-                                                <FaUserCheck />
-                                                Add Staff
+                                                <FaUserCheck /> Add Staff
                                             </button>
                                         )}
 
-                                        <button
-                                            onClick={() => handleDeleteStaff(staff)}
-                                            className="btn"
-                                        >
-                                            <FaTrashCan />
-                                            Remove
+                                        <button onClick={() => handleDeleteStaff(staff)} className="btn border-0 rounded-lg btn-sm">
+                                            <FaTrashCan /> Remove
                                         </button>
                                     </div>
                                 </td>
@@ -239,127 +212,68 @@ const ManageStaff = () => {
 
             {/* ================= APPROVE MODAL ================= */}
             {showAppModal && selectedStaff && (
-                // <div className="modal modal-open">
-                //     <div className="modal-box max-w-2xl">
-                //         <h3 className="font-bold text-lg mb-4">
-                //             Add Staff Member
-                //         </h3>
-
-                //         <form
-                //             onSubmit={handleSubmitAdd(handleAppStaff)}
-                //             className="space-y-4"
-                //         >
-                //             <input
-                //                 value={selectedStaff._id}
-                //                 {...registerAdd('id')}
-                //                 readOnly
-                //                 className="input input-bordered w-full"
-                //             />
-
-                //             <input
-                //                 defaultValue={selectedStaff?.password}
-                //                 type="password"
-                //                 {...registerAdd('password')}
-                //                 placeholder="Password"
-                //                 className="input input-bordered w-full"
-                //             />
-
-                //             <div className="modal-action">
-                //                 <button
-                //                     type="button"
-                //                     onClick={() => {
-                //                         setShowAppModal(false);
-                //                         setSelectedStaff(null);
-                //                         resetAdd();
-                //                     }}
-                //                     className="btn btn-ghost"
-                //                 >
-                //                     Cancel
-                //                 </button>
-
-                //                 <button type="submit" className="btn btn-primary">
-                //                     Approve
-                //                 </button>
-                //             </div>
-                //         </form>
-                //     </div>
-
-                //     <div
-                //         className="modal-backdrop"
-                //         onClick={() => {
-                //             setShowAppModal(false);
-                //             setSelectedStaff(null);
-                //         }}
-                //     />
-                // </div>
                 <div className="modal modal-open">
-                    <div className="modal-box max-w-2xl">
+                    <div className="modal-box max-w-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                         <form onSubmit={handleSubmitAdd(handleAppStaff)} className="space-y-4">
-                            <h3 className="font-bold text-lg mb-4">Add Staff Member</h3>
+                            <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-white">Add Staff Member</h3>
+
                             {/* Name and Email */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Full Name</span>
+                                        <span className="label-text text-gray-700 dark:text-gray-300">Full Name</span>
                                     </label>
                                     <input
                                         defaultValue={selectedStaff?.fullName}
                                         type="text"
                                         {...registerAdd('name', { required: 'Name is required' })}
                                         placeholder="Enter full name"
-                                        className="input input-bordered"
+                                        className="input input-bordered bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
                                     />
-
                                 </div>
 
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Email</span>
+                                        <span className="label-text text-gray-700 dark:text-gray-300">Email</span>
                                     </label>
                                     <input
                                         defaultValue={selectedStaff?.email}
                                         type="email"
                                         {...registerAdd('email', { required: 'Email is required' })}
                                         placeholder="Enter email"
-                                        className="input input-bordered"
+                                        className="input input-bordered bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
                                     />
-
                                 </div>
                             </div>
 
-                            {/* Phone and Password */}
+                            {/* Staff ID and Password */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Staff ID</span>
+                                        <span className="label-text text-gray-700 dark:text-gray-300">Staff ID</span>
                                     </label>
                                     <input
                                         defaultValue={selectedStaff?._id}
                                         type="tel"
                                         {...registerAdd('id')}
                                         readOnly
-                                        className="input input-bordered"
-
+                                        className="input input-bordered bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
                                     />
-
                                 </div>
 
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Password *</span>
+                                        <span className="label-text text-gray-700 dark:text-gray-300">Password *</span>
                                     </label>
                                     <input
                                         defaultValue={selectedStaff?.password}
                                         type="password"
                                         {...registerAdd('password')}
                                         placeholder="Enter password"
-                                        className="input input-bordered"
+                                        className="input input-bordered bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
                                     />
-
                                 </div>
                             </div>
-
-
 
                             {/* Modal Actions */}
                             <div className="modal-action">
@@ -370,15 +284,11 @@ const ManageStaff = () => {
                                         setSelectedStaff(null);
                                         resetAdd();
                                     }}
-                                    className="btn btn-ghost"
+                                    className="btn border-0 rounded-lg btn-ghost dark:text-gray-300 dark:hover:bg-gray-700"
                                 >
                                     Cancel
                                 </button>
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                // disabled={addStaffMutation.isLoading}
-                                >
+                                <button type="submit" className="btn border-0 rounded-lg btn-primary">
                                     Approve
                                 </button>
                             </div>
@@ -391,7 +301,7 @@ const ManageStaff = () => {
             {/* ================= ADD STAFF MODAL ================= */}
             {showAddModal && (
                 <div className="modal modal-open">
-                    <div className="modal-box max-w-2xl">
+                    <div className="modal-box max-w-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                         <Staff2 />
                     </div>
                     <div
@@ -408,6 +318,3 @@ const ManageStaff = () => {
 };
 
 export default ManageStaff;
-
-
-

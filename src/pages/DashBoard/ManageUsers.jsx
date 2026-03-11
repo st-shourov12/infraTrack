@@ -158,12 +158,14 @@ const ManageUsers = () => {
 
     return (
         <div className="max-w-7xl mx-auto py-8 px-4">
-           <Heading
-                center={false}
-                title="Manage Users"
-                subtitle="Add, authorized, explore the role"
-            />
-            <div className="overflow-x-auto bg-white rounded-lg shadow my-5">
+           
+
+            <div className=" mb-8">
+            <h2 className='text-3xl font-bold lg:text-4xl mb-2'>Manage Users</h2>
+            <p className='text-gray-700 dark:text-white/75'>Add, authorized, explore the roley</p>
+            
+          </div>
+            <div className="overflow-x-auto bg-white dark:bg-gray-700 rounded-lg shadow my-5">
                 <table className="table table-zebra">
                     {/* head */}
                     <thead className="bg-base-200">
@@ -232,21 +234,21 @@ const ManageUsers = () => {
                                                     </button> */}
                                         {
                                             manageUser?.isBlock ?
-                                                <button onClick={() => { handleUserUnblock(manageUser) }} className="btn text-green-500">
+                                                <button onClick={() => { handleUserUnblock(manageUser) }} className="btn border-0 rounded-lg text-green-500">
                                                     <CgUnblock />Unblock
                                                 </button>
                                                 :
-                                                <button onClick={() => { handleUserBlock(manageUser) }} className="btn text-red-500">
+                                                <button onClick={() => { handleUserBlock(manageUser) }} className="btn border-0 rounded-lg text-red-500">
                                                     <MdBlockFlipped />Block
                                                 </button>
                                         }
                                         {
                                             manageUser?.role === 'user' || manageUser?.role === 'staff' ?
-                                                <button onClick={() => { handleMakeAdmin(manageUser) }} className="btn text-green-500">
+                                                <button onClick={() => { handleMakeAdmin(manageUser) }} className="btn border-0 rounded-lg text-green-500">
                                                     <FaUserShield />Make Admin
                                                 </button> :
 
-                                                <button onClick={() => { handleRemoveAdmin(manageUser) }} className="btn text-red-500">
+                                                <button onClick={() => { handleRemoveAdmin(manageUser) }} className="btn border-0 rounded-lg text-red-500">
                                                     <LuUserRoundX />Remove Admin
                                                 </button>
                                         }

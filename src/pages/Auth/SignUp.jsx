@@ -1,8 +1,10 @@
+
+
 import { Link, useLocation, useNavigate } from 'react-router'
 
 import { FcGoogle } from 'react-icons/fc';
 import { TbFidgetSpinner } from 'react-icons/tb';
-import { FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi'; // Added icons
+import { FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import Heading from '../../components/Shared/Heading';
 import { useForm } from 'react-hook-form';
@@ -34,7 +36,6 @@ const SignUp = () => {
           .then(res => {
             const photoURL = res.data.data.url;
 
-            // Save user to database
             const userInfo = {
               email: data.email,
               displayName: data.name,
@@ -44,7 +45,6 @@ const SignUp = () => {
 
             axiosSecure.post('/users', userInfo)
               .then(() => {
-                // Update Firebase profile
                 updateUserProfile({ displayName: data.name, photoURL })
                   .then(() => {
                     Swal.fire({
@@ -122,25 +122,29 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl p-8 md:p-10 border border-white/20">
+        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg shadow-2xl rounded-2xl p-8 md:p-10 border border-white/20 dark:border-gray-700">
+          
           <div className="text-center mb-8">
-            <Heading center={true} title="Create Account" subtitle="Join Infratrack today" />
+            <h2 className='text-3xl font-bold lg:text-4xl mb-2'>Create Account</h2>
+            <p className='text-gray-700 dark:text-white/75'>Join Infratrack today</p>
+            
           </div>
 
           <form onSubmit={handleSubmit(handleSignUp)} className="space-y-6">
             <div className="space-y-5">
+
               {/* Name */}
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
                 <div className="relative">
-                  <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg" />
                   <input
                     type="text"
                     {...register("name", { required: "Name is required" })}
                     placeholder="Enter your name"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
                 {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name.message}</p>}
@@ -148,25 +152,25 @@ const SignUp = () => {
 
               {/* Profile Image */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image</label>
-                <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-all">
-                  <FiCamera className="mx-auto text-3xl text-gray-400 mb-2" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Profile Image</label>
+                <div className="relative border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-all">
+                  <FiCamera className="mx-auto text-3xl text-gray-400 dark:text-gray-500 mb-2" />
                   <input
                     type="file"
                     accept="image/*"
                     {...register("photo", { required: "Profile photo is required" })}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <p className="text-sm text-gray-600">Click to upload (PNG, JPG up to 2MB)</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Click to upload (PNG, JPG up to 2MB)</p>
                 </div>
                 {errors.photo && <p className="text-red-600 text-xs mt-1">{errors.photo.message}</p>}
               </div>
 
               {/* Email */}
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                 <div className="relative">
-                  <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg" />
                   <input
                     type="email"
                     {...register("email", {
@@ -174,7 +178,7 @@ const SignUp = () => {
                       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email address" }
                     })}
                     placeholder="Enter your email"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
                 {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
@@ -182,9 +186,9 @@ const SignUp = () => {
 
               {/* Password */}
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
                 <div className="relative">
-                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 text-lg" />
                   <input
                     type="password"
                     {...register("password", {
@@ -193,7 +197,7 @@ const SignUp = () => {
                       pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/, message: "Must include uppercase, lowercase, and special character" }
                     })}
                     placeholder="Create a strong password"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
                 {errors.password && <p className="text-red-600 text-xs mt-1">{errors.password.message}</p>}
@@ -209,26 +213,28 @@ const SignUp = () => {
             </button>
           </form>
 
+          {/* Divider */}
           <div className="my-6 flex items-center">
-            <div className="flex-1 h-px bg-gray-300"></div>
-            <p className="px-4 text-sm text-gray-600">Or sign up with</p>
-            <div className="flex-1 h-px bg-gray-300"></div>
+            <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
+            <p className="px-4 text-sm text-gray-600 dark:text-gray-400">Or sign up with</p>
+            <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600"></div>
           </div>
 
+          {/* Google Button */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-3 py-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg"
+            className="w-full flex items-center justify-center gap-3 py-3.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             <FcGoogle size={28} />
-            <span className="font-medium text-gray-800">Continue with Google</span>
+            <span className="font-medium text-gray-800 dark:text-gray-200">Continue with Google</span>
           </button>
 
-          <p className="mt-8 text-center text-sm text-gray-600">
+          <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
             <Link
               to="/login"
               state={from}
-              className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+              className="font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline"
             >
               Log in
             </Link>
