@@ -291,13 +291,13 @@ const AllIssues = () => {
                   <div className="flex justify-between items-start gap-2 flex-wrap">
                     <h2 className="card-title text-lg">{issue?.category}</h2>
                     <div className="flex gap-2">
-                      <div className={`badge badge-sm ${issue?.priority === 'High' ? 'badge-error' :
+                      <div className={`badge border-0 rounded-lg p-1 badge-sm ${issue?.priority === 'High' ? 'badge-error' :
                         issue?.priority === 'Medium' ? 'badge-warning' :
                           'badge-info'
                         }`}>
                         {issue?.priority}
                       </div>
-                      <div className={`badge badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
+                      <div className={`badge border-0 rounded-lg p-1 badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
                         issue?.status === 'in-progress' ? 'badge-info' :
                           issue?.status === 'resolved' ? 'badge-success' :
                             issue?.status === 'closed' ? 'badge-success' : 'badge-error'
@@ -308,7 +308,7 @@ const AllIssues = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                  <p className="text-sm text-gray-600 dark:text-white/75 line-clamp-2 mt-2">
                     {issue?.description}
                   </p>
 
@@ -370,7 +370,7 @@ const AllIssues = () => {
 
 
                       }
-                      className="btn"
+                      className="btn border-0 rounded-lg"
                     >
                       <FcAssistant className='text-xl' />
                       {issue?.status === 'pending' ? 'Assign' : issue?.status === 'rejected' ? 'Rejected' : 'Assigned'}
@@ -385,7 +385,7 @@ const AllIssues = () => {
 
                     <Link
                       to={`/issues/${issue._id}`}
-                      className="btn btn-primary btn-sm w-full">
+                      className="btn border-0 rounded-lg btn-primary btn-sm w-full">
                       <FaMagnifyingGlass />
                       View Details
                     </Link>
@@ -402,17 +402,17 @@ const AllIssues = () => {
       <div className="flex flex-wrap justify-center items-center gap-3 py-5">
 
         {
-          currentPage > 0 && <button onClick={() => { setCurrentPage(currentPage - 1) }} className="btn">Prev</button>
+          currentPage > 0 && <button onClick={() => { setCurrentPage(currentPage - 1) }} className="btn border-0 rounded-lg">Prev</button>
         }
 
         {
           [...Array(totalPage).keys()].map((i) => (
-            <button onClick={() => { setCurrentPage(i) }} key={i} className={`btn ${i === currentPage && ' btn-primary'}`}>{i + 1}</button>
+            <button onClick={() => { setCurrentPage(i) }} key={i} className={`btn border-0 rounded-lg ${i === currentPage && ' btn-primary'}`}>{i + 1}</button>
           ))
         }
 
         {
-          currentPage < totalPage - 1 && <button onClick={() => { setCurrentPage(currentPage + 1) }} className="btn">Next</button>
+          currentPage < totalPage - 1 && <button onClick={() => { setCurrentPage(currentPage + 1) }} className="btn border-0 rounded-lg">Next</button>
         }
 
       </div>
@@ -473,7 +473,7 @@ const AllIssues = () => {
 
                                 handleAssign(staff);
 
-                              }} className='btn'>
+                              }} className='btn border-0 rounded-lg'>
                                 <MdOutlineAssignmentInd className='text-lg' />
                                 Assign
 
@@ -484,7 +484,7 @@ const AllIssues = () => {
 
                                 handleAssignRemove(staff);
 
-                              }} className='btn'>
+                              }} className='btn border-0 rounded-lg'>
                                 <IoPersonRemove className='text-lg' />
                                 Remove
                               </button>

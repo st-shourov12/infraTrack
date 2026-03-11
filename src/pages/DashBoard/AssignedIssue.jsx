@@ -98,7 +98,7 @@ const AssignedIssue = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Yes, accept it!',
         }).then((result) => {
             if (result.isConfirmed) {
 
@@ -430,15 +430,15 @@ const AssignedIssue = () => {
 
                                             <button
                                                 onClick={() => { handleAccept(issue) }}
-                                                className='btn text-blue-600 bg-blue-300'
-                                            >
+                                                className='btn rounded-xl border-0 mr-1 text-blue-600 bg-blue-300'
+                                            > 
                                                 <FaCheck className='text-lg'></FaCheck>
                                                 Accpet
 
                                             </button>
                                             <button
                                                 onClick={() => { handleReject(issue) }}
-                                                className='btn text-red-600 bg-red-300'
+                                                className='btn rounded-xl border-0 text-red-600 bg-red-300'
                                             >
                                                 <GiCrossMark className='text-lg'></GiCrossMark>
                                                 Reject
