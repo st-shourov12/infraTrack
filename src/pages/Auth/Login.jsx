@@ -84,20 +84,23 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      {/* bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 */}
       <div className="w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl p-8 md:p-10 border border-white/20">
+        <div className="bg-white/80 dark:bg-gray-800  backdrop-blur-lg shadow-2xl rounded-2xl p-8 md:p-10 border border-white/20">
           <div className="text-center mb-8">
-            <Heading center={true} title="Welcome Back" subtitle="Sign in to continue to your account" />
+            <h2 className='text-3xl font-bold lg:text-4xl mb-2'>Welcome Back</h2>
+            <p className='text-gray-700 dark:text-white/75'>Sign in to continue to your account</p>
+            
           </div>
 
           <form onSubmit={handleSubmit(handlelogIn)} className="space-y-6">
             <div className="space-y-5">
               {/* Email Field */}
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-white/75 mb-1">Email</label>
                 <div className="relative">
-                  <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-950 text-lg" />
                   <input
                     type="email"
                     {...register("email", {
@@ -105,7 +108,7 @@ const Login = () => {
                       pattern: { value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: 'Please enter a valid email' }
                     })}
                     placeholder="Enter your email"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:text-gray-950 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
                 {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email.message}</p>}
@@ -118,7 +121,7 @@ const Login = () => {
                   <button type="button" className="text-sm text-blue-600 hover:underline">Forgot password?</button>
                 </div> */}
                 <div className="relative">
-                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-950 text-lg" />
                   <input
                     type="password"
                     {...register("password", {
@@ -127,7 +130,7 @@ const Login = () => {
                       pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).+$/, message: 'Password must include uppercase, lowercase, and special character' }
                     })}
                     placeholder="Enter your password"
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:text-gray-950 bg-white/70 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
                 {errors.password && <p className="text-red-600 text-xs mt-1">{errors.password.message}</p>}
@@ -154,10 +157,10 @@ const Login = () => {
             className="w-full flex items-center justify-center gap-3 py-3.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             <FcGoogle size={28} />
-            <span className="font-medium text-gray-800">Sign in with Google</span>
+            <span className="font-medium text-gray-800 dark:text-white hover:text-blue-700">Sign in with Google</span>
           </button>
 
-          <p className="mt-8 text-center text-sm text-gray-600">
+          <p className="mt-8 text-center text-sm text-gray-600 dark:text-white/75">
             Don't have an account?{' '}
             <Link
               to="/signup"

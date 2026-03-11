@@ -61,8 +61,8 @@ const AppDownload = () => {
     ];
 
     return (
-        <section className="xl:px-20 md:px-10 sm:px-2 px-4 py-16 md:py-24 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden relative">
-            
+        <section className="xl:px-20 md:px-10 sm:px-2 px-4 py-16 md:py-24 bg-linear-to-br dark:bg-gray-800 overflow-hidden relative">
+            {/* from-blue-50 via-purple-50  to-purple-50*/}
             {/* Background Decorations */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -77,13 +77,13 @@ const AppDownload = () => {
                             📱 Mobile App
                         </span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                         Take InfraTrack
                         <span className="block text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
                             Everywhere You Go
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg dark:text-white/75 text-gray-600 max-w-2xl mx-auto">
                         Report issues on the move with our powerful mobile app. Available for iOS and Android with offline support.
                     </p>
                 </div>
@@ -217,12 +217,12 @@ const AppDownload = () => {
                         {/* Stats */}
                         <div className="grid grid-cols-3 gap-4">
                             {stats.map((stat, index) => (
-                                <div key={index} className="bg-white rounded-2xl p-4 shadow-lg text-center">
-                                    <div className="flex items-center justify-center gap-1 text-2xl md:text-3xl font-bold text-gray-900 mb-1">
+                                <div key={index} className="bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-lg text-center">
+                                    <div className="flex items-center justify-center gap-1 text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">
                                         {stat.number}
                                         {stat.icon}
                                     </div>
-                                    <div className="text-xs text-gray-600">{stat.label}</div>
+                                    <div className="text-xs text-gray-600 dark:text-white">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
@@ -232,13 +232,13 @@ const AppDownload = () => {
                             {features.map((feature, index) => (
                                 <div 
                                     key={index}
-                                    className="bg-white rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+                                    className="bg-white dark:bg-gray-900 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
                                 >
                                     <div className="w-12 h-12 bg-linear-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-blue-600 mb-3">
                                         {feature.icon}
                                     </div>
-                                    <h4 className="font-bold text-gray-900 mb-1">{feature.title}</h4>
-                                    <p className="text-sm text-gray-600">{feature.description}</p>
+                                    <h4 className="font-bold text-gray-900 dark:text-white mb-1">{feature.title}</h4>
+                                    <p className="text-sm text-gray-600 dark:text-white/75">{feature.description}</p>
                                 </div>
                             ))}
                         </div>

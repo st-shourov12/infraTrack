@@ -259,7 +259,7 @@ const IssueDetailsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 py-8 px-4 pt-16">
+    <div className="min-h-screen bg-base-200 py-8 px-4 pt-20">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
@@ -273,7 +273,7 @@ const IssueDetailsPage = () => {
           {/* Main Content - Left Side */}
           <div className="lg:col-span-2 space-y-6">
             {/* Issue Card */}
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card rounded-2xl bg-base-100 shadow-xl">
               <figure className="px-6 relative pt-6">
                 <img
                   src={issue?.photo}
@@ -290,14 +290,14 @@ const IssueDetailsPage = () => {
                   <div>
                     <h2 className="card-title text-3xl mb-2">{issue?.category}</h2>
                     <div className="flex flex-wrap gap-2">
-                      <div className={`badge ${getPriorityColor(issue?.priority)}`}>
+                      <div className={`badge badge-sm rounded-sm p-1 ${getPriorityColor(issue?.priority)}`}>
                         {issue?.priority} Priority
                       </div>
-                      <div className={`badge ${getStatusColor(issue?.status)}`}>
+                      <div className={`badge badge-sm rounded-sm p-1 ${getStatusColor(issue?.status)}`}>
                         {issue?.status}
                       </div>
                       {issue?.boosted && (
-                        <div className="badge badge-accent">
+                        <div className="badge badge-sm rounded-sm p-1 badge-accent">
                           <TrendingUp className="w-3 h-3 mr-1" />
                           Boosted
                         </div>
@@ -308,17 +308,17 @@ const IssueDetailsPage = () => {
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-2">
                     {canEdit && (
-                      <button onClick={() => { handleEdit(), setEditingIssue(issue) }} className="btn btn-primary btn-sm">
+                      <button onClick={() => { handleEdit(), setEditingIssue(issue) }} className="btn btn-primary border-0 rounded-sm btn-sm">
                         Edit Issue
                       </button>
                     )}
                     {canDelete && (
-                      <button onClick={handleDelete} className="btn btn-error btn-sm">
+                      <button onClick={handleDelete} className="btn btn-error rounded-sm border-0 btn-sm">
                         Delete
                       </button>
                     )}
                     {canBoost && (
-                      <button onClick={handleBoostPayment} className="btn btn-accent btn-sm">
+                      <button onClick={handleBoostPayment} className="btn rounded-sm border-0 btn-accent btn-sm">
                         <TrendingUp className="w-4 h-4" />
                         Boost Priority (৳100)
                       </button>
@@ -354,7 +354,7 @@ const IssueDetailsPage = () => {
                 {/* Description */}
                 <div>
                   <h3 className="font-semibold text-lg mb-2">Description</h3>
-                  <p className="text-gray-600 leading-relaxed">{issue?.description}</p>
+                  <p className="text-gray-600 dark:text-white/75 leading-relaxed">{issue?.description}</p>
                 </div>
 
                 <div className="divider"></div>
@@ -364,17 +364,17 @@ const IssueDetailsPage = () => {
                   <div className="flex items-start gap-3 p-4 bg-base-200 rounded-lg">
                     <MapPin className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm text-gray-500 uppercase mb-1">Location</h4>
+                      <h4 className="font-semibold text-sm text-gray-500 dark:text-white/75 uppercase mb-1">Location</h4>
                       <p className="font-medium">{issue?.location}</p>
-                      <p className="text-sm text-gray-600">{issue?.upzila}, {issue?.district}</p>
-                      <p className="text-sm text-gray-500">{issue?.region}</p>
+                      <p className="text-sm text-gray-600 dark:text-white/75">{issue?.upzila}, {issue?.district}</p>
+                      <p className="text-sm text-gray-500 dark:text-white/75">{issue?.region}</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 p-4 bg-base-200 rounded-lg">
                     <Calendar className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
-                      <h4 className="font-semibold text-sm text-gray-500 uppercase mb-1">Reported On</h4>
+                      <h4 className="font-semibold text-sm text-gray-500 dark:text-white/75 uppercase mb-1">Reported On</h4>
                       <p className="font-medium">
                         {new Date(issue?.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
@@ -382,7 +382,7 @@ const IssueDetailsPage = () => {
                           day: 'numeric'
                         })}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-white/75">
                         {new Date(issue?.createdAt).toLocaleTimeString('en-US', {
                           hour: '2-digit',
                           minute: '2-digit'
@@ -395,7 +395,7 @@ const IssueDetailsPage = () => {
             </div>
 
             {/* Timeline Section */}
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-base-100 shadow-xl rounded-2xl">
               <div className="card-body">
                 <h2 className="card-title text-2xl mb-4">Issue Timeline</h2>
                 <div className="space-y-6">
@@ -414,13 +414,13 @@ const IssueDetailsPage = () => {
                       {/* Timeline Content */}
                       <div className="flex-1 pb-6">
                         <div className="flex flex-wrap items-center gap-2 mb-2">
-                          <span className={`badge ${getStatusColor(entry?.status)}`}>
+                          <span className={`badge rounded-sm p-1 ${getStatusColor(entry?.status)}`}>
                             {entry?.status}
                           </span>
-                          <span className={`badge badge-sm ${getRoleBadge(entry?.role)}`}>
+                          <span className={`badge rounded-sm p-1 badge-sm ${getRoleBadge(entry?.role)}`}>
                             {entry?.role}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-white/60">
                             {new Date(entry?.assignedAt || entry?.date).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -430,8 +430,8 @@ const IssueDetailsPage = () => {
                             })}
                           </span>
                         </div>
-                        <p className="text-gray-700 mb-1">{entry?.message}</p>
-                        <p className="text-sm text-gray-500">by {entry?.updatedBy}</p>
+                        <p className="text-gray-700 dark:text-white/75 mb-1">{entry?.message}</p>
+                        <p className="text-sm text-gray-500 dark:text-white/60">by {entry?.updatedBy}</p>
                       </div>
                     </div>
                   ))}
@@ -443,7 +443,7 @@ const IssueDetailsPage = () => {
           {/* Sidebar - Right Side */}
           <div className="space-y-6">
             {/* Reporter Info */}
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-base-100 shadow-xl rounded-2xl">
               <div className="card-body">
                 <h3 className="card-title text-lg mb-4">Reported By</h3>
                 <div className="flex items-center gap-4">
@@ -454,8 +454,8 @@ const IssueDetailsPage = () => {
                   </div>
                   <div>
                     <p className="font-bold">{issue?.reporterName}</p>
-                    <p className="text-sm text-gray-600">{issue?.reporterEmail}</p>
-                    <div className="badge badge-sm badge-ghost mt-1">{issue?.userRole}</div>
+                    <p className="text-sm text-gray-600 dark:text-white/75">{issue?.reporterEmail}</p>
+                    <div className="badge p-1 rounded-sm badge-sm badge-ghost mt-1">{issue?.userRole}</div>
                   </div>
                 </div>
               </div>
@@ -463,7 +463,7 @@ const IssueDetailsPage = () => {
 
             {/* Assigned Staff Info */}
             {issue?.assignedStaff && (
-              <div className="card bg-base-100 shadow-xl">
+              <div className="card bg-base-100 shadow-xl rounded-2xl">
                 <div className="card-body">
                   <h3 className="card-title text-lg mb-4">Assigned Staff</h3>
                   <div className="space-y-4">
@@ -476,7 +476,7 @@ const IssueDetailsPage = () => {
                       </div>
                       <div>
                         <p className="font-bold">{issue?.assignedStaff.name}</p>
-                        <div className="badge badge-info badge-sm">Staff</div>
+                        <div className="badge rounded-sm p-1 badge-info badge-sm">Staff</div>
                       </div>
                     </div>
                     <div className="divider my-2"></div>
@@ -500,7 +500,7 @@ const IssueDetailsPage = () => {
             )}
 
             {/* Quick Stats */}
-            <div className="card bg-linear-to-br from-primary to-secondary text-primary-content shadow-xl">
+            <div className="card rounded-2xl bg-linear-to-br from-primary to-secondary text-primary-content shadow-xl">
               <div className="card-body">
                 <h3 className="card-title text-lg">Issue Statistics</h3>
                 <div className="space-y-3 mt-2">

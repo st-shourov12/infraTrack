@@ -132,9 +132,10 @@ export default function MyProfile() {
 
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-12 px-4">
+        <div className="min-h-screen py-12 px-4">
+            {/* bg-linear-to-br from-blue-50 to-indigo-100  */}
             <div className="max-w-2xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
                     {/* Header with Premium Badge */}
                     <div className="bg-linear-to-r from-indigo-600 to-purple-600 h-32 relative">
                         {x?.isPremium && (
@@ -171,7 +172,7 @@ export default function MyProfile() {
                                 <form onSubmit={handleSubmit(handleUpdateProfile)}>
                                     <div className="space-y-4 max-w-md mx-auto">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2 text-left">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-white/75 mb-2 text-left">
                                                 Display Name
                                             </label>
                                             <input
@@ -185,7 +186,7 @@ export default function MyProfile() {
                                         <div>
                                             <label
                                                 htmlFor="issueImage"
-                                                className="block mb-2 text-sm font-medium text-gray-700 text-left"
+                                                className="block mb-2 text-sm font-medium dark:text-white/75 text-gray-700 text-left"
                                             >
                                                 Upload Image (required)
                                             </label>
@@ -217,11 +218,11 @@ export default function MyProfile() {
                                 </form>
                             ) : (
                                 <>
-                                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                                         {x?.displayName}
                                     </h1>
-                                    <p className="text-gray-600 flex items-center justify-center gap-2">
-                                        <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
+                                    <p className="text-gray-600 dark:text-white/75 flex items-center justify-center gap-2">
+                                        <span className="inline-block w-2 h-2 bg-green-500 border-0 rounded-full"></span>
                                         {user?.email}
                                     </p>
                                 </>
@@ -233,15 +234,15 @@ export default function MyProfile() {
                             <div className="grid grid-cols-3 gap-4 mb-6 py-6 border-y border-gray-200">
                                 <div className="text-center">
                                     <p className="text-2xl font-bold text-indigo-600">{issues.length}</p>
-                                    <p className="text-sm text-gray-600">Reports</p>
+                                    <p className="text-sm text-gray-600 dark:text-white/75">Reports</p>
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${closeIssue.length}` : 0}</p>
-                                    <p className="text-sm text-gray-600">Closed</p>
+                                    <p className="text-sm text-gray-600 dark:text-white/75">Closed</p>
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold text-indigo-600">{closeIssue?.length > 0 ? `${parse} %` : 0}</p>
-                                    <p className="text-sm text-gray-600">Success Rate</p>
+                                    <p className="text-sm text-gray-600 dark:text-white/75">Success Rate</p>
                                 </div>
                             </div>
                         )}
@@ -269,7 +270,7 @@ export default function MyProfile() {
                                     <>
                                         <button
                                             onClick={() => setIsEditing(true)}
-                                            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                            className="w-full bg-indigo-600 text-white border-0 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                                         >
                                             <Edit2 className="w-5 h-5" />
                                             Update Profile
@@ -301,7 +302,7 @@ export default function MyProfile() {
                                         key={p._id}
                                         href={`https://infratrack-server.vercel.app/invoice/${p._id}`}
                                         target="_blank"
-                                        className=" text-white flex flex-col items-center rounded-xl justify-center gap-2 btn bg-green-600 hover:bg-green-700"
+                                        className=" text-white flex flex-col items-center rounded-xl justify-center gap-2 btn border-0 mb-1 bg-green-600 hover:bg-green-700"
                                     >
                                         {p.invoiceId} - Download Invoice (PDF)
                                     </a>
@@ -310,12 +311,12 @@ export default function MyProfile() {
                         )}
 
                         {!x?.isPremium && !isEditing && (
-                            <div className="mt-6 bg-linear-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-4">
-                                <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                            <div className="mt-6 rounded-lg p-4">
+                                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                                     <Crown className="w-5 h-5 text-yellow-600" />
                                     Premium Benefits
                                 </h3>
-                                <ul className="text-sm text-gray-700 space-y-1">
+                                <ul className="text-sm text-gray-700 dark:text-white/75 space-y-1">
                                     <li>• Priority support for your reports</li>
                                     <li>• Advanced analytics dashboard</li>
                                     <li>• Unlimited issue submissions</li>

@@ -106,21 +106,21 @@ const StaffDash = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-6">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-1">Welcome to Staff DashBoard</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+                    <p className="text-gray-600 mt-1 dark:text-white">Welcome to Staff DashBoard</p>
                 </div>
 
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-blue-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Total Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.totalIssues}</h3>
+                                <p className="text-gray-500 dark:text-white text-sm font-medium">Total Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.totalIssues}</h3>
                                 <p className="text-green-600 text-sm mt-2 flex items-center">
                                     <TrendingUp className="w-4 h-4 mr-1" />
                                     +12% from last month
@@ -130,12 +130,12 @@ const StaffDash = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-green-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Closed Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.closedIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white text-sm font-medium">Closed Issues</p>
+                                <h3 className="text-3xl font-bold dark:text-white text-gray-900 mt-2">{stats.closedIssues}</h3>
+                                <p className="text-gray-600 dark:text-white text-sm mt-2">
                                     {stats.totalIssues
                                         ? ((stats.closedIssues / stats.totalIssues) * 100).toFixed(1)
                                         : 0}
@@ -145,12 +145,12 @@ const StaffDash = () => {
                             <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-green-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Resolved Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.resolvedIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white text-sm font-medium">Resolved Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.resolvedIssues}</h3>
+                                <p className="text-gray-600 dark:text-white text-sm mt-2">
                                     Issue will be closed soon
                                 </p>
 
@@ -198,12 +198,12 @@ const StaffDash = () => {
                         </div>
                     </div> */}
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 ">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 ">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Active Issues (In Progress)</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.inProgressIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white text-sm font-medium">Active Issues (In Progress)</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.inProgressIssues}</h3>
+                                <p className="text-gray-600 dark:text-white text-sm mt-2">
                                     {stats.pendingIssues} pending
                                 </p>
                             </div>
@@ -215,8 +215,8 @@ const StaffDash = () => {
                 {/* Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Issue Status Distribution */}
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Issue Status Distribution
                         </h3>
 
@@ -249,32 +249,32 @@ const StaffDash = () => {
                                 </PieChart>
                             </ResponsiveContainer>
                         ) : (
-                            <p className="text-center text-gray-500">
+                            <p className="text-center text-gray-500 dark:text-white">
                                 No issue data available
                             </p>
                         )}
                     </div>
 
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-900">My Issues</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">My Issues</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reporter</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Priority</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase">Reporter</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase">Title</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase">Status</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase">Priority</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white uppercase">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestIssues.map((issue) => (
                                         <tr key={issue?._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{issue?.reporterName}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{issue?.category}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{issue?.reporterName}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{issue?.category}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(issue?.status)}`}>
                                                     {issue?.status}
@@ -285,7 +285,7 @@ const StaffDash = () => {
                                                     {issue?.priority}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-white">
                                                 {new Date(issue?.createdAt).toLocaleDateString('en-US', {
                                                     year: 'numeric',
                                                     month: 'long',
@@ -332,9 +332,9 @@ const StaffDash = () => {
                 </div>
 
                 {/* Latest Data Tables */}
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
 
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Today's task</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Today's task</h3>
                     <div className="mb-8">
 
                         {
@@ -400,7 +400,7 @@ const StaffDash = () => {
                                     </table>
                                 </div>
                                 :
-                                <p className="text-center text-gray-500">
+                                <p className="text-center text-gray-500 dark:text-white">
                                     No issue data available
                                 </p>
                         }

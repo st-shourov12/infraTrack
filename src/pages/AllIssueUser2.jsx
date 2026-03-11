@@ -214,14 +214,14 @@ const AllIssueUser2 = () => {
 
 
     return (
-        <div className='max-w-11/12 mx-auto pt-20'>
+        <div className='xl:px-20 md:px-10 sm:px-2 px-4 bg-[#F8FAFC] dark:bg-gray-800'>
             <h2 className="text-xl lg:text-2xl xl:text-5xl font-bold mb-6 text-center my-5">
                 All Issues 
 
 
             </h2>
 
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center mb-4 ">
                 <div className="flex w-full max-w-md gap-2">
                     <input
                         type="text"
@@ -231,18 +231,18 @@ const AllIssueUser2 = () => {
                             setSearchText(e.target.value);
                             setCurrentPage(0);
                         }}
-                        className="input input-bordered w-full"
+                        className="input input-bordered w-full rounded-xl"
                     />
-                    <button className="btn btn-primary">
+                    <button className="btn border-0 btn-primary rounded-xl">
                         <FaMagnifyingGlass />
                     </button>
                 </div>
             </div>
 
 
-            <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-4 mb-6">
                 <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Filters</h2>
                     <button
                         onClick={() => handleToggle()}
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
@@ -255,11 +255,11 @@ const AllIssueUser2 = () => {
                 {showFilters && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-white/75 mb-2">Status</label>
                             <select
                                 value={filters.status}
                                 onChange={(e) => handleFilterChange('status', e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border border-gray-300 dark:bg-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Status</option>
                                 <option value="pending">Pending</option>
@@ -270,11 +270,11 @@ const AllIssueUser2 = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <label className="block text-sm font-medium text-gray-700  dark:text-white/75 mb-2">Category</label>
                             <select
                                 value={filters.category}
                                 onChange={(e) => handleFilterChange('category', e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border dark:bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Categories</option>
                                 <option value="Potholes">Potholes</option>
@@ -291,11 +291,11 @@ const AllIssueUser2 = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-white/75 mb-2">Priority</label>
                             <select
                                 value={filters.priority}
                                 onChange={(e) => handleFilterChange('priority', e.target.value)}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border dark:bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Priorities</option>
                                 <option value="High">High</option>
@@ -321,7 +321,7 @@ const AllIssueUser2 = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6">
                 {filteredIssues.map((issue, i) => (
-                    <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+                    <div key={issue?._id} className="card bg-base-100 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-transparent hover:-translate-y-2">
                         <figure className="px-6 pt-6 relative">
                             <img
                                 src={issue?.photo}
@@ -339,13 +339,13 @@ const AllIssueUser2 = () => {
                             <div className="flex justify-between items-start gap-2 flex-wrap">
                                 <h2 className="card-title text-lg">{issue?.category}</h2>
                                 <div className="flex gap-2">
-                                    <div className={`badge badge-sm ${issue?.priority === 'High' ? 'badge-error' :
+                                    <div className={`badge badge-sm rounded-sm p-1 ${issue?.priority === 'High' ? 'badge-error' :
                                         issue?.priority === 'Medium' ? 'badge-warning' :
                                             'badge-info'
                                         }`}>
                                         {issue?.priority}
                                     </div>
-                                    <div className={`badge badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
+                                    <div className={`badge badge-sm rounded-sm p-1 ${issue?.status === 'pending' ? 'badge-warning' :
                                         issue?.status === 'in-progress' ? 'badge-info' :
                                             issue?.status === 'resolved' ? 'badge-accent' :
                                                 issue?.status === 'closed' ? 'badge-success' : 'badge-error'
@@ -356,7 +356,7 @@ const AllIssueUser2 = () => {
                             </div>
 
                             {/* Description */}
-                            <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                            <p className="text-sm text-gray-600 dark:text-white/75 line-clamp-2 mt-2">
                                 {issue?.description}
                             </p>
 
@@ -412,7 +412,7 @@ const AllIssueUser2 = () => {
 
                                 <Link
                                     to={`/issues/${issue._id}`}
-                                    className="btn btn-primary btn-sm w-full">
+                                    className="btn btn-primary border-0 rounded-xl btn-sm w-full">
                                     <FaMagnifyingGlass />
                                     View Details
                                 </Link>
@@ -426,17 +426,17 @@ const AllIssueUser2 = () => {
             <div className="flex flex-wrap justify-center items-center gap-3 py-5">
 
                 {
-                    currentPage > 0 && <button onClick={() => { setCurrentPage(currentPage - 1) }} className="btn">Prev</button>
+                    currentPage > 0 && <button onClick={() => { setCurrentPage(currentPage - 1) }} className="btn rounded-lg border-0 dark:bg-white/75 dark:text-gray-900">Prev</button>
                 }
 
                 {
                     [...Array(totalPage).keys()].map((i) => (
-                        <button onClick={() => { setCurrentPage(i) }} key={i} className={`btn ${i === currentPage && ' btn-primary'}`}>{i + 1}</button>
+                        <button onClick={() => { setCurrentPage(i) }} key={i} className={`btn rounded-lg border-0 ${i === currentPage && ' btn-primary '}`}>{i + 1}</button>
                     ))
                 }
 
                 {
-                    currentPage < totalPage - 1 && <button onClick={() => { setCurrentPage(currentPage + 1) }} className="btn">Next</button>
+                    currentPage < totalPage - 1 && <button onClick={() => { setCurrentPage(currentPage + 1) }} className="btn rounded-lg border-0 dark:bg-white/75 dark:text-gray-900 ">Next</button>
                 }
 
             </div>

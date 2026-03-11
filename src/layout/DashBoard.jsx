@@ -55,7 +55,7 @@ const DashBoard = () => {
                     <Link to="/" className='font-semibold'>InfraTrack</Link>
                 </nav>
                 {/* Page content here */}
-                <div className="p-4">{<Outlet />}</div>
+                <div className="p-4 ">{<Outlet />}</div>
             </div>
 
             <div className="drawer-side is-drawer-close:overflow-visible">

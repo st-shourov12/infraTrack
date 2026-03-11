@@ -19,7 +19,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? 'text-blue-600 font-semibold'
-              : 'text-gray-700 hover:text-blue-600'
+              : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
           }
         >
           Home
@@ -31,7 +31,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? 'text-blue-600 font-semibold'
-              : 'text-gray-700 hover:text-blue-600'
+              : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
           }
         >
           All Issues
@@ -44,7 +44,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? 'text-blue-600 font-semibold'
-              : 'text-gray-700 hover:text-blue-600'
+              : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
           }
         >
           About
@@ -56,7 +56,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? 'text-blue-600 font-semibold'
-              : 'text-gray-700 hover:text-blue-600'
+              : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
           }
         >
           Contact
@@ -69,7 +69,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'text-blue-600 font-semibold'
-                : 'text-gray-700 hover:text-blue-600'
+                : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
             }
           >
             DashBoard
@@ -82,23 +82,36 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive
                 ? 'text-blue-600 font-semibold'
-                : 'text-gray-700 hover:text-blue-600'
+                : 'text-gray-700 dark:text-white/90 hover:text-blue-600'
             }
           >
             Profile
           </NavLink>
         </li>}
 
-      {/* <li><ThemeToggle /></li> */}
+
       <li>
-        <label className="toggle text-base-content">
-          <input type="checkbox" value="synthwave" className="theme-controller" />
+        {/* <label className="flex cursor-pointer gap-2">
+          <span className="label-text">light</span>
 
-          <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></g></svg>
+          <input type="checkbox" value="infratrack-dark" className="toggle theme-controller" />
+          <span className="label-text">Dark</span>
+        </label> */}
 
-          <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></g></svg>
-
+        <label className="flex cursor-pointer gap-2 items-center">
+          <span className="text-base-content text-sm">Light</span>
+          <input
+            type="checkbox"
+            className="toggle theme-controller"
+            onChange={(e) => {
+              const theme = e.target.checked ? 'infratrack-dark' : 'infratrack';
+              document.documentElement.setAttribute('data-theme', theme);
+              localStorage.setItem('theme', theme);
+            }}
+          />
+          <span className="text-base-content text-sm">Dark</span>
         </label>
+
       </li>
 
     </>
@@ -127,10 +140,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar top-0 left-0 right-0 z-50 fixed bg-primary backdrop-blur-md  shadow-lg border-b border-gray-100 ">
+    <div className="navbar top-0 left-0 right-0 z-50 fixed bg-base-100 dark:bg-base-200 backdrop-blur-md shadow-lg border-b border-base-300">
       <div className="navbar-start">
         {/* Mobile menu */}
-        <div className="dropdown">
+        <div className="dropdown rounded-2xl">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +162,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-1 p-4 shadow bg-white/90 backdrop-blur-md rounded-box w-52"
+            className="menu menu-sm dropdown-content rounded-2xl mt-3 z-1 p-4 shadow bg-white/90 dark:text-white dark:bg-gray-900 backdrop-blur-md rounded-box w-52"
           >
             {menuItems}
           </ul>
@@ -190,7 +203,7 @@ const Navbar = () => {
 
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-4 shadow-lg bg-white/95 backdrop-blur-md rounded-box w-64 mt-4 border border-gray-100"
+              className="dropdown-content menu p-4 shadow-lg bg-white/95 dark:bg-base-200 rounded-2xl backdrop-blur-md  w-64 mt-4 border border-gray-100"
             >
               {/* User Info */}
               <div className="flex flex-col items-center pb-4 border-b border-gray-200 mb-3">
@@ -199,16 +212,16 @@ const Navbar = () => {
                   alt={user?.displayName}
                   className="w-20 h-20 rounded-full border-4 border-blue-100 mb-3"
                 />
-                <p className="font-semibold text-gray-800 text-lg">
+                <p className="font-semibold text-gray-800 dark:text-white/95 text-lg">
                   {user?.displayName || 'User'}
                 </p>
-                <p className="text-sm text-gray-500">{user?.email}</p>
+                <p className="text-sm text-gray-500 dark:text-white/75">{user?.email}</p>
               </div>
 
               <li>
                 <NavLink
                   to="/dashboard"
-                  className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 py-3"
+                  className="text-gray-700 dark:text-white/95 hover:text-blue-600 hover:bg-blue-50 py-3"
                 >
                   Dashboard
                 </NavLink>
@@ -226,7 +239,7 @@ const Navbar = () => {
         ) : (
           <Link
             to="/login"
-            className="btn bg-linear-to-r from-blue-600 to-indigo-600 text-white border-0 hover:from-blue-700 hover:to-indigo-700 shadow-md px-8"
+            className="btn bg-linear-to-r from-blue-600 to-indigo-600 text-white border-0 hover:from-blue-700 rounded-xl hover:to-indigo-700 shadow-md px-8"
           >
             Login
           </Link>

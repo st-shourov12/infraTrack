@@ -137,13 +137,13 @@ const Features = () => {
                             ✨ Features
                         </span>
                     </div>
-                    <h2 className="text-2xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-2xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                         Everything You Need to
                         <span className="block text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-orange-500">
                             Build Better Cities
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-600 dark:text-white/75 max-w-2xl mx-auto">
                         InfraTrack combines powerful features with an intuitive interface to make civic engagement effortless and effective.
                     </p>
                 </div>
@@ -153,7 +153,7 @@ const Features = () => {
                     {features.map((feature, index) => (
                         <div
                             key={feature.id}
-                            className="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-transparent hover:-translate-y-2"
+                            className="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border dark:border-white/25 border-gray-100 hover:border-transparent hover:-translate-y-2"
                             style={{
                                 animation: `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`,
                                 opacity: 0
@@ -171,7 +171,7 @@ const Features = () => {
 
                             {/* Content */}
                             <div className="relative">
-                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                     {feature.title}
                                 </h3>
                                 <p className="text-gray-600 leading-relaxed">

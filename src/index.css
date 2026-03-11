@@ -1,10 +1,9 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:where([data-theme=infratrack-dark], [data-theme=infratrack-dark] *));
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: infratrack --default, infratrack-dark --prefersdark;
 }
-
 
 
 
@@ -29,10 +28,12 @@
   --color-success: oklch(65% 0.19 150);
   --color-warning: oklch(75% 0.18 75);
   --color-error: oklch(60% 0.22 25);
+  
 }
 
 @plugin "daisyui/theme" {
- name: "infratrack-dark";
+  name: "infratrack-dark";
+  default: false;
   color-scheme: dark;
 
   --color-primary: oklch(60% 0.2 262);
@@ -51,4 +52,7 @@
   --color-success: oklch(65% 0.19 150);
   --color-warning: oklch(75% 0.18 75);
   --color-error: oklch(65% 0.22 25);
+ 
 }
+
+

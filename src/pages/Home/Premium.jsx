@@ -19,7 +19,7 @@ const Premium = () => {
                           
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg text-white/75 max-w-3xl mx-auto">
                         Buy Premium Subscription for better Experience
                     </p>
                 </div>
@@ -27,24 +27,24 @@ const Premium = () => {
             <div className='max-w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 mt-10'>
 
                 
-                <div className="bg-linear-to-r from-yellow-50 to-orange-50 border border-yellow-400 rounded-lg p-5 lg:p-10">
-                    <h3 className="font-semibold text-xl text-blue-700  mb-2 flex items-center  gap-2">
-                        <Crown className="w-5 h-5 text-blue-600" />
+                <div className="bg-white border-yellow-400 dark:bg-blue-900 dark:text-white rounded-lg p-5 lg:p-10">
+                    <h3 className="font-semibold text-xl text-blue-700 dark:text-white  mb-2 flex items-center  gap-2">
+                        <Crown className="w-5 h-5 text-blue-600 dark:text-white" />
                         Premium Benefits
                     </h3>
-                    <ul className="text-lg text-blue-700 space-y-1">
+                    <ul className="text-lg text-blue-700 dark:text-white space-y-1">
                         <li>• Priority support for your reports than Normal User</li>
                         <li>• Advanced analytics dashboard</li>
                         <li>• Unlimited issue submissions</li>
                         <li>• Early access to new features</li>
                     </ul>
                 </div>
-                <div className="bg-linear-to-r from-yellow-50 to-orange-50 border border-yellow-400 rounded-lg p-5 lg:p-10">
-                    <h3 className="font-semibold text-xl text-blue-700  mb-2 flex items-center  gap-2">
-                        <User className="w-5 h-5 text-blue-600" />
+                <div className="bg-white border border-yellow-400 dark:bg-blue-900 rounded-lg p-5 lg:p-10">
+                    <h3 className="font-semibold text-xl text-blue-700 dark:text-white  mb-2 flex items-center  gap-2">
+                        <User className="w-5 h-5 text-blue-600 dark:text-white" />
                         Free Cityzen
                     </h3>
-                    <ul className="text-lg text-blue-700 space-y-1">
+                    <ul className="text-lg text-blue-700 dark:text-white space-y-1">
                         <li>• Priority support for your reports less Premium user</li>
                         <li>• Unable to know the latest news</li>
                         <li>• Limited in 3 issue submissions</li>

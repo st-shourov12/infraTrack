@@ -39,7 +39,7 @@ Admin Password: 123@aA
 For testing staff features, use the following credentials:
 
 ```
-Staff Email: staff@astaff.com
+Staff Email: staff@staff.com
 Staff Password: 123@aA
 ```
 

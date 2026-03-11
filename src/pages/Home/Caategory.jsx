@@ -74,7 +74,7 @@ const Caategory = () => {
                            Interactive Category
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg text-gray-600 dark:text-white/75 max-w-3xl mx-auto">
                         Divide Issues into Interactive Category to solve your problem
                     </p>
                 </div>
@@ -82,7 +82,7 @@ const Caategory = () => {
             <Marquee speed={40} pauseOnHover gradient={false} className={`h-70 my-5 md:my-10`}>
                 {
                     categoriesWithImages.map((cat, i) => (
-                        <div key={i} className="card bg-base-100 w-80 h-60 mx-5 shadow-sm">
+                        <div key={i} className="card rounded-xl bg-base-100 w-80 h-60 mx-5 shadow-sm">
                             <figure>
                                 <img
                                     className='w-full h-30'

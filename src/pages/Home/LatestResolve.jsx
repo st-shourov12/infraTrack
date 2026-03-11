@@ -37,7 +37,7 @@ const LatestResolve = () => {
                            Latest Resolved Issues
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg text-gray-600 dark:text-white/75 max-w-3xl mx-auto">
                         From reporting to resolution in 6 simple steps. Our streamlined process ensures your voice is heard and issues are resolved efficiently.
                     </p>
                 </div>
@@ -45,7 +45,7 @@ const LatestResolve = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
                 {latestIssues.map((issue, i) => (
-                    <div key={issue?._id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+                    <div key={issue?._id} className="card bg-base-100 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-transparent hover:-translate-y-2">
                         <figure className="px-6 pt-6 relative">
                             <img
                                 src={issue?.photo}
@@ -63,13 +63,13 @@ const LatestResolve = () => {
                             <div className="flex justify-between items-start gap-2 flex-wrap">
                                 <h2 className="card-title text-lg">{issue?.category}</h2>
                                 <div className="flex gap-2">
-                                    <div className={`badge badge-sm ${issue?.priority === 'High' ? 'badge-error' :
+                                    <div className={`badge badge-sm rounded-sm p-1 ${issue?.priority === 'High' ? 'badge-error' :
                                         issue?.priority === 'Medium' ? 'badge-warning' :
                                             'badge-info'
                                         }`}>
                                         {issue?.priority}
                                     </div>
-                                    <div className={`badge badge-sm ${issue?.status === 'pending' ? 'badge-warning' :
+                                    <div className={`badge badge-sm rounded-sm p-1 ${issue?.status === 'pending' ? 'badge-warning' :
                                         issue?.status === 'in-progress' ? 'badge-info' :
                                             issue?.status === 'resolved' ? 'badge-accent' :
                                                 issue?.status === 'closed' ? 'badge-success' : 'badge-error'
@@ -80,7 +80,7 @@ const LatestResolve = () => {
                             </div>
 
                             {/* Description */}
-                            <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                            <p className="text-sm text-gray-600 dark:text-white/75 line-clamp-2 mt-2">
                                 {issue?.description}
                             </p>
 
@@ -98,7 +98,7 @@ const LatestResolve = () => {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-sm truncate">{issue?.reporterName}</p>
-                                    <p className="text-xs text-gray-500 truncate">{issue?.reporterEmail}</p>
+                                    <p className="text-xs text-gray-500 dark:text-white/75 truncate">{issue?.reporterEmail}</p>
                                     <div className="badge badge-xs badge-ghost mt-1">{issue?.userRole}</div>
                                 </div>
                             </div>

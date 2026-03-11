@@ -152,21 +152,21 @@ const AdminDash = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
+        <div className="min-h-screen dark:bg-gray-800 p-6">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-1">Welcome to Admin DashBoard</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+                    <p className="text-gray-600 mt-1 dark:text-white/75">Welcome to Admin DashBoard</p>
                 </div>
 
                 {/* Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-blue-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Total Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.totalIssues}</h3>
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Total Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.totalIssues}</h3>
                                 <p className="text-green-600 text-sm mt-2 flex items-center">
                                     <TrendingUp className="w-4 h-4 mr-1" />
                                     +12% from last month
@@ -176,35 +176,35 @@ const AdminDash = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-700">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-green-700">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Closed Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.closedIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Closed Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.closedIssues}</h3>
+                                <p className="text-gray-600 dark:text-white/75 text-sm mt-2">
                                     {((stats.closedIssues / stats.totalIssues) * 100).toFixed(1)}% closing rate
                                 </p>
                             </div>
                             <GrCompliance className="w-12 h-12 text-green-500 opacity-80" />
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-300">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-green-300">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Resolved Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.resolvedIssues}</h3>
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Resolved Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.resolvedIssues}</h3>
 
                             </div>
                             <CheckCircle className="w-12 h-12 text-green-500 opacity-80" />
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-yellow-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-yellow-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Pending Issues</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats.pendingIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Pending Issues</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats.pendingIssues}</h3>
+                                <p className="text-gray-600 dark:text-white/75 text-sm mt-2">
                                     {((stats.pendingIssues / stats.totalIssues) * 100).toFixed(1)}% pending rate
                                 </p>
                             </div>
@@ -214,23 +214,23 @@ const AdminDash = () => {
 
 
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-purple-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-purple-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Total Payment</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">${totalAmount.toLocaleString()}</h3>
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Total Payment</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">${totalAmount.toLocaleString()}</h3>
 
                             </div>
                             <DollarSign className="w-12 h-12 text-purple-500 opacity-80" />
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-indigo-500">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-indigo-500">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Total Users</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{users?.length}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Total Users</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{users?.length}</h3>
+                                <p className="text-gray-600 dark:text-white/75 text-sm mt-2">
                                     {stats.activeIssues} active issues
                                 </p>
                             </div>
@@ -238,24 +238,24 @@ const AdminDash = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 ">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-orange-500 col-span-1 ">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Active Issues (In Progress)</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{stats?.inProgressIssues}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Active Issues (In Progress)</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stats?.inProgressIssues}</h3>
+                                <p className="text-gray-600 dark:text-white/75 text-sm mt-2">
                                     {stats.pendingIssues} pending
                                 </p>
                             </div>
                             <AlertCircle className="w-12 h-12 text-orange-500 opacity-80" />
                         </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-red-800 col-span-1 ">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6 border-l-4 border-red-800 col-span-1 ">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-gray-500 text-sm font-medium">Rejected</p>
-                                <h3 className="text-3xl font-bold text-gray-900 mt-2">{isNaN(rejectedIssue.length) ? 0 : rejectedIssue.length}</h3>
-                                <p className="text-gray-600 text-sm mt-2">
+                                <p className="text-gray-500 dark:text-white/75 text-sm font-medium">Rejected</p>
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{isNaN(rejectedIssue.length) ? 0 : rejectedIssue.length}</h3>
+                                <p className="text-gray-600 dark:text-white/75 text-sm mt-2">
                                     {Math.ceil((rejectedIssue.length / stats?.totalIssues) * 100)}% rejected rate
 
                                 </p>
@@ -268,8 +268,8 @@ const AdminDash = () => {
                 {/* Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Issue Status Distribution */}
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Issue Status Distribution
                         </h3>
 
@@ -302,7 +302,7 @@ const AdminDash = () => {
                                 </PieChart>
                             </ResponsiveContainer>
                         ) : (
-                            <p className="text-center text-gray-500">
+                            <p className="text-center text-gray-500 dark:text-white/75">
                                 No issue data available
                             </p>
                         )}
@@ -324,8 +324,8 @@ const AdminDash = () => {
                         </ResponsiveContainer>
                     </div> */}
 
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                             Monthly Payment Analytics
                         </h3>
 
@@ -348,7 +348,7 @@ const AdminDash = () => {
                                 </BarChart>
                             </ResponsiveContainer>
                         ) : (
-                            <p className="text-center text-gray-500">
+                            <p className="text-center text-gray-500 dark:text-white/75">
                                 No payment data available
                             </p>
                         )}
@@ -376,26 +376,26 @@ const AdminDash = () => {
                 {/* Latest Data Tables */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Latest Issues */}
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-900">Latest Issues</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Latest Issues</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reporter</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Priority</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Reporter</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Title</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Status</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Priority</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestIssues.map((issue) => (
-                                        <tr key={issue?._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{issue?.reporterName}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{issue?.category}</td>
+                                        <tr key={issue?._id} className="">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{issue?.reporterName}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{issue?.category}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(issue?.status)}`}>
                                                     {issue?.status}
@@ -406,7 +406,7 @@ const AdminDash = () => {
                                                     {issue?.priority}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-white/75">
                                                 {new Date(issue?.createdAt).toLocaleDateString('en-US', {
                                                     year: 'numeric',
                                                     month: 'long',
@@ -421,26 +421,26 @@ const AdminDash = () => {
                     </div>
 
                     {/* Latest Payments */}
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-900">Latest Payments</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Latest Payments</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reciept</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">ID</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">User</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Amount</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Reciept</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestPayments.map((payment, i) => (
-                                        <tr key={payment._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{i + 1}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment?.userName}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">${payment?.amount}</td>
+                                        <tr key={payment._id} className=" hover:text-blue-700">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{i + 1}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{payment?.userName}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-white">${payment?.amount}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <td className="px-6">
                                                     <a
@@ -461,31 +461,31 @@ const AdminDash = () => {
                     </div>
 
                     {/* Latest Registered Users */}
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-900">Latest Registered Staff</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Latest Registered Staff</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
 
 
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Name</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Email</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Department</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Location</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestStaff.map((user) => (
-                                        <tr key={user?._id} className="hover:bg-gray-50">
+                                        <tr key={user?._id} className="">
 
 
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.fullName}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user?.email}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.department}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user?.preferredDistrict}, {user?.preferredUpzila}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{user?.fullName}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-white">{user?.email}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{user?.department}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{user?.preferredDistrict}, {user?.preferredUpzila}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -494,27 +494,27 @@ const AdminDash = () => {
                     </div>
 
 
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div className="p-6 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-900">Latest Users</h3>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Latest Users</h3>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"></th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase"></th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Name</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Email</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/75 uppercase">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                     {latestUsers.map((user, i) => (
-                                        <tr key={user?._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{i + 1}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.displayName}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user?.email}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user?.isPremium ? 'Premium' : 'Free'}</td>
+                                        <tr key={user?._id} className="">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{i + 1}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{user?.displayName}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-white">{user?.email}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{user?.isPremium ? 'Premium' : 'Free'}</td>
                                         </tr>
                                     ))}
                                 </tbody>

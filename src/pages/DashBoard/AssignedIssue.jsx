@@ -309,9 +309,9 @@ const AssignedIssue = () => {
     return (
         <div>
 
-            <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-4 mb-6">
                 <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Filters</h2>
                     <button
                         onClick={() => setShowFilters(!showFilters)}
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
@@ -324,11 +324,11 @@ const AssignedIssue = () => {
                 {showFilters && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">Status</label>
                             <select
                                 value={filters.status}
                                 onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border border-gray-300 dark:bg-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Status</option>
                                 <option value="pending">Pending</option>
@@ -339,11 +339,11 @@ const AssignedIssue = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">Category</label>
                             <select
                                 value={filters.category}
                                 onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border border-gray-300 dark:bg-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Categories</option>
                                 <option value="Potholes">Potholes</option>
@@ -360,11 +360,11 @@ const AssignedIssue = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">Priority</label>
                             <select
                                 value={filters.priority}
                                 onChange={(e) => setFilters({ ...filters, priority: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-2 border border-gray-300 dark:bg-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="all">All Priorities</option>
                                 <option value="high">High</option>
@@ -419,7 +419,7 @@ const AssignedIssue = () => {
                                 <td>
                                     {issue?.district}, {issue?.upzila}
                                     <br />
-                                    <span className="badge badge-ghost badge-sm">{issue?.location}</span>
+                                    <span className="badge rounded-lg badge-ghost badge-sm">{issue?.location}</span>
                                 </td>
 
                                 <th>
@@ -454,7 +454,7 @@ const AssignedIssue = () => {
                                         issue?.status === 'in-progress' &&
                                         <button
                                             onClick={() => { handleResolved(issue) }}
-                                            className='btn text-blue-600 bg-blue-300'
+                                            className='btn rounded-xl border-0 text-blue-600 bg-blue-300'
                                         >
                                             <VscWorkspaceTrusted className='text-lg'></VscWorkspaceTrusted>
                                             Resolve
@@ -465,7 +465,7 @@ const AssignedIssue = () => {
                                         <button
                                             onClick={() => { handleReject(issue) }}
                                             disabled={issue?.status === 'rejected'}
-                                            className='btn text-red-600 bg-red-300 btn-disabled opacity-50 cursor-not-allowed'
+                                            className='btn text-red-600 rounded-xl border-0 bg-red-300 btn-disabled opacity-50 cursor-not-allowed'
                                         >
                                             <GiCrossMark className='text-lg'></GiCrossMark>
                                             Reject
@@ -478,7 +478,7 @@ const AssignedIssue = () => {
                                         <button
                                             onClick={() => handleClosed(issue)}
                                             disabled={issue?.status === 'closed'}
-                                            className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
+                                            className={` btn text-green-600 rounded-xl border-0 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled rounded-xl border-0 opacity-50 cursor-not-allowed' : ''
                                                 }`}
                                         >
                                             <IoCheckmarkDoneCircle className="text-lg" />
@@ -495,7 +495,7 @@ const AssignedIssue = () => {
                                         <button
                                             onClick={() => handleClosed(issue)}
                                             disabled={issue?.status === 'closed'}
-                                            className={` btn text-green-600 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed' : ''
+                                            className={` btn text-green-600 rounded-xl border-0 bg-green-300 ${issue?.status === 'closed' ? 'btn-disabled opacity-50 cursor-not-allowed rounded-xl border-0' : ''
                                                 }`}
                                         >
                                             <IoCheckmarkDoneCircle className="text-lg" />

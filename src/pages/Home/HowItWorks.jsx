@@ -110,7 +110,7 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section className="xl:px-20 md:px-10 sm:px-2 px-4 bg-white py-5 md:py-10 overflow-hidden">
+        <section className="xl:px-20 md:px-10 sm:px-2 px-4 bg-white dark:bg-gray-800 py-5 md:py-10 overflow-hidden">
             <div className="">
                 
                 {/* Section Header */}
@@ -120,13 +120,13 @@ const HowItWorks = () => {
                             🚀 Simple Process
                         </span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                         How InfraTrack
                         <span className="block text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
                             Actually Works
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-lg text-gray-600 dark:text-white/75 max-w-3xl mx-auto">
                         From reporting to resolution in 6 simple steps. Our streamlined process ensures your voice is heard and issues are resolved efficiently.
                     </p>
                 </div>
@@ -148,7 +148,7 @@ const HowItWorks = () => {
                             >
                                 <div className="relative group">
                                     {/* Card */}
-                                    <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-transparent hover:-translate-y-2">
+                                    <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all dark:bg-gray-900 duration-300 border-2 border-gray-100 hover:border-transparent hover:-translate-y-2">
                                         
                                         {/* Step Number Badge */}
                                         <div className={`absolute -top-4 -right-4 w-12 h-12 rounded-full bg-linear-to-br ${step.color} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
@@ -163,17 +163,17 @@ const HowItWorks = () => {
                                         </div>
 
                                         {/* Content */}
-                                        <h3 className={`text-2xl font-bold text-gray-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r ${step.color} transition-all duration-300`}>
+                                        <h3 className={`text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r ${step.color} transition-all duration-300`}>
                                             {step.title}
                                         </h3>
-                                        <p className="text-gray-600 mb-6 leading-relaxed">
+                                        <p className="text-gray-600 dark:text-white/75 mb-6 leading-relaxed">
                                             {step.description}
                                         </p>
 
                                         {/* Details List */}
                                         <ul className="space-y-2">
                                             {step.details.map((detail, idx) => (
-                                                <li key={idx} className="flex items-center text-sm text-gray-500">
+                                                <li key={idx} className="flex items-center text-sm text-gray-500 dark:text-white/70">
                                                     <div className={`w-1.5 h-1.5 rounded-full bg-linear-to-r ${step.color} mr-2`}></div>
                                                     {detail}
                                                 </li>
@@ -243,11 +243,11 @@ const HowItWorks = () => {
                 {/* Bottom CTA Section */}
                 <div className="mt-20 text-center">
                     <div className="inline-block bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 p-1 rounded-2xl">
-                        <div className="bg-white rounded-2xl p-8 md:p-12">
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 md:p-12">
+                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                                 Ready to Make a Difference?
                             </h3>
-                            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                            <p className="text-gray-600 dark:text-white/75 mb-8 max-w-2xl mx-auto">
                                 Join thousands of active citizens who are transforming their neighborhoods one issue at a time.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
