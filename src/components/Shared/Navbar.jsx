@@ -208,7 +208,7 @@ const Navbar = () => {
 
       {/* Desktop menu */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-2">
+        <ul className="menu items-center menu-horizontal px-1 gap-2">
           {menuItems}
         </ul>
       </div>
